@@ -1,20 +1,48 @@
 #!/bin/sh
+# TODO use a WALLPAPER variable
+# TODO write $helpmsg
 
-# This script does the following:
-#	Run by itself, set the wallpaper (at X start).
-#	If given a file, set that as the new wallpaper.
-#	If given a directory, choose random file in it.
-#	If wal is installed, also generates a colorscheme.
+checkin(){ # Checks paramater and respond. $2 is the flag and $1 is value.
+    # shellcheck disable=SC2015
+    [ -n "$1" ] && return 0 || { [ -n "$2" ] && echo "No parameter for $2" || echo "Bad inputs! Seek help." ;}
+}
+
+[ -n "$1" ] && { printf "%s" "$1" | grep -q "^-" || { input="$1" && shift ;} ;} #If the first input wasn't a flag read it as the $file pattern
+while true; do case "$1" in
+    -f | --file | -p | --directory | -i | --input) checkVal "$2" "$1" && input="$2" && shift 2 ;;
+    -c | --config) checkVal "$2" "$1" && xwconfig="$2" && shift 2 ;;
+    -d | --delete-orignial) deleteorig="deleteOriginalFile" && shift ;;
+	-t | --temporary) temp="temp" && shift ;;
+	-n | --nowal) nowal="noWal" && shift ;;
+	-q | --quite) quite="quiteModeNoNotification" && shift ;;
+	-h | --help) echo "$helpmsg" && exit 0 ;;
+	--) shift && break ;; # End of all options
+	-*) echo "Invalid option: $1" && echo "$helpmsg" && exit 1 ;;
+	*)  break ;; # No more options
+esac ;done
 
 # Location of link to wallpaper link.
 bgloc="${XDG_DATA_HOME:-$HOME/.local/share/}/bg"
 
-[ -f "$1" ] && ln -sf "$(readlink -f "$1")" "$bgloc" && notify-send -i "$bgloc" "Changing wallpaper..."
+if [ -n "$temp" ] ;then
+    [ -n "$input" ] && bgloc="$input" || echo "Temporary flag is risen but no temporary file has been declared. Using default!"
+else
+    if [ -f "$input" ] ;then
+        ln -sf "$(readlink -f "$input")" "$bgloc"
+        notifmsg="Wallpaper is set"
+    else # [ -d "$input" ]
+        ln -sf "$(find "$(readlink -f "$input")" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)" "$bgloc"
+        notifmsg="Random Wallpaper chosen"
+    fi
+    [ -n "$deleteorig" ] && [ -f "$input" ]&& rm "$input"
+fi
 
-[ -d "$1" ] && ln -sf "$(find "$(readlink -f "$1")" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)" "$bgloc" && notify-send -i "$bgloc" "Random Wallpaper chosen."
+[ -f "$bgloc" ] || echo "No such a file!"
 
-# If pywal is installed, use it.
-wal -i "$(readlink -f "$bgloc")" -o "${XDG_CONFIG_HOME:-$HOME/.config}/wal/postrun" >/dev/null 2>&1
+[ -n "$nowal" ] || wal -i "$(readlink -f "$bgloc")" -o "${XDG_CONFIG_HOME:-$HOME/.config}/wal/postrun" >/dev/null 2>&1
 
 pidof dwm >/dev/null && xdotool key super+F12
-xwallpaper --zoom "$bgloc"
+# shellcheck disable=SC2086
+xwallpaper ${xwconfig:---zoom} "$bgloc"
+
+[ -z "$quite" ] && sleep 1 && notify-send -i "$bgloc" "$notifmsg"
