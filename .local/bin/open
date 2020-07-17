@@ -1,0 +1,11 @@
+#!/bin/sh
+# Opens a file based on mime types (basically xdg-open with minor tweaks and available to dmenu)
+
+# If only one sole file exists with the initials given use that instead.
+file="$1"
+[ ! -f "$1" ] && [ "$(ls -1q "$1"* 2>/dev/null | wc -l)" = "1" ] && file="$(ls "$1"*)"
+shift
+# TODO make it fuzzier
+
+xdg-open "$file" "$@"
+exit

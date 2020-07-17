@@ -1,0 +1,2 @@
+#!/bin/sh
+exec nohup $TERMINAL -e $SOUND "$@" >/dev/null 2>&1 &

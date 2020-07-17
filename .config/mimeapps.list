@@ -3,20 +3,21 @@
 # xdg-open will use these settings to determine how to open filetypes.
 # These .desktop entries can also be seen and changed in ~/.local/share/applications/
 
-text/x-shellscript=text.desktop;
+text/x-shellscript=editor.desktop;
 x-scheme-handler/magnet=torrent.desktop;
 application/x-bittorrent=torrent.desktop;
 x-scheme-handler/mailto=mail.desktop;
-text/plain=text.desktop;
-application/postscript=pdf.desktop;
-application/pdf=pdf.desktop;
-image/png=img.desktop;
-image/jpeg=img.desktop;
-image/gif=img.desktop;
 application/rss+xml=rss.desktop
+text/plain=editor.desktop;
+application/postscript=reader.desktop;
+application/pdf=reader.desktop;
+image/png=image.desktop;
+image/jpeg=image.desktop;
+image/gif=image.desktop;
 video/x-matroska=video.desktop
+video/mp4=video.desktop
 x-scheme-handler/lbry=lbry.desktop
-inode/directory=file.desktop
+inode/directory=fm.desktop
 x-scheme-handler/http=browser.desktop
 x-scheme-handler/https=browser.desktop
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=office.desktop

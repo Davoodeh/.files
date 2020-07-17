@@ -1,0 +1,2 @@
+#!/bin/sh
+exec nohup $LOCK "$@" >/dev/null 2>&1 &

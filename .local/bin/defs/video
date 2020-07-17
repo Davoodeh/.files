@@ -1,0 +1,2 @@
+#!/bin/sh
+exec nohup $VIDEO "$@" >/dev/null 2>&1 &

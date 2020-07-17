@@ -1,0 +1,65 @@
+#!/bin/sh
+# This makes a shell executable file for each defualt program defined in env
+# $1 is the prefix of files
+
+dir=${1:-$(cd "$(dirname "$0")" ; pwd -P)}
+
+mkscript(){ # $1: file name. $2: content.
+    file="$dir/$1"
+    rm "$file" -f
+    cat > "$file" <<EOF
+#!/bin/sh
+exec nohup $2 "\$@" >/dev/null 2>&1 &
+EOF
+    chmod +x "$file"
+    echo "     created $file"
+}
+
+mkdesktop(){
+    file="$HOME/.local/share/applications/$1.desktop"
+    name="${2:-$(echo "$1" | sed 's/.*/\u&/')}"
+    cat > "$file" << EOT
+[Desktop Entry]
+Type=Application
+Name=$name
+Exec=$1 %U
+EOT
+    echo "     created $file"
+}
+
+checkvar(){ # $1: var to check. $2: Run in terminal?
+    fn="$(echo "$1" | tr '[:upper:]' '[:lower:]')"
+    [ -n "$2" ] && prefix="$2 " || prefix=""
+    if [ "$(eval printf "%s" "\$$1")" != "" ] ;then
+        mkscript "$fn" "$prefix\$$1"
+        mkdesktop "$fn" "$3"
+        echo "files have been created for for: \$$1"
+    else
+        echo "no value for $1, nothing created. removing its traces..."
+        rm -v "$HOME/.local/share/applications/$fn.desktop" "$dir/$fn"
+        sed -i "/$fn.desktop/d" "${XDG_CONFIG_HOME-$HOME/.config}/mimeapps.list"
+        echo "removed $fn.desktop from ${XDG_CONFIG_HOME-$HOME/.config}/mimeapps.list"
+    fi
+}
+
+mkdir -p "$HOME/.local/share/applications/" 2>/dev/null
+
+#       | VARIABLE | PREFIX       | NAME
+checkvar BROWSER
+checkvar CALCULATOR '$TERMINAL -e'
+checkvar CALENDAR   '$TERMINAL -e'
+checkvar EDITOR     ''
+checkvar FM         '$TERMINAL -e' 'File Manager'
+checkvar IMAGE      ''             'Image Viewer'
+checkvar LOCK       ''             'Lock Screen'
+checkvar MAIL
+checkvar OFFICE
+checkvar READER     ''             'PDF Reader'
+checkvar RSS        '/usr/bin/env' 'RSS Add'
+checkvar SOUND      '$TERMINAL -e' 'Sound Panel'
+checkvar TERMINAL
+checkvar TORRENT    '/usr/bin/env' 'Torrent add'
+checkvar TM         '$TERMINAL -e' 'Task Manager'
+checkvar VIDEO      ''             'Video Player'
+
+echo "All done. Before using scripts and shortcuts (as default applications), be sure that script location ($dir) is in your \$PATH and shortcuts are set in your $HOME/.config/mimeapps.list."

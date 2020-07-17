@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Critical env file
+. "$HOME/.config/env"
+. "$XDG_CONFIG_HOME/aliasrc"

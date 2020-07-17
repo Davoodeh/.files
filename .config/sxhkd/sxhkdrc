@@ -9,27 +9,27 @@
 
 # Basic binds
 super + Return
-	$TERMINAL
+	terminal
+super + v
+	editor
 super + shift + Return
 	samedir
 super + shift + q
 	kill -9 `xdotool getwindowfocus getwindowpid`
 super + d
 	dmenu_run
-super + r
-	$TERMINAL -e $FILE
 super + e
-	$TERMINAL -e neomutt; pkill -RTMIN+12 blocks
+	fm
 super + m
-	$TERMINAL -e ncmpcpp
+	terminal -e ncmpcpp
+{ctrl + Escape,super + i}
+	tm
 super + n
-	$TERMINAL -e newsboat
+	terminal -e newsboat
 super + c
-	$TERMINAL -e calcurse
-super + v
-	$TERMINAL -e nvim -c VimwikiIndex
+	calendar
 super + shift + a
-	$TERMINAL -e pulsemixer
+	sound; pkill -RTMIN+10 $STATUSBAR
 super + shift + c
 	camtoggle
 super + shift + e
@@ -55,13 +55,13 @@ super + x
 XF86Launch1
 	xset dpms force off
 XF86TouchpadToggle
-	(synclient | grep "TouchpadOff.*1" && synclient TouchpadOff=0) || synclient TouchpadOff=1
+	touchpadtoggle
 XF86Touchpad{Off,On}
-	synclient TouchpadOff={1,0}
+	touchpadtoggle {0,1}
 XF86MonBrightnessDown
-	xbacklight -dec 15
+	bl down
 XF86MonBrightnessUp
-	xbacklight -inc 15
+	bl up
 
 # Recording
 # Take screenshot
@@ -75,6 +75,8 @@ super + Print
 	dmenurecord
 super + Delete
 	dmenurecord kill
+super + space
+	kblayoutmanager cycle $(echo $KBLAYOUTS)
 
 # Pause audio
 super + p
@@ -120,26 +122,26 @@ XF86Audio{Rewind,Forward}
 XF86AudioRecord
 	dmenurecord
 XF86AudioMedia
-	$TERMINAL -e ncmpcpp
+	terminal -e ncmpcpp
 
 XF86PowerOff
 	prompt "Shutdown computer?" "sudo -A shutdown -h now"
 XF86Calculator
-	$TERMINAL -e bc
+	calculator
 XF86Sleep
 	prompt 'Hibernate computer?' 'sudo -A systemctl suspend'
 XF86WWW
-	$BROWSER
+	browser
 XF86DOS
-	$TERMINAL
+	terminal
 XF86ScreenSaver
 	mpc pause; pauseallmpv; i3lock -e -f -c 1d2021; xset dpms force off
 XF86TaskPane
-	$TERMINAL -e htop
+	tm
 XF86Mail
-	$TERMINAL -e neomutt
+	terminal -e neomutt
 XF86MyComputer
-	$TERMINAL -e $FILE /
+	fm /
 
 # Function keys
 super + shift + F1

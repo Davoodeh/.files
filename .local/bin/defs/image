@@ -1,0 +1,2 @@
+#!/bin/sh
+exec nohup $IMAGE "$@" >/dev/null 2>&1 &

@@ -1,6 +1,7 @@
 #!/bin/sh
 # xinitrc runs automatically when you run startx.
 
+# xrandr --setprovideroutputsource modesetting NVIDIA-0 # For Nvidia only systems
 xrandr --auto   # This prevents occasional black screens after `startx` on some machines
 
 # There are some small but important commands that need to be run when we start

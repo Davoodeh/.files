@@ -1,0 +1,8 @@
+#!/bin/sh
+
+. "$HOME/.config/sh/.shenv"
+
+[ -f "$HOME/.config/shortcutrc" ] && . "$HOME/.config/shortcutrc" # Load shortcut aliases
+
+# Set proxy settings immediately after a change in variables of .env
+[ -x "$(command -v edenv)" ] && proxy=$(edenv PROXY) && export http_proxy="$proxy" && export https_proxy="$proxy" # && export ftp_proxy="$proxy"

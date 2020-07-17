@@ -1,43 +1,76 @@
 #!/bin/sh
 
-# Use neovim for vim if present.
-command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
-
-# Verbosity and settings that you pretty much just always are going to want.
+# Common abbrevations
 alias \
-	cp="cp -iv" \
-	mv="mv -iv" \
-	rm="rm -vI" \
-	mkd="mkdir -pv" \
-	yt="youtube-dl --add-metadata -i" \
-	yta="yt -x -f bestaudio/best" \
+    c="clear"\
+    cb="xclip -selection clipboard"\
+    e="editor ; exit"\
+    d="detach"\
+    f="fm"\
+    g="git"\
+    ka="killall"\
+    lsp="pacman -Qett --color=always | less"\
+    p="sudo pacman"\
+    q="exit"\
+    r="reader"\
+    s="sound"\
+    sdn="sudo shutdown -h now"\
+    SS="sudo systemctl"\
+    t="terminal"\
+    term="terminal"\
+    trem="transmission-remote"\
+    upc="sudo pacman -Syu; pkill -RTMIN+8 i3blocks"\
+    upg="sudo pacman -Syu --noconfirm --overwrite /usr/lib/python3.8/site-packages/\* && yay -Syu --noconfirm --overwrite /usr/lib/python3.8/site-packages/\*"\
+    v="editor"\
+    ver="pacman -Qe"\
+    vid="video"\
+    w="browser"\
+    xi="sudo xbps-install"\
+    xq="xbps-query"\
+    xr="sudo xbps-remove -R"\
+    yd="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4"\
+    YT="youtube-viewer"
+
+# Load config files before launching... or apply a crucial config...
+alias \
+    calcurse="calcurse -D ~/.config/calcurse"\
+    keynav="keynav 'loadconfig ~/.config/keynav/keynavrc'"\
+    tmux="tmux -f ~/.config/tmux.conf"
+command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d" # uses neovim for vim if present.
+# TODO Instead of the line below take manjaro's aproach to Dmenu!
+[ -f "$HOME/.cache/wal/colors.sh" ] && . $HOME/.cache/wal/colors.sh && alias dmenu_run='dmenu_run -nb "$color0" -nf "$color15" -sb "$color1" -sf "$color15"'
+
+# Verbosity
+alias \
+	cp="cp -iv"\
+    mv="mv -iv"\
+	rm="rm -vI"\
+	mkd="mkdir -pv"\
+	yt="youtube-dl --add-metadata -i"\
+	yta="yt -x -f bestaudio/best"\
 	ffmpeg="ffmpeg -hide_banner"
 
-# Colorize commands when possible.
-alias \
-	ls="ls -hN --color=auto --group-directories-first" \
-	grep="grep --color=auto" \
-	diff="diff --color=auto" \
-	ccat="highlight --out-format=ansi"
 
-# These common commands are just too long! Abbreviate them.
+# Color
 alias \
-	ka="killall" \
-	g="git" \
-	trem="transmission-remote" \
-	YT="youtube-viewer" \
-	sdn="sudo shutdown -h now" \
-	f="$FILE" \
-	e="$EDITOR" \
-	v="$EDITOR" \
-	p="sudo pacman" \
-	xi="sudo xbps-install" \
-	xr="sudo xbps-remove -R" \
-	xq="xbps-query" \
-	z="zathura"
+    ls="ls -hN --color=auto --group-directories-first"\
+    grep="grep --color=auto"\
+    diff="diff --color=auto"\
+    ccat="highlight --out-format=ansi"
 
+# Misc
 alias \
-	magit="nvim -c MagitOnly" \
-	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/zshnameddirrc" \
-	weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
-	tmux="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf" \
+    magit="nvim -c MagitOnly"\
+	ref="shortcuts >/dev/null; source $XDG_CONFIG_HOME/shortcutrc ; source $XDG_CONFIG_HOME/zshnameddirrc"\
+    screenkey="screenkey --mods-mode emacs --font-color red --font monospace"\
+	weath="less -S $XDG_DATA_HOME/weatherreport"\
+    sxiv="sxiv -a"\
+    x="sxiv -ft *"\
+    yt="youtube-dl --add-metadata -i"\
+    yta="yt -x -f bestaudio/best"
+o(){ open "$@" ; exit ;}
+
+# Ignored commands
+while read -r entry ;do alias $entry=" $entry" ;done << EOT
+    lg
+EOT

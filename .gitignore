@@ -1,0 +1,150 @@
+/*
+
+!/.git*
+
+# !/.conda/
+
+!/.cache/
+/.cache/*
+!/.cache/bg
+# !/.cache/wal/
+# /.cache/wal/*
+# !/.cache/wal/colors
+# !/.cache/wal/colors-konsole.colorscheme
+# !/.cache/wal/colors.Xresources
+# !/.cache/wal/dunstrc
+# !/.cache/wal/sequences
+# !/.cache/wal/zathurarc
+
+!/.config/
+/.config/*
+!/.config/autostart/
+!/.config/autostart-scripts/
+!/.config/brutal-doom/
+!/.config/bspwm/
+!/.config/calcurse/
+/.config/calcurse/*
+!/.config/calcurse/conf
+!/.config/calcurse/keys
+#!/.config/compton/
+!/.config/composer/
+/.config/composer/*
+!/.config/composer/composer.json
+!/.config/curl/
+!/.config/config.h/
+!/.config/doom.d/
+!/.config/dunst/
+# !/.config/eog/
+!/.config/fontconfig/
+!/.config/git/
+!/.config/gtk-2.0/
+/.config/gtk-2.0/*
+!/.config/gtk-2.0/gtkrc-2.0
+!/.config/gtk-3.0/
+/.config/gtk-3.0/*
+!/.config/gtk-3.0/settings.ini
+!/.config/gzdoom/
+!/.config/gzdoom/*
+!/.config/gzdoom/brutal-doom/*
+/.config/gzdoom/brutal-doom/*.zds
+!/.config/i3/
+!/.config/i3blocks/
+!/.config/keynav/
+# !/.config/konsolerc
+!/.config/Kvantum/
+!/.config/lf/
+!/.config/libreoffice/
+/.config/libreoffice/*/.lock
+!/.config/libreoffice/*/user/
+/.config/libreoffice/*/user/*
+/.config/libreoffice/*/user/registerymodifications.xcu
+!/.config/mpd/
+/.config/mpd/*
+!/.config/mpd/mpd.conf
+!/.config/mpv/
+!/.config/ncmpcpp/
+/.config/ncmpcpp/*
+!/.config/ncmpcpp/bindings
+!/.config/ncmpcpp/config
+!/.config/newsboat/
+!/.config/nvim/
+/.config/nvim/plugged/
+!/.config/pacman/
+!/.config/picom/
+!/.config/polybar/
+!/.config/pulse/
+/.config/pulse/*
+!/.config/pulse/daemon.conf
+!/.config/ranger/
+!/.config/sh/
+!/.config/sxhkd/
+!/.config/sxiv/
+!/.config/vifm/
+/.config/vifm/Trash/
+/.config/vifm/vifminfo
+/.config/vifm/vifm-help.txt
+/.config/vifm/scripts/README
+!/.config/vlc/
+/.config/vlc/*
+!/.config/vlc/vlcrc
+!/.config/wal/
+!/.config/wget/
+!/.config/zathura/
+!/.config/zsh/
+/.config/zsh/*
+!/.config/zsh/.zshenv
+!/.config/zsh/.zshrc
+!/.config/zsh/custom/
+!/.config/aliasrc
+!/.config/autostartrc
+# !/.config/dolphinrc
+!/.config/directories
+!/.config/env
+!/.config/files
+# !/.config/fontawesome
+!/.config/gtkrc
+!/.config/gtkrc-2.0
+# !/.config/gwenviewrc
+!/.config/inputrc
+!/.config/mimeapps.list
+# !/.config/proton_user_settings
+!/.config/promptmsg
+!/.config/tmux.conf
+!/.config/user-dirs.dirs
+!/.config/warprc
+# !/.config/wall*
+!/.config/xautostartrc
+!/.config/yakuake.notifyrc
+!/.config/yakuakerc
+
+!/.local/
+/.local/*
+!/.local/bin/
+!/.local/share/
+/.local/share/*
+!/.local/share/applications/
+!/.local/share/fonts/
+/.local/share/fonts/.*
+!/.local/share/larbs/
+!/.local/share/konsole/
+
+# !/.PhpStorm*/
+# !/.PyCharm*/
+# !/.AndroidStudio*/
+
+!/README*
+# !/.bash_profile
+# !/.bashenv
+!/.bashrc
+# !/.face
+# !/.face.icon
+!/.fonts.conf
+!/.gtkrc-2.0
+!/.gtkrc-2.0-kde4
+
+!/.asoundrc
+!/.inputrc
+!/.profile
+!/.xinitrc
+!/.xprofile
+!/.zprofile
