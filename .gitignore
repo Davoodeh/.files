@@ -69,6 +69,7 @@
 !/.config/newsboat/
 !/.config/nvim/
 /.config/nvim/plugged/
+/.config/nvim/autoload/
 !/.config/pacman/
 !/.config/picom/
 !/.config/polybar/
@@ -102,6 +103,7 @@
 !/.config/env
 !/.config/files
 # !/.config/fontawesome
+!/.config/gamemode.ini
 !/.config/gtkrc
 !/.config/gtkrc-2.0
 # !/.config/gwenviewrc
@@ -123,8 +125,6 @@
 !/.local/share/
 /.local/share/*
 !/.local/share/applications/
-!/.local/share/fonts/
-/.local/share/fonts/.*
 !/.local/share/larbs/
 !/.local/share/konsole/
 

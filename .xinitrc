@@ -28,7 +28,7 @@ case "$session" in
     m*)            exec mate-session ;;
     o*)            exec openbox-session ;;
     x*)            exec xfce4-session ;;
-    k*|plasma-x*)  exec startplasma-x11 ;;
+    k* | plasma-x*) exec startplasma-x11 ;;
     plasma-w*)     exec startplasma-wayland ;;
     *)             [ -z "$1" ] && exec "$WM" || exec "$1" ;;
 esac

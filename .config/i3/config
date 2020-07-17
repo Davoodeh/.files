@@ -49,7 +49,7 @@ client.focused          #4c7899 #285577 #ffffff #ff4200   #ff7c00
 # client.background       #ffffff
 
 bar {
-   font pango:mono 10
+   font pango:mono 12
    status_command i3blocks
    position top
    mode dock

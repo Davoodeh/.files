@@ -1,21 +1,38 @@
 #!/bin/sh
+# This script works with both pamixer and Alsa.
+# Pamixer is suggested and the default backend. In the absence of pamixer alsa will work.
 
 # Prints the current volume or 󰖁 if muted.
+command -v pamixer >/dev/null || backend="alsa"
+
+if [ "$backend" = "alsa" ] ;then
+    toggle(){ amixer sset Master toggle ;}
+    up(){ amixer sset Master 1%+ >/dev/null 2>/dev/null ;}
+    down(){ amixer sset Master 1%- >/dev/null 2>/dev/null ;}
+    ismute(){ amixer get Master | grep "\[off\]" >/dev/null && echo "true" ;}
+    vol(){ amixer get Master | grep -o "\[[0-9]\+%\]" | sed "s/[^0-9]*//g;1q" ;}
+else
+    toggle(){ pamixer -t ;}
+    up(){ pamixer --allow-boost -i 1 ;}
+    down(){ pamixer --allow-boost -d 1 ;}
+    ismute(){ pamixer --get-mute ;}
+    vol(){ pamixer --get-volume ;}
+fi
 
 case $BLOCK_BUTTON in
-	1) setsid -f "$TERMINAL" -e pulsemixer ;;
-	2) pamixer -t ;;
-	4) pamixer --allow-boost -i 1 ;;
-	5) pamixer --allow-boost -d 1 ;;
+	1) sound ;;
+	2) toggle ;;
+	4) up ;;
+	5) down ;;
 	3) notify-send "󰕾 Volume module" "\- Shows volume 󰕾, 󰖁 if muted.
 - Middle click to mute.
 - Scroll to change." ;;
-	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+	6) editor "$0" ;;
 esac
 
-[ $(pamixer --get-mute) = true ] && echo 󰖁 && exit
+[ "$(ismute)" = "true" ] && echo 󰖁 && exit
 
-vol="$(pamixer --get-volume)"
+vol="$(vol)"
 
 if [ "$vol" -gt "70" ]; then
 	icon="󰕾"

@@ -45,6 +45,9 @@
 ;;; Custom-setq
 (setq company-idle-delay nil)           ; Disable Company-Auto-Completion (saves a lot of time!)
 
+(use-package! tex-fold :defer t :config
+              (add-hook 'after-save-hook #'TeX-fold-buffer))
+
 ;;; Modes
 (general-evil-setup)
 (auto-save-visited-mode)
@@ -144,7 +147,7 @@
   "Title: "
   "\\documentclass[professionalfont, a4paper, margin=1in]{article}\n"
   "\\linespread{1.25}\n"
-  "\\usepackage[backend=biber,sorting=none]{biblatex} % for bib management\n"
+  "\\usepackage[backend=biber, sorting=none]{biblatex} % for bib management\n"
   "\\addbibresource{~/Documents/bib/bib.bib}\n"
   "\\usepackage{booktabs} % for table rules and lines\n"
   "\\usepackage{graphicx} % for figures, floats and graphics\n"
@@ -157,8 +160,7 @@
   "\\usepackage[table]{xcolor} % for colouring tables\n"
   "\\usepackage{tikz} % for drawing graphs and stuff\n"
   "\\usetikzlibrary{shapes.geometric} % for shapes\n"
-  "\\usepackage{fullpage} % for narrower margins, [cm] before the name of it for\n"
-  "                      % even narrower margins\n"
+  "\\usepackage{fullpage} % for narrow margins, [cm] for more narrow margins\n"
   "\\usepackage{amsmath} % for more symbols\n"
   "\\usepackage[linesnumbered,ruled]{algorithm2e}\n"
   "\\newenvironment{algo}[1][H]{\\renewcommand{\\algorithmcfname}{الگوریتم}\\begin{algorithm}[#1]}{\\end{algorithm}}\n"

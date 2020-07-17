@@ -9,12 +9,12 @@ tsf="${TSF:-%y%m%d-%a-%H%M%S}"
 dir="${XDG_PICTURES_DIR:-$HOME}"
 cb(){ xclip -selection clipboard -t image/png ;}
 
-[ "$1" = "-i" ] && maim -u "$dir/pic-full-$(date "+$TSF").png" | cb ||
-	case "$(printf "a selected area\\ncurrent window\\nfull screen\\na selected area (no save)\\ncurrent window (no save)\\nfull screen (no save)" | dmenu -l 6 -i -p "Screenshot which area?")" in
-		"a selected area") maim -s "$dir/pic-selected-$(date "+$tsf").png" | cb ;;
-		"current window") maim -i "$(xdotool getactivewindow)" "$dir/pic-window-$(date "+$tsf").png" | cb ;;
+[ "$1" = "-i" ] && maim -u "$dir/pic-full-$(date "+$TSF").png" ||
+	case "$(printf "a selected area\\ncurrent window\\nfull screen\\na selected area (copy)\\ncurrent window (copy)\\nfull screen (copy)" | dmenu -l 6 -i -p "Screenshot which area?")" in
+		"a selected area") maim -s "$dir/pic-selected-$(date "+$tsf").png" ;;
+		"current window") maim -i "$(xdotool getactivewindow)" "$dir/pic-window-$(date "+$tsf").png" ;;
 		"full screen") "$(basename "$0")" -i ;;
-		"a selected area (no save)") maim -s | cb ;;
-		"current window (no save)") maim -i "$(xdotool getactivewindow)" | cb ;;
-		"full screen (no save)") maim -u | cb ;;
+		"a selected area (copy)") maim -s | cb ;;
+		"current window (copy)") maim -i "$(xdotool getactivewindow)" | cb ;;
+		"full screen (copy)") maim -u | cb ;;
 	esac
