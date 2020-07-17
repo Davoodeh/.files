@@ -1,3 +1,4 @@
+imap jj <Esc>
 let mapleader =","
 
 if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim"'))
@@ -8,25 +9,57 @@ if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autolo
 endif
 
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
+Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
 Plug 'junegunn/goyo.vim'
-Plug 'PotatoesMaster/i3-vim-syntax'
-Plug 'jreybert/vimagit'
-Plug 'lukesmithxyz/vimling'
-Plug 'vimwiki/vimwiki'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-commentary'
-Plug 'kovetskiy/sxhkd-vim'
-Plug 'ap/vim-css-color'
+Plug 'airblade/vim-gitgutter'
 call plug#end()
 
-set bg=light
-set go=a
-set mouse=a
-set nohlsearch
-set clipboard+=unnamedplus
+let g:airline_theme='bubblegum'
+" Config font for AirLine
+if !exists('g:airline_symbols')
+let g:airline_symbols = {}
+endif
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.maxlinenr = '㏑'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = 'Ɇ'
+let g:airline_symbols.whitespace = 'Ξ'
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.maxlinenr = ''
 
+" Theme
+	set bg=light
+	set go=a
+	set mouse=a
+	set nohlsearch
+	set clipboard=unnamedplus
 " Some basics:
 	nnoremap c "_c
 	set nocompatible
@@ -34,8 +67,22 @@ set clipboard+=unnamedplus
 	syntax on
 	set encoding=utf-8
 	set number relativenumber
+    try
+        colorscheme dracula
+        color dracula
+    catch /^Vim\%((\a\+)\)\=:E185/
+        colorscheme default
+        set bg=dark
+    endtry
+    hi Normal guibg=NONE ctermbg=NONE
 " Enable autocompletion:
 	set wildmode=longest,list,full
+" Indention settings
+	set tabstop=4     " tabs are at proper location
+	set expandtab     " don't use actual tab character (ctrl-v)
+	set shiftwidth=4  " indenting is 4 spaces
+	set autoindent    " turns it on
+	set smartindent   " does the right thing (mostly) in programs
 " Disables automatic commenting on newline:
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
@@ -47,6 +94,10 @@ set clipboard+=unnamedplus
 
 " Splits open at the bottom and right, which is non-retarded, unlike vim defaults.
 	set splitbelow splitright
+
+" EditorConfig
+	" To ensure that this plugin works well with Tim Pope's fugitive, use the following patterns array:
+	let g:EditorConfig_exclude_patterns = ['fugitive://.\*']
 
 " Nerd tree
 	map <leader>n :NERDTreeToggle<CR>

@@ -1,0 +1,116 @@
+#!/bin/sh
+
+conf="$HOME/.config"
+# do *NOT* omit the following XDG_*_HOME below
+XDG_CACHE_HOME="$HOME/.cache"
+XDG_CONFIG_HOME="$conf"
+XDG_DATA_HOME="$HOME/.local/share"
+# Dirs are defined in ~/.config/user-dirs.dirs
+# Export XDG environmental variables from '~/.config/user-dirs.dirs', just in case
+. "$HOME/.config/user-dirs.dirs"
+export XDG_DESKTOP_DIR XDG_DOWNLOAD_DIR XDG_TEMPLATES_DIR XDG_PUBLICSHARE_DIR XDG_DOCUMENTS_DIR XDG_MUSIC_DIR XDG_PICTURES_DIR XDG_VIDEOS_DIR\
+    XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME
+
+# Important VARS
+WM="i3"
+PROXY=""
+DEFAULT_USER="$(whoami)" # Will remove username from the prompt
+KBLAYOUTS="us ir"
+export WM PROXY DEFAULT_USER KBLAYOUTS
+
+# Default programs:
+# IMPORTANT: Upon editing, also check and adjust ~/.local/bin/defs/mkdefs
+BL="light" #|"xbacklight"
+BROWSER="firefox-developer-edition"
+CALCULATOR="bc"
+CALENDAR="calcurse"
+EDITOR="emacs"
+FM="vu"
+IMAGE="sxiv"
+LOCK="slock"
+MAIL="thunderbird"
+OFFICE="libreoffice"
+READER="zathura"
+RSS="rssadd"
+SOUND="pulsemixer" #|"alsamixer"
+TERMINAL="st"
+TORRENT="transadd"
+VIDEO="mpv"
+export BL BROWSER CALCULATOR CALENDAR EDITOR FM IMAGE LOCK MAIL OFFICE READER RSS SOUND TERMINAL TORRENT TM VIDEO
+
+TSF="%y%m%d-%a-%H%M%S" # Timestamp format
+SOUNDL="5" # Amount of sound changed
+LIGHTL="5" # Amount of light changed
+export TSF SOUNDL LIGHTL
+
+# ~/ Clean-up:
+ANDROID_SDK_HOME="$XDG_DATA_HOME/android"
+ANSIBLE_CONFIG="$config/ansible/ansible.cfg"
+CARGO_HOME="$XDG_DATA_HOME/cargo"
+CURL_HOME="$conf/curl"
+DOOMDIR="$conf/doom.d"
+# GNUPGHOME="$XDG_DATA_HOME/gnupg"
+GIT_CONFIG="$conf/git/config"
+GTK2_RC_FILES="$conf/gtk-2.0/gtkrc-2.0"
+HISTFILE="$XDG_DATA_HOME/history"
+INPUTRC="$conf/inputrc"
+KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
+LESSHISTFILE="-"
+NOTMUCH_CONFIG="$conf/notmuch-config"
+PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
+# TMUX_TMPDIR="$XDG_RUNTIME_DIR"
+WINEPREFIX="$XDG_DATA_HOME/wineprefixes/default"
+WGETRC="$conf/wget/wgetrc"
+ZDOTDIR="$conf/zsh"
+ZSH="$XDG_DATA_HOME/ohmyzsh"
+ZSH_CUSTOM="$ZDOTDIR/custom"
+ZSH_PLUGIND="/usr/share/zsh/plugins" # Default for AUR
+export ANDROID_SDK_HOME ANSIBLE_CONFIG CARGO_HOME CURL_HOME DOOMDIR GIT_CONFIG GTK2_RC_FILES HISTFILE INPUTRC KODI_DATA LESSHISTFILE NOTMUCH_CONFIG\
+    PASSWORD_STORE_DIR WINEPREFIX WGETRC ZDOTDIR ZSH ZSH_CUSTOM ZSH_PLUGIND
+
+# Other program settings:
+DICS="/usr/share/stardict/dic/"
+FZF_DEFAULT_OPTS="--layout=reverse --height 40%"
+ftp_proxy="$PROXY"
+HISTORY_IGNORE="(lg *)"
+HISTIGNORE="lg *"
+http_proxy="$PROXY"
+https_proxy="$PROXY"
+PASSWORD_STORE_DIR="$HOME/.local/share/password-store"
+QT_STYLE_OVERRIDE="kvantum" #| QT_QPA_PLATFORMTHEME="gtk2" # Have QT use gtk2 theme.
+STATUSBAR="i3blocks"
+SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+_JAVA_AWT_WM_NONREPARENTING=1 # Fix for Java applications in dwm
+#XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
+export DICS FZF_DEFAULT_OPTS ftp_proxy HISTORY_IGNORE HISTIGNORE http_proxy https_proxy PASSWORD_STORE_DIR QT_STYLE_OVERRIDE QT_QPA_PLATFORMTHEME\
+    STATUSBAR SUDO_ASKPASS _JAVA_AWT_WM_NONREPARENTING
+
+# PATH, each line only contains one entry.
+while read -r entry ;do
+    # Add it if it's  not redundant
+    if ! echo "$PATH" | grep -Eq "(^|:)$entry($|:)" ;then
+        PATH="$PATH:$entry"
+    fi
+done << EOT
+    $(du "$HOME/.local/bin" | cut -f2 | tr '\n' ':')
+    $HOME/.emacs.d/bin
+EOT
+export PATH
+
+LF_ICONS="di=📁:fi=📃:tw=🤝:ow=📂:ln=⛓:or=❌:ex=🎯:*.txt=✍:*.mom=✍:*.me=✍:*.ms=✍:*.png=🖼:*.webp=🖼:*.ico=🖼:*.jpg=📸:*.jpe=📸:*.jpeg=📸:*.gif=🖼:\
+    *.svg=🗺:*.tif=🖼:*.tiff=🖼:*.xcf=🖌:*.html=🌎:*.xml=📰:*.gpg=🔒:*.css=🎨:*.pdf=📚:*.djvu=📚:*.epub=📚:*.csv=📓:*.xlsx=📓:*.tex=📜:*.md=📘:*.r=📊:\
+    *.R=📊:*.rmd=📊:*.Rmd=📊:*.m=📊:*.mp3=🎵:*.opus=🎵:*.ogg=🎵:*.m4a=🎵:*.flac=🎼:*.mkv=🎥:*.mp4=🎥:*.webm=🎥:*.mpeg=🎥:*.avi=🎥:*.zip=📦:*.rar=📦:\
+    *.7z=📦:*.tar.gz=📦:*.z64=🎮:*.v64=🎮:*.n64=🎮:*.gba=🎮:*.nes=🎮:*.gdi=🎮:*.1=ℹ:*.nfo=ℹ:*.info=ℹ:*.log=📙:*.iso=📀:*.img=📀:*.bib=🎓:*.ged=👪:\
+    *.part=💔:*.torrent=🔽:*.jar=♨:*.java=♨:"
+export LF_ICONS
+
+LESS=-R
+LESSOPEN="| /usr/bin/highlight -O ansi %s 2>/dev/null"
+LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
+LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
+LESS_TERMCAP_me="$(printf '%b' '[0m')"
+LESS_TERMCAP_se="$(printf '%b' '[0m')"
+LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"
+LESS_TERMCAP_ue="$(printf '%b' '[0m')"
+LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
+export LESS LESSOPEN LESS_TERMCAP_mb LESS_TERMCAP_md LESS_TERMCAP_me LESS_TERMCAP_se LESS_TERMCAP_so LESS_TERMCAP_ue LESS_TERMCAP_us

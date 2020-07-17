@@ -1,0 +1,18 @@
+#!/bin/sh
+# Autostart file for X apps/services. Sourced by .xinitrc.
+
+# Add this when you include flatpak in your system
+# Fix Gnome Apps Slow Start due to failing services
+dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
+
+# remaps &        # run the remaps script, switching caps/esc and more; check it for more info
+setbg -w -q & # set the background with the `setbg` script
+# xrdb $XDG_CONFIG_HOME/Xresources & # Uncomment to use Xresources colors/settings on startup
+# picom &         # Compositor
+dunst &         # dunst for notifications
+# xset r rate 300 50 & # Speed xrate up
+unclutter &     # Remove mouse when idle
+
+# touchpadtoggle 0 &
+# terminal &
+# protocable 1 &

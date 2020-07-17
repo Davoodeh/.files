@@ -8,57 +8,56 @@ interval=once
 signal=9
 
 [music]
-label=🎼
+label=
 interval=once
 signal=11
 
-[news]
-interval=once
-signal=6
+# [news]
+# interval=once
+# signal=6
 
-#[iplocate]
-#interval=30
+# [iplocate]
+# interval=30
 
-[pacpackages]
-interval=once
-signal=8
+# [pacpackages]
+# interval=once
+# signal=8
 
-[torrent]
-interval=20
-signal=7
+# [torrent]
+# interval=20
+# signal=7
 
-[weather]
-interval=18000
-signal=5
+# [weather]
+# interval=18000
+# signal=5
 
-[mailbox]
-interval=180
-signal=12
+# [mailbox]
+# interval=180
+# signal=12
 
-#[memory]
-#interval=30
+# [memory]
+# interval=30
 
-#[cpu]
-#interval=15
+# [cpu]
+# interval=15
 
 [volume]
 interval=once
 signal=10
 
-#[disk]
-#interval=60
-#command=disk /
+[disk]
+interval=15
 
-#[disk]
-#interval=60
-#command=disk /home
+# [disk]
+# interval=60
+# command=disk /home
 
 [battery]
 command=battery BAT0
 interval=5
 
 [clock]
-label=📅
+label=
 interval=30
 
 [internet]

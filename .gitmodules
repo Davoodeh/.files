@@ -1,3 +1,6 @@
+[submodule "iosevka-emacs"]
+	path = .local/share/fonts/iosevka-emacs
+	url = https://github.com/jsravn/iosevka-emacs.git
 [submodule ".config/mpv/scripts/mpvSockets"]
 	path = .config/mpv/scripts/mpvSockets
 	url = https://github.com/wis/mpvSockets.git

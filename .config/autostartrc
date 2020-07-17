@@ -1,0 +1,4 @@
+#!/bin/sh
+# Autostart file for terminal apps/services. Gets called by .profile.
+
+(mpd >/dev/null 2>&1 &)
