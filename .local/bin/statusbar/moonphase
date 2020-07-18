@@ -10,28 +10,28 @@ moonfile="${XDG_DATA_HOME:-$HOME/.local/share}/moonphase"
 icon="$(cat "$moonfile")"
 
 case "$icon" in
-	🌑) name="New" ;;
-	🌒) name="Waxing Crescent" ;;
-	🌓) name="First Quarter" ;;
-	🌔) name="Waxing Gibbous" ;;
-	🌕) name="Full" ;;
-	🌖) name="Waning Gibbous" ;;
-	🌗) name="Last Quarter" ;;
-	🌘) name="Waning Crescent" ;;
+	󰽤) name="New" ;;
+	󰽧) name="Waxing Crescent" ;;
+	󰽡) name="First Quarter" ;;
+	󰽨) name="Waxing Gibbous" ;;
+	󰽢) name="Full" ;;
+	󰽦) name="Waning Gibbous" ;;
+	󰽣) name="Last Quarter" ;;
+	󰽥) name="Waning Crescent" ;;
 	*) exit 1 ;;
 esac
 
 echo "${icon-?}"
 
 case $BLOCK_BUTTON in
-	3) notify-send "🌜 Moon phase module" "Displays current moon phase.
-- 🌑: New
-- 🌒: Waxing Crescent
-- 🌓: First Quarter
-- 🌔: Waxing Gibbous
-- 🌕: Full
-- 🌖: Waning Gibbous
-- 🌗: Last Quarter
-- 🌘: Waning Crescent" ;;
+	3) notify-send "󰖔 Moon phase module" "Displays current moon phase.
+- 󰽤: New
+- 󰽧: Waxing Crescent
+- 󰽡: First Quarter
+- 󰽨: Waxing Gibbous
+- 󰽢: Full
+- 󰽦: Waning Gibbous
+- 󰽣: Last Quarter
+- 󰽥: Waning Crescent" ;;
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
 esac

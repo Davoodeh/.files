@@ -11,6 +11,7 @@
  '(centaur-tabs-gray-out-icons 'buffer) ; Gray out icons for the unselected tabs
  '(centaur-tabs-height 20)
  '(doom-font (font-spec :family "Iosevka" :size 16 :inherit 'italic))
+ '(doom-unicode-font (font-spec :family "Material Design Icons" :size 16))
  ;; '(line-spacing 8)
  ;; '(lsp-log-io t)
  '(lsp-keymap-prefix "M-l")             ; For i3 and tiling window managers that use Super key

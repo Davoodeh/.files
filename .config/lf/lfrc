@@ -1,5 +1,3 @@
-# Luke's lf settings
-
 # Basic vars
 set shell bash
 set shellopts '-eu'
@@ -46,7 +44,7 @@ cmd moveto ${{
 	for x in $fx; do
 		eval mv -iv \"$x\" \"$dest\"
 	done &&
-	notify-send "🚚 File(s) moved." "File(s) moved to $dest."
+	notify-send "󰪹 File(s) moved." "File(s) moved to $dest."
 }}
 
 cmd copyto ${{
@@ -57,7 +55,7 @@ cmd copyto ${{
 	for x in $fx; do
 		eval cp -ivr \"$x\" \"$dest\"
 	done &&
-	notify-send "📋 File(s) copied." "File(s) copies to $dest."
+	notify-send "󰅇 File(s) copied." "File(s) copies to $dest."
 }}
 
 cmd setbg "$1"

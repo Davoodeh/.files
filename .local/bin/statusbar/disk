@@ -8,15 +8,15 @@ location=${1:-/}
 [ -d "$location" ] || exit
 
 case $BLOCK_BUTTON in
-    1) notify-send "💽 Disk space" "$(df -h --output=target,used,size)" ;;
-    3) notify-send "💽 Disk module" "\- Shows used hard drive space.
+    1) notify-send "󰑹 Disk space" "$(df -h --output=target,used,size)" ;;
+    3) notify-send "󰑹 Disk module" "\- Shows used hard drive space.
 - Click to show all disk info." ;;
     6) editor "$0" ;;
 esac
 
 case "$location" in
-    "/home"* ) icon="🏠" ;;
-    "/mnt"* ) icon="💾" ;;
+    "/home"* ) icon="󱂵" ;;
+    "/mnt"* ) icon="󰡰" ;;
     *) icon="$location:";;
 esac
 

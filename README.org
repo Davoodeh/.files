@@ -17,6 +17,7 @@ Head over there to read the main README. In here, I just write the main notes un
 - Default applications can be called about everywhere since they are not simply aliases or variables.
   =~/.local/bin/defs/mkdefs= makes these files both in script form and in =.desktop= form.
   You can use them in your configs, tweak them and afterward simply run =mkdefs= instead of crying for days afterward blaming yourself for your unnecessary change. (basically what I used to do)
+- Material icons (from [[https://github.com/Templarian/MaterialDesign][Material Design Icons git]]).
 
 * End notes
 Contributions of any sort are welcome!

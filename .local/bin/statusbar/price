@@ -2,7 +2,7 @@
 
 # Usage:
 #	price <url> <Name of currency> <icon>
-#	price bat "Basic Attention Token" 🦁
+#	price bat "Basic Attention Token"
 # When the name of the currency is multi-word, put it in quotes.
 
 [ -z "$3" ] && exit 1
@@ -29,7 +29,7 @@ case $BLOCK_BUTTON in
 		notify-send "$3 $2 module" "\- <b>Exact price: \$$(cat "$pricefile")</b>
 - Left click for chart of changes.
 - Middle click to update.
-- Shows 🔃 if updating prices.
+- Shows 󰃨 if updating prices.
 - <b>Last updated:
 	$uptime</b>" ;;
 	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
