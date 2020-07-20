@@ -1,23 +1,35 @@
 #!/bin/sh
-
+# If provided with any input it will show the wifi by percentage, otherwise it will be shown by a corresponding icon.
 # Show wifi 󰤨 and percent strength or 󰤯 if none.
 # Show 󰌘 if connected to ethernet or 󰌙 if none.
 
 case $BLOCK_BUTTON in
-	1) "$TERMINAL" -e nmtui; pkill -RTMIN+4 dwmblocks ;;
-	3) notify-send "󰖈 Internet module" "\- Click to connect
-󰤯: no wifi connection
-󰤨: wifi connection with quality
+    1) terminal -e nmtui; pkill -RTMIN+4 dwmblocks ;;
+    3) notify-send "󰖈 Internet module" "\- Click to connect
+󰤮: no wifi connection
+󰤨: wifi connection
 󰌙: no ethernet
 󰌘: ethernet working
 " ;;
-	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+    6) editor "$0" ;;
 esac
 
 case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
-	down) wifiicon="󰤯 " ;;
-	up) wifiicon="$(awk '/^\s*w/ { print "󰤨", int($3 * 100 / 70) "% " }' /proc/net/wireless)" ;;
+    down) wifiicon="󰤮" ;;
+    up)
+        percent="$(awk '/^\s*w/ { print int($3 * 100 / 70) }' /proc/net/wireless)"
+        [ -n "$1" ] && wifiicon="󰤨$percent%" ||
+            if [ "$percent" -gt 80 ] ;then
+                wifiicon="󰤨"
+            elif [ "$percent" -gt 60 ] ;then
+                wifiicon="󰤥"
+            elif [ "$percent" -gt 40 ] ;then
+                wifiicon="󰤢"
+            elif [ "$percent" -gt 20 ] ;then
+                wifiicon="󰤟"
+            else
+                wifiicon="󰤯"
+            fi ;;
 esac
 
-# TODO show wifi percentage via the icon
-printf "%s%s\n" "$wifiicon" "$(sed "s/down/󰌙/;s/up/󰌘/" /sys/class/net/e*/operstate 2>/dev/null)"
+printf "%s %s\n" "$wifiicon" "$(sed "s/down/󰌙/;s/up/󰌘/" /sys/class/net/e*/operstate 2>/dev/null)"

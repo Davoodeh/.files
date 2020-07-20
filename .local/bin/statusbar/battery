@@ -1,34 +1,55 @@
 #!/bin/sh
-
-# Prints all batteries, their percentage remaining and an emoji corresponding
+# If provided with any input it will show the wifi by percentage, otherwise it will be shown by a corresponding icon.
+# Prints all batteries, their percentage remaining or an emoji corresponding
 # to charge status (󰂄 for plugged up, 󰂌 for discharging on battery, etc.).
 
 case $BLOCK_BUTTON in
-	3) notify-send "󰁹 Battery module" "󰂌: discharging
+    3) notify-send "󰁹 Battery module" "󰂌: discharging
 󰁹: not charging
 󰂃: stagnant charge
 󰂄: charging
 󱈑: charged
-󰁺: battery very low!
-- Scroll to change adjust xbacklight." ;;
-	4) xbacklight -inc 10 ;;
-	5) xbacklight -dec 10 ;;
-	6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+- Scroll to change backlight." ;;
+    4) bl up ;;
+    5) bl down ;;
+    6) editor "$0" ;;
 esac
 
 # acpi alternative
 # acpi | sed "s/Battery [0-9]: //;s/[Dd]ischarging, /󰂌/;s/[Nn]ot charging, /󰁹/;s/[Cc]harging, /󰂄/;s/[Uu]nknown, /󰂃/;s/[Ff]ull, /󱈑/;s/ \(remaining\|until charged\)//"; exit
 
 # Loop through all attached batteries.
-for battery in /sys/class/power_supply/BAT?
-do
-	# Get its remaining capacity and charge status.
-	capacity=$(cat "$battery"/capacity 2>/dev/null) || break
-	status=$(sed "s/[Dd]ischarging/󰂌/;s/[Nn]ot charging/󰁹/;s/[Cc]harging/󰂄/;s/[Uu]nknown/󰂃/;s/[Ff]ull/󱈑/" "$battery"/status)
-
-	# If it is discharging and 25% or less, we will add a ❗ as a warning.
-	# TODO show battery percentage via the icon
-	 [ "$capacity" -le 25 ] && [ "$status" = "󰂌" ] && status="󰁺"
-
-	printf "%s%s%% " "$status" "$capacity"
-done | sed 's/ *$//'
+for battery in /sys/class/power_supply/BAT? ;do
+    # Get its remaining capacity and charge status.
+    capacity=$(cat "$battery"/capacity 2>/dev/null) || break
+    status=$(sed "s/[Dd]ischarging/󰂌/;s/[Nn]ot charging/󰁹/;s/[Cc]harging/󰂄/;s/[Uu]nknown/󰂃/;s/[Ff]ull/󱈑/" "$battery"/status)
+    if [ "$status" = "󰂌" ] && [ -z "$1" ]; then
+        if [ "$capacity" -gt 90 ] ;then
+            batteryicon="󰁹"
+        elif [ "$capacity" -gt 80 ] ;then
+            batteryicon="󰂂"
+        elif [ "$capacity" -gt 70 ] ;then
+            batteryicon="󰂁"
+        elif [ "$capacity" -gt 60 ] ;then
+            batteryicon="󰂀"
+        elif [ "$capacity" -gt 50 ] ;then
+            batteryicon="󰁿"
+        elif [ "$capacity" -gt 40 ] ;then
+            batteryicon="󰁾"
+        elif [ "$capacity" -gt 30 ] ;then
+            batteryicon="󰁽"
+        elif [ "$capacity" -gt 20 ] ;then
+            batteryicon="󰁼"
+        elif [ "$capacity" -gt 10 ] ;then
+            batteryicon="󰁻"
+        # elif [ "$capacity" -gt 5 ] ;then
+        #   batteryicon="󰁺"
+        else
+            batteryicon="󰂎"
+        fi
+    else
+        batteryicon="$status$capacity%"
+    fi
+    printf "%s " "$batteryicon"
+done | sed 's/\s*$//'
+printf '\n'
