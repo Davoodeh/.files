@@ -31,4 +31,4 @@ case $subcommand in
 	*) echo "Error: Command $subcommand not found. Please use one of the enteries: 'get', 'set <layout>' or 'cycle <layout1> <layout2> ... <layoutN>'" ;;
 esac
 
-pkill -RTMIN+13 i3blocks # for [lang] in i3blocks
+pkill -RTMIN+30 i3blocks # for [lang] or [kbselect] modules in blocks bars

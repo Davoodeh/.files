@@ -6,7 +6,6 @@
 
 !/.cache/
 /.cache/*
-!/.cache/bg
 # !/.cache/wal/
 # /.cache/wal/*
 # !/.cache/wal/colors

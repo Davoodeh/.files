@@ -28,7 +28,7 @@ do
 
 	# If it is discharging and 25% or less, we will add a ❗ as a warning.
 	# TODO show battery percentage via the icon
-	 [ "$capacity" -le 25 ] && [ "$status" = "󰁹" ] && status="󰁺"
+	 [ "$capacity" -le 25 ] && [ "$status" = "󰂌" ] && status="󰁺"
 
 	printf "%s%s%% " "$status" "$capacity"
 done | sed 's/ *$//'

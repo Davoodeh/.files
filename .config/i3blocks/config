@@ -41,27 +41,30 @@ signal=11
 # [cpu]
 # interval=15
 
-[volume]
-interval=once
-signal=10
-
-[disk]
-interval=15
+# [disk]
+# interval=15
 
 # [disk]
 # interval=60
 # command=disk /home
 
 [battery]
-command=battery BAT0
 interval=5
+
+[internet]
+interval=10
+
+[kbselect]
+interval=once
+signal=30
+
+[volume]
+interval=once
+signal=10
 
 [clock]
 label=
 interval=30
 
-[internet]
-interval=10
-
-[help-icon]
-interval=once
+# [help-icon]
+# interval=once
