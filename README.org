@@ -2,11 +2,15 @@
 
 This is a dotfile repo forked from [[https://github.com/lukesmithxyz/voidrice][Luke Smith's]].
 
+* Requirements
+In addition to Luke's dotfiles you'll need:
+- [[https://github.com/Templarian/MaterialDesign][Material Design Icons git]]
+
 * Main differences
 Head over there to read the main README. In here, I just write the main notes until some day when I make a proper doc and merge it in master.
 
 - MOST IMPORTANT FEATURE: NO TABS IN THE FREAKING CONFIG FILES!
-
+- Material icons
 - GITIGNORE! The =.gitignore= in this repo is a reverse file that un-ignores everything you list there. Therefore,
   you can have the repo directly under your =$HOME= without the fear that =git status= output will fill your ram.
   Yes, from time to time you can break your desktop with slapdash tweaks (especially to your =.config/env= file) but where's the fun without that?
@@ -17,7 +21,6 @@ Head over there to read the main README. In here, I just write the main notes un
 - Default applications can be called about everywhere since they are not simply aliases or variables.
   =~/.local/bin/defs/mkdefs= makes these files both in script form and in =.desktop= form.
   You can use them in your configs, tweak them and afterward simply run =mkdefs= instead of crying for days afterward blaming yourself for your unnecessary change. (basically what I used to do)
-- Material icons (from [[https://github.com/Templarian/MaterialDesign][Material Design Icons git]]).
 
 * End notes
 Contributions of any sort are welcome!
@@ -29,6 +32,9 @@ Simply, deleting stuff is way way easier than finding/writing them.
 
 For the next big step I aim to make a "Settings" program which tweaks config and the =env= files
 automatically with a decent/proper/convenient CLI rather than making the users dirty with tweaking codes and breaking everything.
+
+** Known issues
+- [ ] fontconfig(?): Material icons sometimes don't render in ST.
 
 -----
 Yet figuring it out!
