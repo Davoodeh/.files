@@ -48,15 +48,15 @@ signal=11
 # interval=60
 # command=disk /home
 
+[kbselect]
+interval=once
+signal=30
+
 [battery]
 interval=5
 
 [internet]
 interval=10
-
-[kbselect]
-interval=once
-signal=30
 
 [volume]
 interval=once
@@ -66,5 +66,5 @@ signal=10
 label=
 interval=30
 
-# [help-icon]
-# interval=once
+[help-icon]
+interval=once

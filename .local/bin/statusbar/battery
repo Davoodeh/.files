@@ -1,5 +1,5 @@
 #!/bin/sh
-# If provided with any input it will show the wifi by percentage, otherwise it will be shown by a corresponding icon.
+# If provided with any input it will show battry percentage, otherwise it will be shown by a corresponding icon.
 # Prints all batteries, their percentage remaining or an emoji corresponding
 # to charge status (󰂄 for plugged up, 󰂌 for discharging on battery, etc.).
 

@@ -33,8 +33,14 @@ Simply, deleting stuff is way way easier than finding/writing them.
 For the next big step I aim to make a "Settings" program which tweaks config and the =env= files
 automatically with a decent/proper/convenient CLI rather than making the users dirty with tweaking codes and breaking everything.
 
+** Todo
+- [-] replace tabs with spaces
+- [ ] add the missing $NM variable
+- [ ] replace $VARS with script commands (e.g: =$EDITOR= instead of =editor=)
+- [ ] add hidden values of battery, volume and internet scripts to their popup menus
 ** Known issues
-- [ ] fontconfig(?): Material icons sometimes don't render in ST.
+- fontconfig(?): Material icons sometimes don't render in ST
+- cannot quit BC
 
 -----
 Yet figuring it out!
