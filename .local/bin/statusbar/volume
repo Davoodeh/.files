@@ -1,4 +1,6 @@
 #!/bin/sh
+# If provided with any input it will show the volume by percentage, otherwise it will be shown by a corresponding icon.
+# When volume is dangerously high (for headset users) it will be printed in red.
 # This script works with both pamixer and Alsa.
 # Pamixer is suggested and the default backend. In the absence of pamixer alsa will work.
 
@@ -20,26 +22,29 @@ else
 fi
 
 case $BLOCK_BUTTON in
-	1) sound ;;
-	2) toggle ;;
-	4) up ;;
-	5) down ;;
-	3) notify-send "󰕾 Volume module" "\- Shows volume 󰕾, 󰖁 if muted.
+    1) sound ;;
+    2) toggle ;;
+    4) up ;;
+    5) down ;;
+    3) notify-send "󰕾 Volume module" "\- Shows volume 󰕾, 󰖁 if muted.
 - Middle click to mute.
 - Scroll to change." ;;
-	6) editor "$0" ;;
+    6) editor "$0" ;;
 esac
 
 [ "$(ismute)" = "true" ] && echo 󰖁 && exit
 
 vol="$(vol)"
 
-if [ "$vol" -gt "70" ]; then
-	icon="󰕾"
-elif [ "$vol" -lt "30" ]; then
-	icon="󰕿"
+if [ "$vol" -gt 75 ] ;then
+    icon="<span color='#ff0000'>󰕾</span>"
+elif [ "$vol" -gt 50 ] ;then
+    icon="󰕾"
+elif [ "$vol" -gt 25 ] ;then
+    icon="󰖀"
 else
-	icon="󰖀"
+    icon="󰕿"
 fi
+{ [ -n "$1" ] || [ "$vol" -gt 100 ] ;} && icon="$icon$vol%"
 
-echo "$icon$vol%"
+echo "$icon"
