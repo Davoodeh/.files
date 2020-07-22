@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Lock Screen
+Exec=lock %U

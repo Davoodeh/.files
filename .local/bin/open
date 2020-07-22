@@ -7,5 +7,4 @@ file="$1"
 shift
 # TODO make it fuzzier
 
-xdg-open "$file" "$@"
-exit
+exec nohup xdg-open "$file" "$@" >/dev/null 2>&1 &

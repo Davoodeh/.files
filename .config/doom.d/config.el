@@ -69,7 +69,7 @@
 (defun xterm-here ()
   (interactive "@")
   (shell-command
-   (concat "cd '" (file-name-directory (or (or load-file-name buffer-file-name) "")) "' && detach terminal")
+   (concat "cd '" (file-name-directory (or (or load-file-name buffer-file-name) "")) "' ; detach terminal")
    nil nil))
 
 ;;; Binds

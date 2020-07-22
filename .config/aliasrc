@@ -10,6 +10,7 @@ alias \
     g="git"\
     ka="killall"\
     lsp="pacman -Qett --color=always | less"\
+    img="image"\
     p="sudo pacman"\
     q="exit"\
     r="reader"\
@@ -21,7 +22,7 @@ alias \
     trem="transmission-remote"\
     upc="sudo pacman -Syu; pkill -RTMIN+8 i3blocks"\
     upg="sudo pacman -Syu --noconfirm --overwrite /usr/lib/python3.8/site-packages/\* && yay -Syu --noconfirm --overwrite /usr/lib/python3.8/site-packages/\*"\
-    v="editor"\
+    v="editor ; exit"\
     ver="pacman -Qe"\
     vid="video"\
     w="browser"\
@@ -60,7 +61,6 @@ alias \
 
 # Misc
 alias \
-    magit="nvim -c MagitOnly"\
 	ref="shortcuts >/dev/null; source $XDG_CONFIG_HOME/shortcutrc ; source $XDG_CONFIG_HOME/zshnameddirrc"\
     screenkey="screenkey --mods-mode emacs --font-color red --font monospace"\
 	weath="less -S $XDG_DATA_HOME/weatherreport"\
@@ -69,6 +69,7 @@ alias \
     yt="youtube-dl --add-metadata -i"\
     yta="yt -x -f bestaudio/best"
 o(){ open "$@" ; exit ;}
+[ "$EDITOR" = "nvim" ] && alias magit="editor -c MagitOnly" || alias magit="editor -f magit-status"
 
 # Ignored commands
 while read -r entry ;do alias $entry=" $entry" ;done << EOT
