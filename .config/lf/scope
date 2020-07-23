@@ -32,9 +32,9 @@ HIGHLIGHT_STYLE='pablo'
 handle_mime() {
     local mimetype="${1}"
     case "${mimetype}" in
-	text/html) w3m -dump "${FILE_PATH}" ;;
-	text/troff) man ./ "${FILE_PATH}" | col -b ;;
-	text/* | */xml)
+    text/html) w3m -dump "${FILE_PATH}" ;;
+    text/troff) man ./ "${FILE_PATH}" | col -b ;;
+    text/* | */xml)
             if [ "$( stat --printf='%s' -- "${FILE_PATH}" )" -gt "${HIGHLIGHT_SIZE_MAX}" ]; then
                 exit 2
             fi
@@ -45,7 +45,7 @@ handle_mime() {
             fi
             highlight --replace-tabs="${HIGHLIGHT_TABWIDTH}" --out-format="${highlight_format}" \
                 --style="${HIGHLIGHT_STYLE}" --force -- "${FILE_PATH}" ;;
-	application/zip) atool --list -- "${FILE_PATH}" ;;
+    application/zip) atool --list -- "${FILE_PATH}" ;;
         image/*) chafa --fill=block --symbols=block -c 256 -s 80x"${HEIGHT}" "${FILE_PATH}" || exit 1;;
         video/* | audio/*|application/octet-stream) mediainfo "${FILE_PATH}" || exit 1;;
         */pdf) pdftotext -l 10 -nopgbrk -q -- "${FILE_PATH}" - ;;

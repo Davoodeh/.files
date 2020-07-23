@@ -43,13 +43,13 @@ command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d" # uses neovim f
 
 # Verbosity
 alias \
-	cp="cp -iv"\
+    cp="cp -iv"\
     mv="mv -iv"\
-	rm="rm -vI"\
-	mkd="mkdir -pv"\
-	yt="youtube-dl --add-metadata -i"\
-	yta="yt -x -f bestaudio/best"\
-	ffmpeg="ffmpeg -hide_banner"
+    rm="rm -vI"\
+    mkd="mkdir -pv"\
+    yt="youtube-dl --add-metadata -i"\
+    yta="yt -x -f bestaudio/best"\
+    ffmpeg="ffmpeg -hide_banner"
 
 
 # Color
@@ -61,9 +61,9 @@ alias \
 
 # Misc
 alias \
-	ref="shortcuts >/dev/null; source $XDG_CONFIG_HOME/shortcutrc ; source $XDG_CONFIG_HOME/zshnameddirrc"\
+    ref="shortcuts >/dev/null; source $XDG_CONFIG_HOME/shortcutrc ; source $XDG_CONFIG_HOME/zshnameddirrc"\
     screenkey="screenkey --mods-mode emacs --font-color red --font monospace"\
-	weath="less -S $XDG_DATA_HOME/weatherreport"\
+    weath="less -S $XDG_DATA_HOME/weatherreport"\
     sxiv="sxiv -a"\
     x="sxiv -ft *"\
     yt="youtube-dl --add-metadata -i"\
