@@ -180,7 +180,7 @@
     hh  = help
 
     ignore  = update-index --assume-unchanged
-    ignored = ls-files -v | grep "^[[:lower:]]"
+    ignored = ! git ls-files -v | grep '^h' | cut -c3-
 
     l   = pull
     lg  = log --stat

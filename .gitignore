@@ -4,8 +4,8 @@
 
 # !/.conda/
 
-!/.cache/
-/.cache/*
+# !/.cache/
+# /.cache/*
 # !/.cache/wal/
 # /.cache/wal/*
 # !/.cache/wal/colors
