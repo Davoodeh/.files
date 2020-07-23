@@ -1,0 +1,2 @@
+#!/bin/sh
+exec nohup /usr/bin/env $TORRENT "$@" >/dev/null 2>&1 &
