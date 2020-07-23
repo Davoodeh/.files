@@ -20,7 +20,7 @@ Head over there to read the main README. In here, I just write the main notes un
 - Doom Emacs files are included.
 - Default applications can be called about everywhere since they are not simply aliases or variables.
   =~/.local/bin/defs/mkdefs= makes these files both in script form and in =.desktop= form.
-  You can use them in your configs, tweak them and afterward simply run =mkdefs= instead of crying for days afterward blaming yourself for your unnecessary change. (basically what I used to do)
+  You can use them in your configs, tweak them and afterward simply run =mkdefs= instead of crying for days and blaming yourself for your unnecessary change. (basically what I used to do)
 
 * End notes
 Contributions of any sort are welcome!
@@ -34,8 +34,6 @@ For the next big step I aim to make a "Settings" program which tweaks config and
 automatically with a decent/proper/convenient CLI rather than making the users dirty with tweaking codes and breaking everything.
 
 ** Todo
-- [-] replace tabs with spaces
-- [ ] add the missing $NM variable
 - [ ] replace $VARS with script commands (e.g: =$EDITOR= instead of =editor=)
 - [ ] add hidden values of battery, volume and internet scripts to their popup menus
 ** Known issues
