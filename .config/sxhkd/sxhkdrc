@@ -76,7 +76,7 @@ super + Print
 super + Delete
     dmenurecord kill
 super + space
-    kblayoutmanager cycle $(echo $KBLAYOUTS)
+    kblayout cycle $KBLAYOUTS
 
 # Pause audio
 super + p

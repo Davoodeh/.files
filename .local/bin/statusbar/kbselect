@@ -13,8 +13,7 @@ case $BLOCK_BUTTON in
     6) editor "$0" ;;
 esac
 
-# Since shortcuts are unlikely to work with non-latin/US keyboard layouts,
-# the line below makes US layout green to help you recognize anything else easier
-[ "$kb" = "us" ] && color="#00ff00" || color="#ff0000"
+# Since shortcuts are bound for US layout by default and it's the universal default layout it won't be printed
+[ "$kb" = "us" ] && unset kb
 
-printf "<span color='%s'>%s</span>\n" "$color" "$kb"
+printf "%s\n" "$kb"

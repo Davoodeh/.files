@@ -19,25 +19,7 @@
  '(display-line-numbers-type 'relative) ; Doesn't work properly for LaTeX
  '(display-time-default-load-average 3) ; Just show simple clock not loadtime
  '(display-time-mode t)
- ;; '(doom-theme 'doom-acario-dark)     ; Half-Life with flavours
- ;; '(doom-theme 'doom-challenger-deep) ; Princess Peach
- ;; '(doom-theme 'doom-city-lights)     ; Princess Mint-Peach
- ;; '(doom-theme 'doom-dark+)           ; If you wanna thank yourself again for leaving VS
- ;; '(doom-theme 'doom-dracula)         ; Everyone's fav purple
- ;; '(doom-theme 'doom-gruvbox)         ; For master Smywalker
- ;; '(doom-theme 'doom-gruvbox-light)   ; Probable light mode
- ;; '(doom-theme 'doom-henna)           ; Princess Mint-Only
- '(doom-theme 'doom-horizon)         ; Still better than dark+
- ;; '(doom-theme 'doom-Iosvkem)         ; Candy purple
- ;; '(doom-theme 'doom-laserwave)       ; Depressed teenagers...
- ;; '(doom-theme 'doom-monokai-pro)     ; Princess it ain't funny anymore
- ;; '(doom-theme 'doom-moonlight)       ; Velvet~
- ;; '(doom-theme 'doom-nord-light)      ; Decent classic white
- ;; '(doom-theme 'doom-one-light)       ; Fair try
- ;; '(doom-theme 'doom-outrun-electric) ; Hardcore purple fans, assemble!
- ;; '(doom-theme 'doom-palenight)       ; Semi-velvet moonlight
- ;; '(doom-theme 'doom-tomorrow-day)    ; Setup your shelter
- ;; '(doom-theme 'doom-vibrant)         ; Still boring as the One
+ '(doom-theme 'doom-solarized-dark)
  '(global-display-line-numbers-mode)
  '(global-prettify-symbols-mode)
  '(treemacs-position (quote right)))

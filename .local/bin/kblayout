@@ -1,14 +1,10 @@
 #!/bin/sh
 # An edited https://github.com/porras/i3-keyboard-layout/blob/master/i3-keyboard-layout by MYDavoodeh
 # FIXME The script is relatively way too slow (especially when cycling)
-set -e
 
 get_kbdlayout(){ setxkbmap -query | grep -oP 'layout:\s*\K\w+' ;}
 
-set_kbdlayout(){ # TODO Add support for variations of langugages
-	setxkbmap "$1"
-	# pgrep i3status | xargs --no-run-if-empty kill -s USR1 # to tell i3status to update
-}
+set_kbdlayout(){ setxkbmap "$1" ;} # TODO Add support for variations of langugages
 
 cycle(){ # TODO Optimize cycling time
 	current_layout=$(get_kbdlayout)
@@ -22,13 +18,11 @@ cycle(){ # TODO Optimize cycling time
 }
 
 
-subcommand="$1"
-shift || (echo "$helpmsg" && exit)
-case $subcommand in
+case $1 in
 	"get") get_kbdlayout ;;
-	"set") set_kbdlayout "$1" ;;
-	"cycle") cycle "$@" ;;
-	*) echo "Error: Command $subcommand not found. Please use one of the enteries: 'get', 'set <layout>' or 'cycle <layout1> <layout2> ... <layoutN>'" ;;
+	"set") set_kbdlayout "${2:-us}" ;;
+	"cycle") shift && cycle "$@" || (echo "$helpmsg" && exit) ;;
+	*) echo "Error: Command $1 not found. Please use one of the enteries: 'get', 'set [layout]' or 'cycle <layout1> <layout2> ... <layoutN>'" ;;
 esac
 
-pkill -RTMIN+30 i3blocks # for [lang] or [kbselect] modules in blocks bars
+pkill -RTMIN+30 "${STATUSBAR:-dwmblocks}" # for [lang] or [kbselect] modules in blocks bars

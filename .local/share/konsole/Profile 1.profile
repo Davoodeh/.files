@@ -1,6 +1,6 @@
 [Appearance]
 AntiAliasFonts=true
-ColorScheme=Breeze
+ColorScheme=Solarized
 Font=monospace,13,-1,2,50,0,0,0,0,0
 
 [General]

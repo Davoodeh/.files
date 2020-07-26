@@ -49,7 +49,7 @@ client.focused          #4c7899 #285577 #ffffff #ff4200   #ff7c00
 # client.background       #ffffff
 
 bar {
-   font pango:mono 12
+   font pango:mono 13
    status_command i3blocks
    position top
    mode dock
@@ -62,7 +62,7 @@ bindsym $mod+Shift+Return     exec --no-startup-id samedir
 
 bindsym $alt+space            focus mode_toggle
 bindsym $alt+Shift+space      floating toggle
-bindsym $mod+space            exec --no-startup-id kblayoutmanager cycle $(echo $KBLAYOUTS)
+bindsym $mod+space            exec --no-startup-id kblayout cycle $KBLAYOUTS
 
 bindsym $mod+Escape           workspace prev
 bindsym $mod+Shift+Escape     exec --no-startup-id prompt "Exit i3?" "i3 exit"
