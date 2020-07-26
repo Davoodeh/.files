@@ -178,7 +178,14 @@
     psup= push --set-upstream origin $(git_current_branch)
 
     h   = ! gh
-    hcl   = ! gh repo clone
+    hc  = ! gh repo clone
+    hcl = ! gh repo clone
+    hv  = ! gh repo view
+    hw  = ! gh repo view -w
+    hr  = "! f(){ wget https://raw.githubusercontent.com/$1/${3:-master}/$2 ;} ; f"
+    hrcl= ! gh repo clone
+    hrv = ! gh repo view
+    hrw = ! gh repo view -w
     hh  = help
 
     ignore  = update-index --assume-unchanged
