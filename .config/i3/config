@@ -318,26 +318,26 @@ bindsym XF86AudioRaiseVolume                    exec --no-startup-id pulsemixer 
 bindsym Shift+XF86AudioRaiseVolume              exec --no-startup-id pulsemixer --change-volume +$(($SOUNDL*3)) && pkill -RTMIN+10 i3blocks
 bindsym Control+XF86AudioRaiseVolume            exec --no-startup-id pulsemixer --change-volume +1 && pkill -RTMIN+10 i3blocks
 bindsym XF86PowerOff                            exec --no-startup-id prompt "Shutdown computer?" "$shutdown"
-##bindsym XF86Copy                              exec
-##bindsym XF86Open                              exec
-##bindsym XF86Paste                             exec
-##bindsym XF86Cut                               exec
-##bindsym XF86MenuKB                            exec
+##bindsym XF86Copy
+##bindsym XF86Open
+##bindsym XF86Paste
+##bindsym XF86Cut
+##bindsym XF86MenuKB
 bindsym XF86Calculator                          exec --no-startup-id ddspawn dropdowncalc -f mono:pixelsize=24
 ##bindsym XF86Sleep                             This binding is typically mapped by systemd automatically.
-##bindsym XF86WakeUp                            exec
+##bindsym XF86WakeUp
 bindsym XF86Explorer                            exec --no-startup-id fm
-##bindsym XF86Send                              exec
-##bindsym XF86Xfer                              exec
+##bindsym XF86Send
+##bindsym XF86Xfer
 bindsym XF86WWW                                 exec --no-startup-id browser
-##bindsym XF86DOS                               exec
+bindsym XF86DOS                                 exec $term
 bindsym XF86ScreenSaver                         exec exec --no-startup-id lock
-##bindsym XF86RotateWindows                     exec
-##bindsym XF86TaskPane                          exec
-##bindsym XF86Favorites                         exec
+##bindsym XF86RotateWindows
+##bindsym XF86TaskPane
+##bindsym XF86Favorites
 bindsym XF86MyComputer                          exec --no-startup-id fm
-##bindsym XF86Back                              exec
-##bindsym XF86Forward                           exec
+##bindsym XF86Back
+##bindsym XF86Forward
 bindsym XF86Eject                               exec --no-startup-id dmenuumount
 bindsym XF86AudioNext                           exec --no-startup-id mpc next
 bindsym XF86AudioPlay                           exec --no-startup-id mpc toggle
@@ -346,24 +346,24 @@ bindsym XF86AudioStop                           exec --no-startup-id mpc toggle
 ##bindsym XF86AudioRecord                       exec
 bindsym XF86AudioRewind                         exec --no-startup-id mpc seek -10
 bindsym XF86AudioForward                        exec --no-startup-id mpc seek +10
-##bindsym XF86Phone                             exec
-##bindsym XF86Tools                             exec
+##bindsym XF86Phone
+##bindsym XF86Tools
 bindsym XF86HomePage                            exec browser https://lukesmith.xyz
 bindsym XF86Reload                              restart
-##bindsym XF86ScrollUp                          exec
-##bindsym XF86ScrollDown                        exec
-##bindsym XF86New                               exec
-##bindsym XF86LaunchA                           exec
-##bindsym XF86LaunchB                           exec
-##bindsym XF86Launch2                           exec
-##bindsym XF86Launch3                           exec
-##bindsym XF86Launch4                           exec
-##bindsym XF86Launch5                           exec
-##bindsym XF86Launch6                           exec
-##bindsym XF86Launch7                           exec
-##bindsym XF86Launch8                           exec
-##bindsym XF86Launch9                           exec
-##bindsym XF86AudioMicMute                      exec $micmute
+##bindsym XF86ScrollUp
+##bindsym XF86ScrollDown
+##bindsym XF86New
+##bindsym XF86LaunchA
+##bindsym XF86LaunchB
+##bindsym XF86Launch2
+##bindsym XF86Launch3
+##bindsym XF86Launch4
+##bindsym XF86Launch5
+##bindsym XF86Launch6
+##bindsym XF86Launch7
+##bindsym XF86Launch8
+##bindsym XF86Launch9
+##bindsym XF86AudioMicMute
 bindsym XF86TouchpadToggle                      exec --no-startup-id toggletouchpad
 bindsym XF86TouchpadOn                          exec --no-startup-id toggletouchpad 1
 bindsym XF86TouchpadOff                         exec --no-startup-id toggletouchpad 0
@@ -373,21 +373,21 @@ bindsym XF86WebCam                              exec --no-startup-id camtoggle
 bindsym XF86Mail                                exec $term -e neomutt && pkill -RTMIN+12 i3blocks
 bindsym XF86Messenger                           exec $term -e weechat
 bindsym XF86Search                              exec browser https://duckduckgo.com
-##bindsym XF86Go                                exec
-##bindsym XF86Finance                           exec
-##bindsym XF86Game                              exec
+##bindsym XF86Go
+##bindsym XF86Finance
+##bindsym XF86Game
 bindsym XF86Shop                                exec browser https://ebay.com
 bindsym XF86MonBrightnessDown                   exec --no-startup-id bl down
 bindsym XF86MonBrightnessUp                     exec --no-startup-id bl up
 bindsym XF86AudioMedia                          exec --no-startup-id $term -e ncmpcpp
 bindsym XF86Display                             exec --no-startup-id displayselect
-##bindsym XF86KbdLightOnOff                     exec
-##bindsym XF86KbdBrightnessDown                 exec
-##bindsym XF86KbdBrightnessUp                   exec
-##bindsym XF86Reply                             exec
-##bindsym XF86MailForward                       exec
-##bindsym XF86Save                              exec
+##bindsym XF86KbdLightOnOff
+##bindsym XF86KbdBrightnessDown
+##bindsym XF86KbdBrightnessUp
+##bindsym XF86Reply
+##bindsym XF86MailForward
+##bindsym XF86Save
 bindsym XF86Documents                           exec --no-startup-id fm ~/Documents
-##bindsym XF86Battery                           exec
-##bindsym XF86Bluetooth                         exec
+##bindsym XF86Battery
+##bindsym XF86Bluetooth
 bindsym XF86WLAN                                exec $netrefresh
