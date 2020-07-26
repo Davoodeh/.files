@@ -58,7 +58,7 @@ bar {
 
 # #---Basic Bindings---# #
 bindsym $mod+Return           exec $term
-bindsym $mod+Shift+Return     exec --no-startup-id samedir
+#bindsym $mod+Shift+Return
 
 bindsym $alt+space            focus mode_toggle
 bindsym $alt+Shift+space      floating toggle
@@ -155,14 +155,14 @@ bindsym $mod+Shift+x          exec --no-startup-id prompt "Shutdown computer?" "
 bindsym $mod+c                exec --no-startup-id cabl
 bindsym $mod+Shift+c          exec --no-startup-id camtoggle
 
-bindsym $mod+v                exec --no-startup-id editor
-#bindsym $mod+Shift+v
+bindsym $mod+v                floating toggle; sticky toggle; exec --no-startup-id hover left
+bindsym $mod+Shift+v          floating toggle; sticky toggle; exec --no-startup-id hover right
 
 bindsym $mod+b                bar mode toggle
-bindsym $mod+Shift+b          floating toggle; sticky toggle; exec --no-startup-id hover left
+#bindsym $mod+Shift+b
 
-bindsym $mod+n                exec $term -e newsboat && pkill -RTMIN+6 i3blocks
-bindsym $mod+Shift+n          floating toggle; sticky toggle; exec --no-startup-id hover right
+bindsym $mod+n                exec --no-startup-id editor
+bindsym $mod+Shift+n          exec $term -e newsboat && pkill -RTMIN+6 i3blocks
 
 bindsym $mod+Shift+m          exec --no-startup-id pulsemixer --toggle-mute && pkill -RTMIN+10 i3blocks
 bindsym $mod+m                exec --no-startup-id $term -e ncmpcpp
@@ -184,7 +184,7 @@ bindsym $mod+Shift+XF86Forward     move container to workspace next
 bindsym $mod+semicolon        workspace next
 bindsym $mod+apostrophe       split horizontal ;; exec $term
 bindsym $mod+slash            split vertical ;; exec $term
-bindsym $mod+Shift+slash      kill
+bindsym $mod+Shift+slash      samedir
 bindsym $mod+backslash        workspace back_and_forth
 
 set $ws1 "1"

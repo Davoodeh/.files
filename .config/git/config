@@ -177,6 +177,8 @@
     gsup= branch --set-upstream-to=origin/$(git_current_branch)
     psup= push --set-upstream origin $(git_current_branch)
 
+    h   = ! gh
+    hcl   = ! gh repo clone
     hh  = help
 
     ignore  = update-index --assume-unchanged

@@ -10,22 +10,20 @@
 # Basic binds
 super + Return
     terminal
-super + v
-    editor
-super + shift + Return
-    samedir
 super + shift + q
     kill -9 `xdotool getwindowfocus getwindowpid`
 super + d
     dmenu_run
 super + e
     fm
+super + n
+    editor
+super + shift + n
+    terminal -e newsboat
 super + m
     terminal -e ncmpcpp
 {ctrl + Escape,super + i}
     tm
-super + n
-    terminal -e newsboat
 super + c
     calendar
 super + shift + a
@@ -36,6 +34,8 @@ super + shift + e
     tutorialvids
 super + {_,shift +} w
     {browser,terminal -e sudo nmtui}
+super + {_,shift +} slash
+    {terminal,samedir}
 
 # Et cetera...
 super + grave
