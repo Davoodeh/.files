@@ -31,6 +31,10 @@
 !/.config/composer/composer.json
 !/.config/curl/
 !/.config/etc/
+/.config/etc/dwm/*
+!/.config/etc/dwm/config.h
+/.config/etc/dwmblocks/*
+!/.config/etc/dwmblocks/config.h
 !/.config/doom.d/
 !/.config/dunst/
 # !/.config/eog/
