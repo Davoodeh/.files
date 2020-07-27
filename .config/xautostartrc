@@ -6,7 +6,7 @@
 dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
 
 # remaps &        # run the remaps script, switching caps/esc and more; check it for more info
-setbg -w -q & # set the background with the `setbg` script
+setbg --quite & # set the background with the `setbg` script
 # xrdb $XDG_CONFIG_HOME/Xresources & # Uncomment to use Xresources colors/settings on startup
 # picom &         # Compositor
 dunst &         # dunst for notifications
