@@ -108,7 +108,7 @@ static Key keys[] = {
     /* modifier                     key        function        argument */
     STACKKEYS(MODKEY,                          focus)
     STACKKEYS(MODKEY|ShiftMask,                push)
-    /* { MODKEY|ShiftMask,      XK_Escape,  spawn,  SHCMD("") }, */
+    { MODKEY|ShiftMask,      XK_Escape,  spawn,  SHCMD("sysact") },
     { MODKEY,           XK_grave,   spawn,  SHCMD("dmenuunicode") },
     /* { MODKEY|ShiftMask,      XK_grave,   togglescratch,  SHCMD("") }, */
     TAGKEYS(            XK_1,       0)
@@ -133,7 +133,6 @@ static Key keys[] = {
     { MODKEY,           XK_Tab,     view,       {0} },
     /* { MODKEY|ShiftMask, XK_Tab,     spawn,      SHCMD("") }, */
     { MODKEY,           XK_q,       killclient, {0} },
-    { MODKEY|ShiftMask, XK_q,       spawn,      SHCMD("sysact") },
     { MODKEY,           XK_w,       spawn,      SHCMD("browser") },
     { MODKEY|ShiftMask, XK_w,       spawn,      SHCMD("terminal -e sudo nmtui") },
     { MODKEY,           XK_e,       spawn,      SHCMD("fm") },
