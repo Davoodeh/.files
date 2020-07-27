@@ -18,7 +18,7 @@ static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
 static char selbordercolor[]        = "#770000";
-static char selbgcolor[]            = "#005577";
+static char selbgcolor[]            = "#151515";
 static char *colors[][3] = {
        /*               fg           bg           border   */
        [SchemeNorm] = { normfgcolor, normbgcolor, normbordercolor },
@@ -34,7 +34,7 @@ const char *spcmd2[] = {"st", "-n", "spcalc", "-f", "monospace:size=16", "-g", "
 static Sp scratchpads[] = {
     /* name          cmd  */
     {"spterm",      spcmd1},
-    {"spranger",    spcmd2},
+    {"spcalc",      spcmd2},
 };
 
 /* tagging */
@@ -169,8 +169,10 @@ static Key keys[] = {
     { MODKEY,           XK_g,       shiftview,  { .i = -1 } },
     { MODKEY|ShiftMask, XK_g,       shifttag,   { .i = -1 } },
     { MODKEY,           XK_h,       setmfact,   {.f = -0.05} },
+    { MODKEY|ShiftMask, XK_h,       setmfact,   {.f = -0.05} },
     /* J and K are automatically bound above in STACKEYS */
     { MODKEY,           XK_l,       setmfact,       {.f = +0.05} },
+    { MODKEY|ShiftMask, XK_l,       setmfact,       {.f = +0.05} },
     { MODKEY,           XK_semicolon,   shiftview,  { .i = 1 } },
     { MODKEY|ShiftMask, XK_semicolon,   shifttag,   { .i = 1 } },
     { MODKEY,           XK_apostrophe,  togglescratch,  {.ui = 1} },

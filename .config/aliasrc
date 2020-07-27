@@ -69,7 +69,7 @@ alias \
     yt="youtube-dl --add-metadata -i"\
     yta="yt -x -f bestaudio/best"
 o(){ open "$@" ; exit ;}
-[ "$EDITOR" = "nvim" ] && alias magit="e -c MagitOnly" || alias magit="e -f magit-status"
+[ "$EDITOR" = "nvim" ] && alias magit="editor -c MagitOnly ; exit" || alias magit="e -f magit-status ; exit"
 
 # Ignored commands
 while read -r entry ;do alias $entry=" $entry" ;done << EOT

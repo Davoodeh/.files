@@ -12,7 +12,7 @@ export XDG_DESKTOP_DIR XDG_DOWNLOAD_DIR XDG_TEMPLATES_DIR XDG_PUBLICSHARE_DIR XD
     XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME
 
 # Important VARS
-WM="i3"
+WM="dwm"
 PROXY=""
 DEFAULT_USER="$(whoami)" # Will remove username from the prompt
 KBLAYOUTS="us ir"
