@@ -33,6 +33,7 @@
 !/.config/etc/
 /.config/etc/dwm/*
 !/.config/etc/dwm/config.h
+!/.config/etc/dwm/*.diff
 /.config/etc/dwmblocks/*
 !/.config/etc/dwmblocks/config.h
 !/.config/doom.d/
