@@ -79,7 +79,7 @@ http_proxy="$PROXY"
 https_proxy="$PROXY"
 PASSWORD_STORE_DIR="$HOME/.local/share/password-store"
 QT_STYLE_OVERRIDE="kvantum" #| QT_QPA_PLATFORMTHEME="gtk2" # Have QT use gtk2 theme.
-STATUSBAR="${WM}blocks"
+# STATUSBAR="${WM}blocks" # is set in .xinitrc
 SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
 _JAVA_AWT_WM_NONREPARENTING=1 # Fix for Java applications in dwm
 #XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
