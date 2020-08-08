@@ -36,9 +36,7 @@ esac
 
 vol="$(vol)"
 
-if [ "$vol" -gt 75 ] ;then
-    icon="<span color='#ff0000'>󰕾</span>"
-elif [ "$vol" -gt 50 ] ;then
+if [ "$vol" -gt 50 ] ;then
     icon="󰕾"
 elif [ "$vol" -gt 25 ] ;then
     icon="󰖀"
