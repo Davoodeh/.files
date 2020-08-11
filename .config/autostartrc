@@ -1,4 +1,6 @@
 #!/bin/sh
 # Autostart file for terminal apps/services. Gets called by .profile.
 
+# sudo sysctl -w kernel.printk="3 4 1 7" # suppresses bad usb error
 (mpd >/dev/null 2>&1 &)
+# emacs --daemon &

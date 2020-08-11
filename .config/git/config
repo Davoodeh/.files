@@ -182,7 +182,8 @@
     hcl = ! gh repo clone
     hv  = ! gh repo view
     hw  = ! gh repo view -w
-    hr  = "! f(){ wget https://raw.githubusercontent.com/$1/${3:-master}/$2 ;} ; f"
+    hr  = "! f(){ curl -SLO https://raw.githubusercontent.com/$1/${3:-master}/$2 ;} ; f"
+    hro = "! f(){ curl -SL https://raw.githubusercontent.com/$1/${3:-master}/$2 ;} ; f"
     hrcl= ! gh repo clone
     hrv = ! gh repo view
     hrw = ! gh repo view -w

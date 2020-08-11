@@ -21,3 +21,5 @@ inode/directory=fm.desktop
 x-scheme-handler/http=browser.desktop
 x-scheme-handler/https=browser.desktop
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=office.desktop
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=office.desktop
+application/vnd.openxmlformats-officedocument.presentationml.presentation=office.desktop
