@@ -4,8 +4,8 @@
 
 # For non-systemd init systems.
 case "$(readlink -f /sbin/init)" in
-	*runit*) hib="sudo -A zzz" ;;
-	*openrc*) reb="sudo -A openrc-shutdown -r"; shut="sudo -A openrc-shutdown -p" ;;
+    *runit*) hib="sudo -A zzz" ;;
+    *openrc*) reb="sudo -A openrc-shutdown -r"; shut="sudo -A openrc-shutdown -p" ;;
 esac
 
 pidof i3 && renew="i3 restart" && leave="i3 exit" && wm="i3"

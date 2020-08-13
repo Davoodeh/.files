@@ -4,23 +4,23 @@ backend=${BL:-light}
 lightl=${2:-${LIGHTL:-5}}
 
 if [ "$backend" = "light" ] ;then
-	up(){ sudo light -A $lightl ;}
-	down(){ sudo light -U $lightl ;}
-	off(){ sudo light -S 0 ;}
-	mild(){ sudo light -S 50 ;}
-	max(){ sudo light -S 100 ;}
+    up(){ sudo light -A $lightl ;}
+    down(){ sudo light -U $lightl ;}
+    off(){ sudo light -S 0 ;}
+    mild(){ sudo light -S 50 ;}
+    max(){ sudo light -S 100 ;}
 elif [ "$backend" = "xbacklight" ] ;then
-	up(){ sudo xbacklight -inc $lightl ;}
-	down(){ sudo xbacklight -dec $lightl ;}
-	off(){ sudo xbacklight -set 0 ;}
-	mild(){ sudo xbacklight -set 50 ;}
-	max(){ sudo xbacklight -set 100 ;}
+    up(){ sudo xbacklight -inc $lightl ;}
+    down(){ sudo xbacklight -dec $lightl ;}
+    off(){ sudo xbacklight -set 0 ;}
+    mild(){ sudo xbacklight -set 50 ;}
+    max(){ sudo xbacklight -set 100 ;}
 fi
 
 case "$1" in
-	toggle) toggle ;;
-	mute) mute ;;
-	up) up ;;
-	down) down ;;
-	control) control ;;
+    toggle) toggle ;;
+    mute) mute ;;
+    up) up ;;
+    down) down ;;
+    control) control ;;
 esac

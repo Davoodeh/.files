@@ -13,7 +13,7 @@ pkill -RTMIN+8 "${STATUSBAR:-dwmblocks}"
 
 if pacman -Qu | grep -v "\[ignored\]"
 then
-	notify-send "󰏔 Repository Sync" "Updates available. Click statusbar icon (󰏗) for update."
+    notify-send "󰏔 Repository Sync" "Updates available. Click statusbar icon (󰏗) for update."
 else
-	notify-send "󰏗 Repository Sync"  "Sync complete. No new packages for update."
+    notify-send "󰏗 Repository Sync"  "Sync complete. No new packages for update."
 fi

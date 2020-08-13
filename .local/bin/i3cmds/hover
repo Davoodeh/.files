@@ -9,7 +9,7 @@ newsize=$(xdotool getwindowgeometry "$current" | grep Geometry | sed -e 's/x/ /g
 newwidth=$(xdotool getwindowgeometry "$current" | grep Geometry | grep -o " [0-9]*")
 
 case "$1" in
-	left) horizontal=0; vertical=$(($(xdotool getdisplaygeometry | awk '{print $2}') - newsize)) ;;
-	right) horizontal=$(($(xdotool getdisplaygeometry | awk '{print $1}') - newwidth)) ; vertical=$(($(xdotool getdisplaygeometry | awk '{print $2}') - newsize)) ;;
+    left) horizontal=0; vertical=$(($(xdotool getdisplaygeometry | awk '{print $2}') - newsize)) ;;
+    right) horizontal=$(($(xdotool getdisplaygeometry | awk '{print $1}') - newwidth)) ; vertical=$(($(xdotool getdisplaygeometry | awk '{print $2}') - newsize)) ;;
 esac
 xdotool windowmove "$current" $horizontal $vertical

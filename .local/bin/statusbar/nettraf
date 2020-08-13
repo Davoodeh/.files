@@ -7,7 +7,7 @@
 case $BLOCK_BUTTON in
     3) notify-send "󰖈 Network traffic module" "󰜮: Traffic received
 󰜷: Traffic transmitted" ;;
-    6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+    6) editor "$0" ;;
 esac
 
 update() {

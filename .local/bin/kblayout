@@ -7,22 +7,22 @@ get_kbdlayout(){ setxkbmap -query | grep -oP 'layout:\s*\K\w+' ;}
 set_kbdlayout(){ setxkbmap "$1" ;} # TODO Add support for variations of langugages
 
 cycle(){ # TODO Optimize cycling time
-	current_layout=$(get_kbdlayout)
-	eval last="\$$#"
-	# If current_layout is the last one OR current_layout is not in the given layouts,
-	{ [ "$last" = "$current_layout" ] || ! echo "$*" | grep -qo "$current_layout" ;} &&
-		# set the first one in cycle as the initiator,
-		set_kbdlayout "$1" ||
-			# otherwise find the next.
-			set_kbdlayout "$(echo "$*" | sed -E "s/^.*$current_layout ([a-zA-Z]*).*$/\1/")"
+    current_layout=$(get_kbdlayout)
+    eval last="\$$#"
+    # If current_layout is the last one OR current_layout is not in the given layouts,
+    { [ "$last" = "$current_layout" ] || ! echo "$*" | grep -qo "$current_layout" ;} &&
+        # set the first one in cycle as the initiator,
+        set_kbdlayout "$1" ||
+            # otherwise find the next.
+            set_kbdlayout "$(echo "$*" | sed -E "s/^.*$current_layout ([a-zA-Z]*).*$/\1/")"
 }
 
 
 case $1 in
-	"get") get_kbdlayout ;;
-	"set") set_kbdlayout "${2:-us}" ;;
-	"cycle") shift && cycle "$@" || (echo "$helpmsg" && exit) ;;
-	*) echo "Error: Command $1 not found. Please use one of the enteries: 'get', 'set [layout]' or 'cycle <layout1> <layout2> ... <layoutN>'" ;;
+    "get") get_kbdlayout ;;
+    "set") set_kbdlayout "${2:-us}" ;;
+    "cycle") shift && cycle "$@" || (echo "$helpmsg" && exit) ;;
+    *) echo "Error: Command $1 not found. Please use one of the enteries: 'get', 'set [layout]' or 'cycle <layout1> <layout2> ... <layoutN>'" ;;
 esac
 
 pkill -RTMIN+30 "${STATUSBAR:-dwmblocks}" # for [lang] or [kbselect] modules in blocks bars
