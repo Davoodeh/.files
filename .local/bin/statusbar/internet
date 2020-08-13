@@ -2,6 +2,7 @@
 # If provided with any input it will show the wifi by percentage, otherwise it will be shown by a corresponding icon.
 # Show wifi 󰤨 and percent strength or 󰤯 if none.
 # Show 󰌘 if connected to ethernet or 󰌙 if none.
+# Show 󰕓 for USB intefaces
 
 case $BLOCK_BUTTON in
     1) terminal -e nmtui; pkill -RTMIN+4 dwmblocks ;;
@@ -10,6 +11,7 @@ case $BLOCK_BUTTON in
 󰤨: wifi connection
 󰌙: no ethernet
 󰌘: ethernet working
+󰕓: USB interface
 " ;;
     6) editor "$0" ;;
 esac
@@ -32,4 +34,12 @@ case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
             fi ;;
 esac
 
-printf "%s %s\n" "$wifiicon" "$(sed "s/down/󰌙/;s/up/󰌘/" /sys/class/net/e*/operstate 2>/dev/null)"
+printf "%s" "$wifiicon"
+for dev in /sys/class/net/e* ;do
+    if grep -q usb < "$dev/device/uevent" ;then
+        printf " %s" "󰕓"
+    else
+        printf " %s" "$(sed "s/down/󰌙/;s/up/󰌘/" "$dev/operstate" 2>/dev/null)"
+    fi
+done
+printf "\n"
