@@ -1,6 +1,9 @@
 #!/bin/sh
 # Autostart file for X apps/services. Sourced by .xinitrc.
 
+# For prime enabled devices
+# sudo /sbin/prime-offload
+
 # Add this when you include flatpak in your system
 # Fix Gnome Apps Slow Start due to failing services
 dbus-update-activation-environment --systemd DBUS_SESSION_BUS_ADDRESS DISPLAY XAUTHORITY
@@ -16,4 +19,4 @@ mpdup &         # Required for music status in blocks
 
 # toggletouchpad 0 &
 # terminal &
-# protocable 1 &
+# /usr/bin/optimus-manager-qt > /dev/null 2>&1 &

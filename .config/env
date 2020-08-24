@@ -81,10 +81,11 @@ PASSWORD_STORE_DIR="$HOME/.local/share/password-store"
 QT_STYLE_OVERRIDE="kvantum" #| QT_QPA_PLATFORMTHEME="gtk2" # Have QT use gtk2 theme.
 # STATUSBAR="${WM}blocks" # is set in .xinitrc
 SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
+VK_ICD_FILENAMES="/usr/share/vulkan/icd.d/intel_icd.x86_64.json:/usr/share/vulkan/icd.d/nvidia_icd.json"
 _JAVA_AWT_WM_NONREPARENTING=1 # Fix for Java applications in dwm
 #XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
 export DICS FZF_DEFAULT_OPTS ftp_proxy HISTORY_IGNORE HISTIGNORE http_proxy https_proxy PASSWORD_STORE_DIR QT_STYLE_OVERRIDE QT_QPA_PLATFORMTHEME\
-    STATUSBAR SUDO_ASKPASS _JAVA_AWT_WM_NONREPARENTING
+    STATUSBAR SUDO_ASKPASS VK_ICD_FILENAMES _JAVA_AWT_WM_NONREPARENTING
 
 # PATH, each line only contains one entry.
 while read -r entry ;do
