@@ -15,7 +15,7 @@ pidof bspwm && renew="${XDG_CONFIG_HOME:-$HOME/.config}/bspwm/bspwmrc" && wm="bs
 cmds="\
 󰌾 lock:        lock
 󰠜 leave ${wm:-Xorg}: ${leave:-killall Xorg}
-󰤁 hibernate:   lock ${hib:-sudo -A systemctl suspend-then-hibernate -i}
+󰤁 hibernate:   lock ; ${hib:-sudo -A systemctl suspend-then-hibernate -i}
 󱄋 reboot:      ${reb:-sudo -A reboot}
 󰐥 shutdown:    ${shut:-sudo -A shutdown -h now}"
 
@@ -24,4 +24,4 @@ cmds="\
 
 choice="$(echo "$cmds" | cut -d: -f1 | dmenu)" || exit 1
 
-$(echo "$cmds" | grep "^$choice" | cut -d: -f2-)
+eval "$(echo "$cmds" | grep "^$choice" | cut -d: -f2-)"
