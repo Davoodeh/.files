@@ -18,34 +18,32 @@ case $BLOCK_BUTTON in
     6) editor "$0" ;;
 esac
 
+# Wifi
 case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
-    down) wifiicon="󰤮" ;;
+    down) out="󰤮" ;;
     up)
         percent="$(awk '/^\s*w/ { print int($3 * 100 / 70) }' /proc/net/wireless)"
-        [ -n "$1" ] && wifiicon="󰤨$percent%" ||
+        [ -n "$1" ] && out="󰤨$percent%" ||
             if [ "$percent" -gt 80 ] ;then
-                wifiicon="󰤨"
+                out="󰤨"
             elif [ "$percent" -gt 60 ] ;then
-                wifiicon="󰤥"
+                out="󰤥"
             elif [ "$percent" -gt 40 ] ;then
-                wifiicon="󰤢"
+                out="󰤢"
             elif [ "$percent" -gt 20 ] ;then
-                wifiicon="󰤟"
+                out="󰤟"
             else
-                wifiicon="󰤯"
+                out="󰤯"
             fi
     ;;
 esac
 
-vpn="$(printf "%s%s" "$(cat /etc/resolv.conf | grep -i vpn)" "$(cat /sys/class/net/tun*/operstate 2>/dev/null)" | sed "s/.*/󰌆 /")"
-
-printf "%s%s" "$vpn" "$wifiicon"
-
+# Ethernet
 for dev in /sys/class/net/e* ;do
-    if grep -q usb < "$dev/device/uevent" ;then
-        printf " %s" "󰕓"
-    else
-        printf " %s" "$(sed "s/down/󰌙/;s/up/󰌘/" "$dev/operstate" 2>/dev/null)"
-    fi
+    grep -q usb < "$dev/device/uevent" && out="$out 󰕓" || out="$out $(sed "s/down/󰌙/;s/up/󰌘/" "$dev/operstate" 2>/dev/null)"
 done
-printf "\n"
+
+# VPN (tunnels or vpn word in reslov.conf)
+out="$out$(printf "%s%s" "$(cat /etc/resolv.conf | grep -i vpn)" "$(cat /sys/class/net/tun*/operstate 2>/dev/null)" | sed "s/.*/ 󰌆/")"
+
+printf "%s\n" "$out"
