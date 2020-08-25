@@ -4,6 +4,7 @@
 # Show 󰌘 if connected to ethernet or 󰌙 if none.
 # Show 󰕓 for USB intefaces
 # Show 󰌆 if there is a tunnel or if a vpn word is found in /etc/resolv.conf
+# Show 󱎖 for Tor
 
 case $BLOCK_BUTTON in
     1) terminal -e nmtui; pkill -RTMIN+4 dwmblocks ;;
@@ -14,6 +15,7 @@ case $BLOCK_BUTTON in
 󰌘: ethernet working
 󰕓: USB interface
 󰌆: VPN is active
+󱎖: Active Tor connection
 " ;;
     6) editor "$0" ;;
 esac
@@ -45,5 +47,8 @@ done
 
 # VPN (tunnels or vpn word in reslov.conf)
 out="$out$(printf "%s%s" "$(cat /etc/resolv.conf | grep -i vpn)" "$(cat /sys/class/net/tun*/operstate 2>/dev/null)" | sed "s/.*/ 󰌆/")"
+
+# Tor
+out="$out$(pidof tor | sed "s/.*/ 󱎖/")"
 
 printf "%s\n" "$out"
