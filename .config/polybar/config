@@ -220,7 +220,7 @@ card = intel_backlight
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = "󰏈 "
+format-prefix = "$(ico temp) "
 format-prefix-foreground = ${colors.gray}
 format-underline = ${colors.red}
 label = %percentage%%
@@ -228,7 +228,7 @@ label = %percentage%%
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = "󰍛 "
+format-prefix = "$(ico mem) "
 format-prefix-foreground = ${colors.gray}
 format-underline = ${colors.darkcyan}
 label = %percentage_used%%

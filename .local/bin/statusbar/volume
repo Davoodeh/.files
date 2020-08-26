@@ -4,7 +4,6 @@
 # This script works with both pamixer and Alsa.
 # Pamixer is suggested and the default backend. In the absence of pamixer alsa will work.
 
-# Prints the current volume or 󰖁 if muted.
 command -v pamixer >/dev/null || backend="alsa"
 
 if [ "$backend" = "alsa" ] ;then
@@ -26,22 +25,26 @@ case $BLOCK_BUTTON in
     2) toggle ;;
     4) up ;;
     5) down ;;
-    3) notify-send "󰕾 Volume module" "\- Shows volume 󰕾, 󰖁 if muted.
+    3) notify-send "$(ico vol) Volume module" "\- Shows volume $(ico vol), $(ico vol-x) if muted.
 - Middle click to mute.
 - Scroll to change." ;;
     6) editor "$0" ;;
 esac
 
-[ "$(ismute)" = "true" ] && echo 󰖁 && exit
+[ "$(ismute)" = "true" ] && echo "$(ico vol-x)" && exit
 
 vol="$(vol)"
 
-if [ "$vol" -gt 50 ] ;then
-    icon="󰕾"
+if [ "$vol" -gt 90 ] ;then
+    icon="$(ico vol)"
+elif [ "$vol" -gt 75 ] ;then
+    icon="$(ico vol-2)"
+elif [ "$vol" -gt 50 ] ;then
+    icon="$(ico vol-m)"
 elif [ "$vol" -gt 25 ] ;then
-    icon="󰖀"
+    icon="$(ico vol-1)"
 else
-    icon="󰕿"
+    icon="$(ico vol-0)"
 fi
 { [ -n "$1" ] || [ "$vol" -gt 100 ] ;} && icon="$icon$vol%"
 

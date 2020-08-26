@@ -1,54 +1,49 @@
 #!/bin/sh
 # If provided with any input it will show the wifi by percentage, otherwise it will be shown by a corresponding icon.
-# Show wifi 󰤨 and percent strength or 󰤯 if none.
-# Show 󰌘 if connected to ethernet or 󰌙 if none.
-# Show 󰕓 for USB intefaces
-# Show 󰌆 if there is a tunnel or if a vpn word is found in /etc/resolv.conf
-# Show 󱎖 for Tor
 
 case $BLOCK_BUTTON in
     1) terminal -e nmtui; pkill -RTMIN+4 dwmblocks ;;
-    3) notify-send "󰖈 Internet module" "\- Click to connect
-󰤮: no wifi connection
-󰤨: wifi connection
-󰌙: no ethernet
-󰌘: ethernet working
-󰕓: USB interface
-󰌆: VPN is active
-󱎖: Active Tor connection
+    3) notify-send "$(ico internet) Internet module" "\- Click to connect
+$(ico wifi-x): no wifi connection
+$(ico wifi): wifi connection
+$(ico lan-x): no ethernet
+$(ico lan): ethernet working
+$(ico usb): USB interface
+$(ico vpn): VPN is active
+$(ico tor): Active Tor connection
 " ;;
     6) editor "$0" ;;
 esac
 
 # Wifi
 case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
-    down) out="󰤮" ;;
+    down) out="$(ico wifi-x)" ;;
     up)
         percent="$(awk '/^\s*w/ { print int($3 * 100 / 70) }' /proc/net/wireless)"
-        [ -n "$1" ] && out="󰤨$percent%" ||
+        [ -n "$1" ] && out="$(ico wifi-2)$percent%" ||
             if [ "$percent" -gt 80 ] ;then
-                out="󰤨"
+                out="$(ico wifi)"
             elif [ "$percent" -gt 60 ] ;then
-                out="󰤥"
+                out="$(ico wifi-2)"
             elif [ "$percent" -gt 40 ] ;then
-                out="󰤢"
+                out="$(ico wifi-m)"
             elif [ "$percent" -gt 20 ] ;then
-                out="󰤟"
+                out="$(ico wifi-1)"
             else
-                out="󰤯"
+                out="$(ico wifi-0)"
             fi
     ;;
 esac
 
 # Ethernet
 for dev in /sys/class/net/e* ;do
-    grep -q usb < "$dev/device/uevent" && out="$out 󰕓" || out="$out $(sed "s/down/󰌙/;s/up/󰌘/" "$dev/operstate" 2>/dev/null)"
+    grep -q usb < "$dev/device/uevent" && out="$out $(ico usb)" || out="$out $(sed "s/down/$(ico lan-x)/;s/up/$(ico lan)/" "$dev/operstate" 2>/dev/null)"
 done
 
 # VPN (tunnels or vpn word in reslov.conf)
-out="$out$(printf "%s%s" "$(cat /etc/resolv.conf | grep -i vpn)" "$(cat /sys/class/net/tun*/operstate 2>/dev/null)" | sed "s/.*/ 󰌆/")"
+out="$out$(printf "%s%s" "$(cat /etc/resolv.conf | grep -i vpn)" "$(cat /sys/class/net/tun*/operstate 2>/dev/null)" | sed "s/.*/ $(ico vpn)/")"
 
 # Tor
-out="$out$(pidof tor | sed "s/.*/ 󱎖/")"
+out="$out$(pidof tor | sed "s/.*/ $(ico tor)/")"
 
 printf "%s\n" "$out"

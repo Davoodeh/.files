@@ -99,13 +99,6 @@ done << EOT
 EOT
 export PATH
 
-LF_ICONS="di=󰉋:fi=󰈔:tw=󱈘:ow=󰝰:ln=󱅷:or=󰜺:ex=󰟃:*.txt=󰈙:*.mom=󰈙:*.me=󰈙:*.ms=󰈙:*.png=󰈟:*.webp=󰈟:*.ico=󰈟:*.jpg=󰈟:*.jpe=󰈟:*.jpeg=󰈟:*.gif=󰵸:\
-    *.svg=󰜡:*.tif=󰈟:*.tiff=󰈟:*.xcf=󰴒:*.html=󰌝:*.xml=󰗀:*.gpg=󱆄:*.css=󰌜:*.pdf=󰹖:*.djvu=󰂺:*.epub=󰂺:*.csv=󰈘:*.xlsx=󰈛:*.tex=󰊄:*.md=󰍔:*.r=󰟔:\
-    *.R=󰟔:*.rmd=󰈕:*.Rmd=󰈕:*.m=󰈕:*.mp3=󰸪:*.opus=󰸪:*.ogg=󰸪:*.m4a=󰸪:*.flac=󰈣:*.mkv=󰈰:*.mp4=󰈫:*.webm=󰈫:*.mpeg=󰈫:*.avi=󰈰:*.zip=󰗄:*.rar=󰿺:\
-    *.7z=󰗄:*.tar.gz=󰗄:*.z64=󰺵:*.v64=󰺵:*.n64=󰺵:*.gba=󰺵:*.nes=󰺵:*.gdi=󰺵:*.1=󱁯:*.nfo=󱁯:*.info=󱁯:*.log=󰺿:*.iso=󰗮:*.img=󰗮:*.bib=󰂢:*.ged=󰡉:\
-    *.part=󰋔:*.torrent=󰍇:*.jar=󰬷:*.java=󰬷:"
-export LF_ICONS
-
 LESS=-R
 LESSOPEN="| /usr/bin/highlight -O ansi %s 2>/dev/null"
 LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
@@ -116,3 +109,18 @@ LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"
 LESS_TERMCAP_ue="$(printf '%b' '[0m')"
 LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
 export LESS LESSOPEN LESS_TERMCAP_mb LESS_TERMCAP_md LESS_TERMCAP_me LESS_TERMCAP_se LESS_TERMCAP_so LESS_TERMCAP_ue LESS_TERMCAP_us
+
+# Special dash marks: x: crossed / no; 1: first quarter / 25%;  m: mid point / 50%; 2: second quarter / 75%; f: full / 100%;
+CF_ICONS="/home=󱂵:/mnt=󰡰:android=󰀲:bat-0=󰂎:bat-1=󰁺:bat-2=󰁻:bat-3=󰁼:bat-4=󰁽:bat-5=󰁾:bat-6=󰁿:bat-7=󰂀:bat-8=󰂁:bat-9=󰂂:bat-charging=󰂄:\
+    bat-discharging=󰂌:bat-f=󱈑:bat-unknown=󰂃:bat=󰁹:batt=󰭟:btc=󰠓:cb=📋:clock-00=󱑖:clock-01=󱑋:clock-02=󱑌:clock-03=󱑍:clock-04=󱑎:clock-05=󱑏:\
+    clock-06=󱑐:clock-07=󱑑:clock-08=󱑒:clock-09=󱑓:clock-10=󱑔:clock-11=󱑕:clock-12=󱑖:cpu=󰻠:crypto=󰆬:disk=󰑹:down=󰜮:eth=󰡪:f-move=󰪹:help=󰘥:\
+    hib=󰤁:internet=󰖈:lan-x=󰌙:lan=󰌙:lbc=󰺃:leave=󰠜:lock=󰌾:mail=󰇮:mem=󰍛:music=󰎇:news=󰎕:pause=󰏤:pc=󰟀:pkg-down=󰏔:pkg=󰏗:q-add=󱊘:reboot=󱄋:\
+    rec-cam=󰤙:rec-screen=󰊓:rec-voice=󰗋:renew=󰑓:sheets=󱈆:shutdown=󰐥:sync=󰃨:temp=󰏈:tick-clock=󰾨:tick-cloud=󰅠:time=󰃰:tor=󱎖:torrent-add=󰶡:\
+    torrent-seed-x=󱏽:torrent-seed=󰹢:torrent-seeding󰹦=:up=󰜷:usb=󰕓:vol-0=󰕿:vol-1=󰖀:vol-2=󰕾:vol-m=󰕾:vol-x=󰖁:vol=󰕾:vpn=󰌆:weather-h=󰖙:\
+    weather-l=󰜗:weather-perc=󰖗:weather=󰔎:wifi-0=󰤯:wifi-1=󰤟:wifi-2=󰤥:wifi-m=󰤢:wifi-x=󰤮:wifi=󰤨:🌑=󰽤:🌒=󰽧:🌓=󰽡:🌔=󰽨:🌕=󰽢:🌖=󰽦:🌗=󰽣:🌘=󰽥:"
+LF_ICONS="di=󰉋:fi=󰈔:tw=󱈘:ow=󰝰:ln=󱅷:or=󰜺:ex=󰟃:*.txt=󰈙:*.mom=󰈙:*.me=󰈙:*.ms=󰈙:*.png=󰈟:*.webp=󰈟:*.ico=󰈟:*.jpg=󰈟:*.jpe=󰈟:*.jpeg=󰈟:*.gif=󰵸:\
+    *.svg=󰜡:*.tif=󰈟:*.tiff=󰈟:*.xcf=󰴒:*.html=󰌝:*.xml=󰗀:*.gpg=󱆄:*.css=󰌜:*.pdf=󰹖:*.djvu=󰂺:*.epub=󰂺:*.csv=󰈘:*.xlsx=󰈛:*.tex=󰊄:*.md=󰍔:*.r=󰟔:\
+    *.R=󰟔:*.rmd=󰈕:*.Rmd=󰈕:*.m=󰈕:*.mp3=󰸪:*.opus=󰸪:*.ogg=󰸪:*.m4a=󰸪:*.flac=󰈣:*.mkv=󰈰:*.mp4=󰈫:*.webm=󰈫:*.mpeg=󰈫:*.avi=󰈰:*.zip=󰗄:*.rar=󰿺:\
+    *.7z=󰗄:*.tar.gz=󰗄:*.z64=󰺵:*.v64=󰺵:*.n64=󰺵:*.gba=󰺵:*.nes=󰺵:*.gdi=󰺵:*.1=󱁯:*.nfo=󱁯:*.info=󱁯:*.log=󰺿:*.iso=󰗮:*.img=󰗮:*.bib=󰂢:*.ged=󰡉:\
+    *.part=󰋔:*.torrent=󰍇:*.jar=󰬷:*.java=󰬷:"
+export LF_ICONS CF_ICONS

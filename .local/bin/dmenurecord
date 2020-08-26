@@ -38,8 +38,8 @@ screencast() { \
     -c:v h264 -crf 0 -preset ultrafast -c:a aac \
     "$HOME/screencast-$(date '+%y%m%d-%H%M-%S').mp4" &
     echo $! > /tmp/recordingpid
-    updateicon "󰗋󰊓"
-        }
+    updateicon "$(ico rec-voice rec-screen | tr -d '\n')"
+}
 
 video() { ffmpeg \
     -f x11grab \
@@ -48,8 +48,8 @@ video() { ffmpeg \
     -c:v libx264 -qp 0 -r 30 \
     "$HOME/video-$(date '+%y%m%d-%H%M-%S').mkv" &
     echo $! > /tmp/recordingpid
-    updateicon "󰊓"
-    }
+    updateicon "$(ico rec-screen)"
+}
 
 webcamhidef() { ffmpeg \
     -f v4l2 \
@@ -57,8 +57,8 @@ webcamhidef() { ffmpeg \
     -video_size 1920x1080 \
     "$HOME/webcam-$(date '+%y%m%d-%H%M-%S').mkv" &
     echo $! > /tmp/recordingpid
-    updateicon "󰤙"
-    }
+    updateicon "$(ico rec-cam)"
+}
 
 webcam() { ffmpeg \
     -f v4l2 \
@@ -66,8 +66,8 @@ webcam() { ffmpeg \
     -video_size 640x480 \
     "$HOME/webcam-$(date '+%y%m%d-%H%M-%S').mkv" &
     echo $! > /tmp/recordingpid
-    updateicon "󰤙"
-    }
+    updateicon "$(ico rec-cam)"
+}
 
 
 audio() { \
@@ -76,8 +76,8 @@ audio() { \
     -c:a flac \
     "$HOME/audio-$(date '+%y%m%d-%H%M-%S').flac" &
     echo $! > /tmp/recordingpid
-    updateicon "󰗋"
-    }
+    updateicon "$(ico rec-voice)"
+}
 
 askrecording() { \
     choice=$(printf "screencast\\nvideo\\naudio\\nwebcam\\nwebcam (hi-def)" | dmenu -i -p "Select recording style:")

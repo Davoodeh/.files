@@ -5,8 +5,8 @@
 # second, gives network traffic per second.
 
 case $BLOCK_BUTTON in
-    3) notify-send "󰖈 Network traffic module" "󰜮: Traffic received
-󰜷: Traffic transmitted" ;;
+    3) notify-send "$(ico internet) Network traffic module" "$(ico down): Traffic received
+$(ico down): Traffic transmitted" ;;
     6) editor "$0" ;;
 esac
 
@@ -25,4 +25,4 @@ update() {
 rx=$(update /sys/class/net/[ew]*/statistics/rx_bytes)
 tx=$(update /sys/class/net/[ew]*/statistics/tx_bytes)
 
-printf "󰜷%4sB 󰜮%4sB\\n" $(numfmt --to=iec $rx) $(numfmt --to=iec $tx)
+printf "$(ico up)%4sB $(ico down)%4sB\\n" $(numfmt --to=iec $rx) $(numfmt --to=iec $tx)

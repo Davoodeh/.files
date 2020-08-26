@@ -9,13 +9,13 @@ In addition to Luke's dotfiles you'll need:
 * Main differences
 Head over there to read the main README. In here, I just write the main notes until some day when I make a proper doc and merge it in master.
 
+- Centralized settings: Almost most of the settings can be tweaked via =~/.config/env=. I do my best to make that file "the Options" file of this repo and the only place that an end user has to deal with.
 - MOST IMPORTANT FEATURE: NO TABS IN THE FREAKING CONFIG FILES!
-- Material icons
+- Material icons (requires =material-design-icons-git= AUR package.)! Icons can be changed by editing =CF_ICONS= in the =~/.config/env= file (MAGIC!).
 - GITIGNORE! The =.gitignore= in this repo is a reverse file that un-ignores everything you list there. Therefore,
   you can have the repo directly under your =$HOME= without the fear that =git status= output will fill your ram.
   Yes, from time to time you can break your desktop with slapdash tweaks (especially to your =.config/env= file) but where's the fun without that?
 - Some scripts are re-written (or heavily modified) for the sake of sanity or ease of use (e.g: =setbg=).
-- Almost most of the settings can be tweaked via =~/.config/env=. I do my best to make that file "the Options" file of this repo and the only place that an end user has to deal with.
 - Less hostile toward UTF-8, non-en_US languages and RTL.
 - Doom Emacs files are included.
 - Default applications can be called about everywhere since they are not simply aliases or variables.
@@ -33,12 +33,8 @@ Simply, deleting stuff is way way easier than finding/writing them.
 For the next big step I aim to make a "Settings" program which tweaks config and the =env= files
 automatically with a decent/proper/convenient CLI rather than making the users dirty with tweaking codes and breaking everything.
 
-** Todo
-- [ ] replace $VARS with script commands (e.g: =$EDITOR= instead of =editor=)
-- [ ] add hidden values of battery, volume and internet scripts to their popup menus
 ** Known issues
 - fontconfig(?): Material icons sometimes don't render in ST
-- cannot quit BC
 
 -----
 Yet figuring it out!
