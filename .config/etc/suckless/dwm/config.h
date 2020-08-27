@@ -16,7 +16,7 @@ static const int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=13" };
-static char dmenufont[]             = "monospace:size=13";
+static char dmenufont[]             = "monospace:size=10";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -34,7 +34,7 @@ typedef struct {
     const void *cmd;
 } Sp;
 const char *spcmd1[] = {"st", "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {"st", "-n", "spcalc", "-f", "monospace:size=16", "-g", "50x20", "-e", "bc", "-lq", NULL };
+const char *spcmd2[] = {"st", "-n", "spcalc", "-g", "70x28", "-e", "python", NULL };
 static Sp scratchpads[] = {
     /* name          cmd  */
     {"spterm",      spcmd1},
@@ -126,7 +126,7 @@ static Key keys[] = {
     TAGKEYS(            XK_9,       8)
     { MODKEY,           XK_0,       view,       {.ui = ~0 } },
     { MODKEY|ShiftMask, XK_0,       tag,        {.ui = ~0 } },
-    { ControlMask|ShiftMask, XK_Escape, spawn,  SHCMD("tm") },
+    { ControlMask,      XK_Escape,  spawn,      SHCMD("tm") },
     { MODKEY,           XK_minus,   spawn,      SHCMD("pamixer --allow-boost -d $SOUNDL; kill -44 $(pidof dwmblocks)") },
     { MODKEY|ShiftMask, XK_minus,   spawn,      SHCMD("pamixer --allow-boost -d $((SOUNDL*3)); kill -44 $(pidof dwmblocks)") },
     { MODKEY,           XK_equal,   spawn,      SHCMD("pamixer --allow-boost -i $SOUNDL; kill -44 $(pidof dwmblocks)") },
@@ -218,6 +218,7 @@ static Key keys[] = {
     { MODKEY,           XK_F2,      spawn,      SHCMD("tutorialvids") },
     { MODKEY,           XK_F3,      spawn,      SHCMD("displayselect") },
     { MODKEY,           XK_F4,      spawn,      SHCMD("sound; kill -44 $(pidof dwmblocks)") },
+    { ALTKEY,           XK_F4,      killclient, {0} },
     { MODKEY,           XK_F5,      xrdb,       {.v = NULL } },
     { MODKEY,           XK_F6,      spawn,      SHCMD("torwrap") },
     { MODKEY,           XK_F7,      spawn,      SHCMD("td-toggle") },

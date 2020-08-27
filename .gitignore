@@ -31,11 +31,9 @@
 !/.config/composer/composer.json
 !/.config/curl/
 !/.config/etc/
-/.config/etc/dwm/*
-!/.config/etc/dwm/config.h
-!/.config/etc/dwm/*.diff
-/.config/etc/dwmblocks/*
-!/.config/etc/dwmblocks/config.h
+/.config/etc/suckless/*/*
+!/.config/etc/suckless/*/config.h
+!/.config/etc/suckless/*/*.diff
 !/.config/doom.d/
 !/.config/dunst/
 # !/.config/eog/
