@@ -27,11 +27,11 @@ EOT
     echo "     created $file"
 }
 
-checkvar(){ # $1: var to check. $2: Run in terminal?
+checkvar(){ # $1: var to check. $2: prefix. $3: desktop name. $4: postfix/args
     fn="$(echo "$1" | tr '[:upper:]' '[:lower:]')"
     [ -n "$2" ] && prefix="$2 " || prefix=""
     if [ "$(eval printf "%s" "\$$1")" != "" ] ;then
-        mkscript "$fn" "$prefix\$$1"
+        mkscript "$fn" "$prefix\$$1 $4"
         mkdesktop "$fn" "$3"
         echo "files have been created for for: \$$1"
     else
@@ -57,9 +57,12 @@ checkvar OFFICE
 checkvar READER     ''             'PDF Reader'
 checkvar RSS        '/usr/bin/env' 'RSS Add'
 checkvar SOUND      '$TERMINAL -e' 'Sound Panel'
-checkvar TERMINAL
 checkvar TORRENT    '/usr/bin/env' 'Torrent add'
 checkvar TM         '$TERMINAL -e' 'Task Manager'
 checkvar VIDEO      ''             'Video Player'
+
+{ command -v tabbed >/dev/null && [ "$TERMINAL" = "st" ] ;} &&
+    checkvar TERMINAL 'tabbed -r 2'       ''             "-w '' -e" ||
+    checkvar TERMINAL
 
 echo "All done. Before using scripts and shortcuts (as default applications), be sure that script location ($dir) is in your \$PATH and shortcuts are set in your $HOME/.config/mimeapps.list."
