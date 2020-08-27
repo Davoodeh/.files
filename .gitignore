@@ -32,8 +32,13 @@
 !/.config/curl/
 !/.config/etc/
 /.config/etc/suckless/*/*
+!/.config/etc/suckless/**/README.org
+!/.config/etc/suckless/*/*luke*.diff
 !/.config/etc/suckless/*/config.h
-!/.config/etc/suckless/*/*.diff
+!/.config/etc/suckless/*/dmenu.c
+!/.config/etc/suckless/*/dwm.c
+!/.config/etc/suckless/*/surf.c
+!/.config/etc/suckless/*/tabbed.c
 !/.config/doom.d/
 !/.config/dunst/
 # !/.config/eog/

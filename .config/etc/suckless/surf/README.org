@@ -1,0 +1,7 @@
+Based on d068a38
+
+Applied patches are:
+- Keycode
+- Homepage
+- Clipboard
+- Bookmarks

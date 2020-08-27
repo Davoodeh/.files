@@ -1,0 +1,8 @@
+Based on dabf6a2
+
+Applied patches are:
+- Keycode
+- Keyrelease (required by Hidetabs)
+- Hidetabs
+
+Also shortcuts are bound to Ctrl-Alt rather than Ctrl-Shift.
