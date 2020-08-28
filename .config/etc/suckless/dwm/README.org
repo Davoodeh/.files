@@ -1,0 +1,4 @@
+Based on lukesmithxyz's 86aba1a
+
+Applied patches are:
+- systray

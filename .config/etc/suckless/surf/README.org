@@ -5,3 +5,8 @@ Applied patches are:
 - Homepage
 - Clipboard
 - Bookmarks
+- Notification (buggy)
+- MultiJS
+
+** TODO
+- [ ] Add a VIM-Navigation JS plugin
