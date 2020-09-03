@@ -15,7 +15,7 @@ export XDG_DESKTOP_DIR XDG_DOWNLOAD_DIR XDG_TEMPLATES_DIR XDG_PUBLICSHARE_DIR XD
 WM="dwm"
 PROXY=""
 DEFAULT_USER="$(whoami)" # Will remove username from the prompt
-KBLAYOUTS="us ir"
+KBLAYOUTS="us ir ru-phonetic" # first one acts as the system default (in keyboard related scripts) if not set default is "us".
 export WM PROXY DEFAULT_USER KBLAYOUTS
 
 # Default programs:

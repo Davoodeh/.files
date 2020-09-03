@@ -1,19 +1,16 @@
 #!/bin/sh
 # works on any init system
-# requirements: dmenu, xorg-setxkbmap
-kb="$(setxkbmap -query | grep -oP 'layout:\s*\K\w+')"
+kb="$(kblayout get)" || exit 1
 
 case $BLOCK_BUTTON in
-    1) kb_choice="$(awk '/! layout/{flag=1; next} /! variant/{flag=0} flag {print $2, "- " $1}' /usr/share/X11/xkb/rules/base.lst | dmenu -l 15)"
-    kb="$(echo "$kb_choice" | awk '{print $3}')"
-    setxkbmap "$kb"
+    1) kblayout list
     pkill -RTMIN+30 "${STATUSBAR:-dwmblocks}";;
-    3) notify-send "⌨  Keyboard/language module" "$(printf "%s" "\- Current layout: $(setxkbmap -query | grep -oP 'layout:\s*\K\w+')")
+    3) notify-send "⌨  Keyboard/language module" "\- Current layout: $kb
 - Left click to change keyboard.";;
     6) editor "$0" ;;
 esac
 
 # Since shortcuts are bound for US layout by default and it's the universal default layout it won't be printed
-[ "$kb" = "us" ] && unset kb
+[ "$kb" = "$(echo "${KBLAYOUT:-us}" | cut -d' ' -f1)" ] && unset kb
 
 printf "%s\n" "$kb"

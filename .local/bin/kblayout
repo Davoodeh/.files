@@ -1,28 +1,30 @@
 #!/bin/sh
 # An edited https://github.com/porras/i3-keyboard-layout/blob/master/i3-keyboard-layout by MYDavoodeh
+# Requires: xorg-setxkbmap, List also requires dmenu
 # FIXME The script is relatively way too slow (especially when cycling)
 
-get_kbdlayout(){ setxkbmap -query | grep -oP 'layout:\s*\K\w+' ;}
+def="$(echo "${KBLAYOUT:-us}" | cut -d' ' -f1)"
 
-set_kbdlayout(){ setxkbmap "$1" ;} # TODO Add support for variations of langugages
+getl(){
+    q="$(setxkbmap -query)"
+    variant="$(echo "$q" | grep -oP 'variant:\s*\K\w+')" &&
+        echo "$(echo "$q" | grep -oP 'layout:\s*\K\w+')-$variant" ||
+        echo "$q" | grep -oP 'layout:\s*\K\w+'
+    exit 0
+}
 
-cycle(){ # TODO Optimize cycling time
-    current_layout=$(get_kbdlayout)
-    eval last="\$$#"
-    # If current_layout is the last one OR current_layout is not in the given layouts,
-    { [ "$last" = "$current_layout" ] || ! echo "$*" | grep -qo "$current_layout" ;} &&
-        # set the first one in cycle as the initiator,
-        set_kbdlayout "$1" ||
-            # otherwise find the next.
-            set_kbdlayout "$(echo "$*" | sed -E "s/^.*$current_layout ([a-zA-Z]*).*$/\1/")"
+setl(){ # accepts either the layout (ru) or layout and variant separated with a dash (ru-phonetic)
+    setxkbmap "${1:-$def}" 2>/dev/null || setxkbmap "$(echo "${1:-$def}" | cut -d- -f1)" -variant "$(echo "${1:-$def}" | cut -d- -f2)"
 }
 
 
 case $1 in
-    "get") get_kbdlayout ;;
-    "set") set_kbdlayout "${2:-us}" ;;
-    "cycle") shift && cycle "$@" || (echo "$helpmsg" && exit) ;;
-    *) echo "Error: Command $1 not found. Please use one of the enteries: 'get', 'set [layout]' or 'cycle <layout1> <layout2> ... <layoutN>'" ;;
+    get) getl ;;
+    set) setl "$2" ;;
+    list | ls) setxkbmap "$(echo "$(awk '/! layout/{flag=1; next} /! variant/{flag=0} flag {print $2, "- " $1}' /usr/share/X11/xkb/rules/base.lst | dmenu -l 15)" | awk '{print $3}')" ;;
+    # TODO Optimize cycling time
+    cycle) shift && setl "$(echo "$@" | grep -oP ".*$(getl) +\\K[\\w-]+")" || (echo "$helpmsg" && exit) ;;
+    *) setl ; echo us;;
 esac
 
 pkill -RTMIN+30 "${STATUSBAR:-dwmblocks}" # for [lang] or [kbselect] modules in blocks bars
