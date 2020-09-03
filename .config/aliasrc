@@ -22,7 +22,7 @@ alias \
     trem="transmission-remote"\
     upc="sudo pacman -Syu; pkill -RTMIN+8 i3blocks"\
     upg="sudo pacman -Syu --noconfirm --overwrite /usr/lib/python3.8/site-packages/\* && yay -Syu --noconfirm --overwrite /usr/lib/python3.8/site-packages/\*"\
-    v="editor ; exit"\
+    v="editor"\
     ver="pacman -Qe"\
     vid="video"\
     w="browser"\
@@ -38,6 +38,7 @@ alias \
     keynav="keynav 'loadconfig ~/.config/keynav/keynavrc'"\
     tmux="tmux -f ~/.config/tmux.conf"
 command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d" # uses neovim for vim if present.
+command -v tabbed >/dev/null && alias surf="tabbed -r 2 surf -pe ''"
 # TODO Instead of the line below take manjaro's aproach to Dmenu!
 [ -f "$HOME/.cache/wal/colors.sh" ] && . $HOME/.cache/wal/colors.sh && alias dmenu_run='dmenu_run -nb "$color0" -nf "$color15" -sb "$color1" -sf "$color15"'
 
@@ -71,7 +72,7 @@ alias \
     yt="youtube-dl --add-metadata -i"\
     yta="yt -x -f bestaudio/best"
 o(){ open "$@" ; exit ;}
-[ "$EDITOR" = "nvim" ] && alias magit="editor -c MagitOnly ; exit" || alias magit="e -f magit-status ; exit"
+[ "$EDITOR" = "nvim" ] && alias magit="vim -c MagitOnly ; exit" || alias magit="d emacs -f magit-status ; exit"
 
 # Ignored commands
 while read -r entry ;do alias $entry=" $entry" ;done << EOT

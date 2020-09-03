@@ -24,7 +24,8 @@
 ;;; -----
 
 ;;; -----
-;;; Modes
+;;; Modes and hooks
+(add-hook 'find-file-hooks 'auto-insert)
 (general-evil-setup) ; enables General commands in this file
 (auto-save-visited-mode)
 ;; (use-package! nyan-mode :config
@@ -57,6 +58,7 @@
  '(global-display-line-numbers-mode) ; enables line number mode
  '(global-prettify-symbols-mode) ; disable it already I know you all hate it (why?)
  '(treemacs-position (quote right)))
+
 (setq auto-insert-alist '( ; insers skeletons automatically
                           ("\\.sent\\'" . sent-skeleton)
                           ("\\.snt\\'"  . sent-skeleton)))
@@ -107,9 +109,4 @@
         ;; (:map global-map "C-TAB" #'centaur-tabs-forward) ; FIXME
 
 ;; TODO Add -c flag to magit-log and bind it to Spc-g-l-a
-;;; -----
-
-;;; -----
-;;; Hooks
-(add-hook 'find-file-hooks 'auto-insert)
 ;;; -----

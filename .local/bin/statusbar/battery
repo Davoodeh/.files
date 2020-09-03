@@ -30,7 +30,7 @@ for battery in /sys/class/power_supply/BAT? ;do
         elif [ "$capacity" -gt 10 ] ;then
             out="$(ico bat-$(echo "$capacity" | head -c1))"
         else
-            out="󰂎"
+            out="$(ico bat-0)"
         fi
     else
         out="$status$capacity%"

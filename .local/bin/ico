@@ -25,5 +25,5 @@ defs="/home=🏠:/mnt=💾:android=🤖:bat-charging=🔌:bat-discharging=🔋:b
 # . ~/.config/env
 
 for input in "$@" ;do
-    echo "${CF_ICONS:-defs}" | grep -Po "[:\s]$input=\K.+?(?=(:|$))" || exit $? # break if an icon is not found
+    echo "${CF_ICONS:-defs}" | grep -Po "[:\s]$input=\K.*?(?=(:|$))" || exit $? # break if an icon is not found (won't break if icon is set to null)
 done

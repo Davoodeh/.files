@@ -3,11 +3,13 @@
 kb="$(kblayout get)" || exit 1
 
 case $BLOCK_BUTTON in
-    1) kblayout list
-    pkill -RTMIN+30 "${STATUSBAR:-dwmblocks}";;
+    1)
+        kblayout list
+        pkill -RTMIN+30 "${STATUSBAR:-dwmblocks}"
+    ;;
     3) notify-send "⌨  Keyboard/language module" "\- Current layout: $kb
-- Left click to change keyboard.";;
-    6) editor "$0" ;;
+- Left click to change keyboard." ;;
+    6) editor "$0"  ;;
 esac
 
 # Since shortcuts are bound for US layout by default and it's the universal default layout it won't be printed
