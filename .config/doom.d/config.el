@@ -25,7 +25,7 @@
 
 ;;; -----
 ;;; Modes and hooks
-(add-hook 'find-file-hooks 'auto-insert)
+(add-hook 'find-file-hook 'auto-insert)
 (general-evil-setup) ; enables General commands in this file
 (auto-save-visited-mode)
 ;; (use-package! nyan-mode :config
@@ -46,9 +46,8 @@
  '(centaur-tabs-gray-out-icons 'buffer) ; grays out icons for unselected tabs
  '(centaur-tabs-height 20)
  '(doom-font (font-spec :family "Iosevka" :size 16 :inherit 'italic))
- '(doom-unicode-font (font-spec :family "Material Design Icons" :size 16))
  ;; '(line-spacing 8)
- ;; '(lsp-log-io t) ; shows lsp-log in an accessible buffer
+ '(lsp-log-io t) ; shows lsp-log in an accessible buffer
  '(lsp-keymap-prefix "M-l") ; for Window Managers that use the Super key
  '(display-line-number t)
  '(display-line-numbers-type 'relative)
@@ -66,7 +65,7 @@
                                 ("\\.sent\\'" . org-mode)
                                 ("\\.snt\\'"  . org-mode))
                               auto-mode-alist))
-(setq company-idle-delay nil) ; disables Company-Auto-Completion (makes Emacs WAY smoother!)
+;; (setq company-idle-delay nil) ; disables Company-Auto-Completion (makes Emacs WAY smoother!)
 ;;; -----
 
 ;;; -----
