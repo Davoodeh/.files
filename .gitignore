@@ -120,6 +120,7 @@
 !/.config/promptmsg
 !/.config/tmux.conf
 !/.config/user-dirs.dirs
+!/.config/vars
 !/.config/warprc
 # !/.config/wall*
 !/.config/xautostartrc

@@ -1,29 +1,14 @@
 #!/bin/sh
-# Use icons defined in CF_ICONS
-
-# Default example which defines every used icon in the config (requires material-design-icons-git):
-# defs="/home=󱂵:/mnt=󰡰:android=󰀲:bat-0=󰂎:bat-1=󰁺:bat-2=󰁻:bat-3=󰁼:bat-4=󰁽:bat-5=󰁾:bat-6=󰁿:bat-7=󰂀:bat-8=󰂁:bat-9=󰂂:bat-charging=󰂄:\
-#     bat-discharging=󰂌:bat-f=󱈑:bat-unknown=󰂃:bat=󰁹:batt=󰭟:btc=󰠓:cb=📋:clock-00=󱑖:clock-01=󱑋:clock-02=󱑌:clock-03=󱑍:clock-04=󱑎:clock-05=󱑏:\
-#     clock-06=󱑐:clock-07=󱑑:clock-08=󱑒:clock-09=󱑓:clock-10=󱑔:clock-11=󱑕:clock-12=󱑖:cpu=󰻠:crypto=󰆬:disk=󰑹:down=󰜮:eth=󰡪:f-move=󰪹:help=󰘥:\
-#     hib=󰤁:internet=󰖈:lan-x=󰌙:lan=󰌙:lbc=󰺃:leave=󰠜:lock=󰌾:mail=󰇮:mem=󰍛:music=󰎇:news=󰎕:pause=󰏤:pc=󰟀:pkg-down=󰏔:pkg=󰏗:q-add=󱊘:reboot=󱄋:\
-#     rec-cam=󰤙:rec-screen=󰊓:rec-voice=󰗋:renew=󰑓:sheets=󱈆:shutdown=󰐥:sync=󰃨:temp=󰏈:tick-clock=󰾨:tick-cloud=󰅠:time=󰃰:tor=󱎖:torrent-add=󰶡:\
-#     torrent-seed-x=󱏽:torrent-idle=󰹢:torrent-seed=󰹦:up=󰜷:usb=󰕓:vol-0=󰕿:vol-1=󰖀:vol-2=󰕾:vol-m=󰕾:vol-x=󰖁:vol=󰕾:vpn=󰌆:weather-h=󰖙:\
-#     weather-l=󰜗:weather-perc=󰖗:weather=󰔎:wifi-0=󰤯:wifi-1=󰤟:wifi-2=󰤥:wifi-m=󰤢:wifi-x=󰤮:wifi=󰤨:🌑=󰽤:🌒=󰽧:🌓=󰽡:🌔=󰽨:🌕=󰽢:🌖=󰽦:🌗=󰽣:🌘=󰽥:"
-defs="/home=🏠:/mnt=💾:android=🤖:bat-charging=🔌:bat-discharging=🔋:bat-f=⚡:bat-unknown=♻:bat=🛑:batt=🦁:btc=💰:cb=📋:clock-00=🕛:clock-01=🕐:\
-    clock-02=🕑:clock-03=🕒:clock-04=🕓:clock-05=🕔:clock-06=🕕:clock-07=🕖:clock-08=🕗:clock-09=🕘:clock-10=🕙:clock-11=🕚:clock-12=🕛:cpu=🖥:\
-    crypto=💸:disk=💽:down=🔻:eth=🍸:f-move=:help=❓:hib=🐻:internet=🌐:lan-x=❎:lan=🌐:lbc=📚:leave=🚪:lock=🔒:mail=📬:mem=🧠:music=🎵:news=📰:pause=⏸:\
-    pc=💻:pkg-down=🎁:pkg=📦:q-add=⏳:reboot=🔃:rec-cam=🎥:rec-screen=⏺️:rec-voice=🎙️:renew=♻:sheets=📰:shutdown=🖥:sync=🔃:temp=🌡:tick-clock=🕓:\
-    tick-cloud=✅:time=📅:tor=󱎖:torrent-add=🔽:torrent-seed-x=🛑:torrent-seed=🕰:torrent-seeding=🌱:up=🔺:usb=💻:vol-0=🔈:vol-1=🔉:vol-2=🔊:vol-m=🔊:\
-    vol-x=🔇:vol=🔊:vpn=󰌆:warn=❗:weather-h=🌞:weather-l=🥶:weather-perc=☔:weather=🌈:wifi-0=no📶:wifi-1=weak📶:wifi-2=📶:wifi-m=📶:wifi-x=📡:wifi=📶:\
-    🌑=🌑:🌒=🌒:🌓=🌓:🌔=🌔:🌕=🌕:🌖=🌖:🌗=🌗:🌘=🌘:"
+# Default example which defines every used icon in the config (requires material-design-icons-git) is located in ~/.config/vars/cf_mdi.ico -> cf.ico
 
 # Directories are used with disk module. Any path can take its own icon.
 # Icons like weather and crypto are used in notifications of the respective modules.
 # Special dash marks: x: crossed / no; 1: first quarter / 25%;  m: mid point / 50%; 2: second quarter / 75%; f: full / 100%;
 
-# Source your env file if you want to test new icons before rebooting your system
-# . ~/.config/env
+# If you are in habit of rapidly changing your icons, uncomment the line below
+# icons="$(cat "$HOME/.config/vars/cf.ico" 2>/dev/null)" ||
+    icons="$CF_ICONS"
 
 for input in "$@" ;do
-    echo "${CF_ICONS:-defs}" | grep -Po "[:\s]$input=\K.*?(?=(:|$))" || exit $? # break if an icon is not found (won't break if icon is set to null)
+    echo "$icons" | grep -Po "[:\s]$input=\K.*?(?=(:|$))" || exit $? # break if an icon is not found (won't break if icon is set to null)
 done

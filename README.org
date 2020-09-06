@@ -3,8 +3,9 @@
 This is a dotfile repo forked from [[https://github.com/lukesmithxyz/voidrice][Luke Smith's]].
 
 * Requirements
-In addition to Luke's dotfiles you'll need:
-- [[https://github.com/Templarian/MaterialDesign][Material Design Icons git]]
++In addition to Luke's dotfiles you'll need+:
++- [[https://github.com/Templarian/MaterialDesign][Material Design Icons git]]+
+As mentioned below, you can edit your =CF_ICONS= in the =~/.config/env= to change icons if you don't have the MDI installed.
 
 * Main differences
 Head over there to read the main README. In here, I just write the main notes until some day when I make a proper doc and merge it in master.
@@ -35,6 +36,7 @@ automatically with a decent/proper/convenient CLI rather than making the users d
 
 ** Known issues
 - fontconfig(?): Material icons sometimes don't render in ST
+- Most scripts are dependent on =ico=, and occasionally =kblayout=.
 
 -----
 Yet figuring it out!
