@@ -48,7 +48,7 @@ export TSF SOUNDL LIGHTL
 
 # ~/ Clean-up:
 ANDROID_SDK_HOME="$XDG_DATA_HOME/android"
-ANSIBLE_CONFIG="$config/ansible/ansible.cfg"
+ANSIBLE_CONFIG="$conf/ansible/ansible.cfg"
 CARGO_HOME="$XDG_DATA_HOME/cargo"
 CURL_HOME="$conf/curl"
 DOOMDIR="$conf/doom.d"
@@ -93,9 +93,7 @@ export DICS FZF_DEFAULT_OPTS ftp_proxy HISTORY_IGNORE HISTIGNORE http_proxy http
 # PATH, each line only contains one entry.
 while read -r entry ;do
     # Add it if it's  not redundant
-    if ! echo "$PATH" | grep -Eq "(^|:)$entry($|:)" ;then
-        PATH="$PATH:$entry"
-    fi
+    echo "$PATH" | grep -Eq "(^|:)$entry($|:)" || PATH="$PATH:$entry"
 done << EOT
     $(du "$HOME/.local/bin" | cut -f2 | tr '\n' ':')
     $HOME/.emacs.d/bin

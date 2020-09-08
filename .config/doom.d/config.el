@@ -79,6 +79,11 @@
   (general-imap "ت" (general-key-dispatch '(lambda () (interactive) (insert "ت"))
       :timeout 0.25
       "ت" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
+  (general-imap "о" (general-key-dispatch '(lambda () (interactive) (insert "о"))
+      :timeout 0.25
+      "о" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
+  (general-nmap "о" (lambda () (interactive) (evil-normal-state) (set-lang "us")))
+  (general-nmap "л" (lambda () (interactive) (evil-normal-state) (set-lang "us")))
   (general-nmap "ت" (lambda () (interactive) (evil-normal-state) (set-lang "us")))
   (general-nmap "ن" (lambda () (interactive) (evil-normal-state) (set-lang "us"))))
   ;; (add-hook 'evil-mode-hook ; FIXME doesn't work

@@ -14,4 +14,5 @@ case $BLOCK_BUTTON in
     3) notify-send "$(ico help) Help module" "\- Left click to open LARBS guide.
 - Middle click to refresh window manager." ;;
     6) editor "$0" ;;
-esac; echo "$(ico help)"
+esac
+echo "$(ico help)"
