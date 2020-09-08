@@ -1,9 +1,11 @@
 #!/bin/sh
 # If provided with any input it will show the wifi by percentage, otherwise it will be shown by a corresponding icon.
+# Requires nmcli to print wifi status in the notification.
 
 case $BLOCK_BUTTON in
-    1) terminal -e nmtui; pkill -RTMIN+4 dwmblocks ;;
-    3) notify-send "$(ico internet) Internet module" "\- Click to connect
+    1) terminal -e nmtui; pkill -RTMIN+4 ${STATUSBAR:-dwmblocks} ;;
+    3) notify-send "$(ico internet) Internet module" "$(echo "Wifi: $(nmcli -t -f active,ssid dev wifi | grep -oP '(?<=^yes:).*' || echo Unknown)")
+\- Click to connect
 $(ico wifi-x): no wifi connection
 $(ico wifi): wifi connection
 $(ico lan-x): no ethernet
