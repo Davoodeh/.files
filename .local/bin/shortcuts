@@ -10,9 +10,9 @@ vifm_shortcuts="/dev/null"
 
 # Remove, prepare files
 rm -f "$ranger_shortcuts" "$qute_shortcuts" "$zsh_named_dirs" 2>/dev/null
-printf "# vim: filetype=sh\\n" > "$fish_shortcuts"
-printf "# vim: filetype=sh\\nalias " > "$shell_shortcuts"
-printf "\" vim: filetype=vim\\n" > "$vifm_shortcuts"
+printf "# vim: filetype=sh\\n" >"$fish_shortcuts"
+printf "# vim: filetype=sh\\nalias " >"$shell_shortcuts"
+printf "\" vim: filetype=vim\\n" >"$vifm_shortcuts"
 
 # Format the `directories` file in the correct syntax and sent it to all three configs.
 awk "!/^\s*#/ && !/^\s*\$/ {gsub(\"\\\s*#.*$\",\"\");

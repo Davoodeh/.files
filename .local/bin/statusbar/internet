@@ -1,9 +1,12 @@
 #!/bin/sh
-# If provided with any input it will show the wifi by percentage, otherwise it will be shown by a corresponding icon.
+# If provided with any input it will show the wifi name alongside its percentage, otherwise it will be shown by a corresponding icon.
 # Requires nmcli to print wifi status in the notification.
 
 case $BLOCK_BUTTON in
-    1) terminal -e nmtui; pkill -RTMIN+4 ${STATUSBAR:-dwmblocks} ;;
+    1)
+        terminal -e nmtui
+        pkill -RTMIN+4 ${STATUSBAR:-dwmblocks}
+        ;;
     3) notify-send "$(ico internet) Internet module" "$(echo "Wifi: $(nmcli -t -f active,ssid dev wifi | grep -oP '(?<=^yes:).*' || echo Unknown)")
 \- Click to connect
 $(ico wifi-x): no wifi connection
@@ -22,30 +25,30 @@ case "$(cat /sys/class/net/w*/operstate 2>/dev/null)" in
     down) out="$(ico wifi-x)" ;;
     up)
         percent="$(awk '/^\s*w/ { print int($3 * 100 / 70) }' /proc/net/wireless)"
-        [ -n "$1" ] && out="$(ico wifi-2)$percent%" ||
-            if [ "$percent" -gt 80 ] ;then
+        [ -n "$1" ] && out="$(nmcli -t -f active,ssid dev wifi | grep -oP '(?<=^yes:).*' || ico wifi):$percent%" ||
+            if [ "$percent" -gt 80 ]; then
                 out="$(ico wifi)"
-            elif [ "$percent" -gt 60 ] ;then
+            elif [ "$percent" -gt 60 ]; then
                 out="$(ico wifi-2)"
-            elif [ "$percent" -gt 40 ] ;then
+            elif [ "$percent" -gt 40 ]; then
                 out="$(ico wifi-m)"
-            elif [ "$percent" -gt 20 ] ;then
+            elif [ "$percent" -gt 20 ]; then
                 out="$(ico wifi-1)"
             else
                 out="$(ico wifi-0)"
             fi
-    ;;
+        ;;
 esac
 
 # Ethernet
-for dev in /sys/class/net/e* ;do
-    grep -q usb < "$dev/device/uevent" && out="$out$(ico usb)" || out="$out$(sed "s/down/$(ico lan-x)/;s/up/$(ico lan)/" "$dev/operstate" 2>/dev/null)"
+for dev in /sys/class/net/e*; do
+    grep -q usb <"$dev/device/uevent" && out="$out $(ico usb)" || out="$out$(sed "s/down/ $(ico lan-x)/;s/up/ $(ico lan)/" "$dev/operstate" 2>/dev/null)"
 done
 
 # VPN (tunnels or vpn word in reslov.conf)
-out="$out$(printf "%s%s" "$(cat /etc/resolv.conf | grep -i vpn)" "$(cat /sys/class/net/tun*/operstate 2>/dev/null)" | sed "s/.*/$(ico vpn)/")"
+out="$out$({ cat /etc/resolv.conf | grep -qi vpn || cat /sys/class/net/tun*/operstate 2>/dev/null; } && echo " $(ico vpn)")"
 
 # Tor
-out="$out$(pidof tor | sed "s/.*/$(ico tor)/")"
+out="$out$(pidof tor >/dev/null && echo " $(ico tor)")"
 
 printf "%s\n" "$out"

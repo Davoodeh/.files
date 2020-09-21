@@ -9,6 +9,6 @@ while read -r line; do
     [ -z "$line" ] && continue
     url="$(echo "$line" | awk '{print $1}')"
     qndl "$url" "curl -LO"
-done < "$queuefile"
+done <"$queuefile"
 
-echo > "$queuefile"
+echo >"$queuefile"

@@ -4,4 +4,5 @@ ifinstalled tremc-git transmission-cli || exit
 
 ! pidof transmission-daemon >/dev/null && transmission-daemon && notify-send "Starting torrent daemon..."
 
-$TERMINAL -e tremc; pkill -RTMIN+7 "${STATUSBAR:-dwmblocks}"
+$TERMINAL -e tremc
+pkill -RTMIN+7 "${STATUSBAR:-dwmblocks}"

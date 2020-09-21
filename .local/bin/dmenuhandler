@@ -12,5 +12,5 @@ case "$(printf "copy url\\nmpv\\nmpv (loop)\\nqueue download\\n\\nqueue youtube-
     browser) setsid -f "$BROWSER" "$1" >/dev/null 2>&1 ;;
     feh) setsid -f feh "$1" >/dev/null 2>&1 ;;
     w3m) w3m "$1" >/dev/null 2>&1 ;;
-    "mpv (float)") setsid -f mpv --geometry=+0-0 --autofit=30%  --title="mpvfloat" "$1" >/dev/null 2>&1 ;;
+    "mpv (float)") setsid -f mpv --geometry=+0-0 --autofit=30% --title="mpvfloat" "$1" >/dev/null 2>&1 ;;
 esac

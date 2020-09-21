@@ -25,26 +25,26 @@ Examples:
   kblayout cycle us ir ru-phonetic'
 # FIXME The script is relatively way too slow (especially when cycling)
 
-getl(){ # prints out keyboard layout in xx-variant format.
-  q="$(setxkbmap -query)"
-  variant="$(echo "$q" | grep -oP 'variant:\s*\K\w+')" && variant="-$variant"
-  echo "$(echo "$q" | grep -oP 'layout:\s*\K[\w,]+')$variant"
+getl() { # prints out keyboard layout in xx-variant format.
+    q="$(setxkbmap -query)"
+    variant="$(echo "$q" | grep -oP 'variant:\s*\K\w+')" && variant="-$variant"
+    echo "$(echo "$q" | grep -oP 'layout:\s*\K[\w,]+')$variant"
 }
 
-setl(){ # accepts either the layout (xx) or layout and variant separated with a dash (xx-variant)
+setl() { # accepts either the layout (xx) or layout and variant separated with a dash (xx-variant)
     [ -z "$1" ] && echo "$helpmsg" && exit 1
     setxkbmap "$(echo "$1" | cut -d- -f1)" "$(echo "$1" | cut -s -d- -f2)"
-    [ "$STATUSBAR" = "i3status" ] && pgrep i3status | xargs --no-run-if-empty kill -s USR1 || # tell i3status to update
+    [ "$STATUSBAR" = "i3status" ] && pgrep i3status | xargs --no-run-if-empty kill -s USR1 ||
+        # tell i3status to update
         pkill -RTMIN+30 "${STATUSBAR:-dwmblocks}" # for [lang] or [kbselect] modules in blocks bars
 }
-
 
 case $1 in
     g*) getl ;;
     s*) setl "$2" ;;
     c*) shift && setl "$(echo "$@" | grep -oP ".*$(getl) +\\K[\\w-]+" || echo "$1")" ;;
     l*) command -v dmenu >/dev/null &&
-          setxkbmap "$(echo "$(awk '/! layout/{flag=1; next} /! variant/{flag=0} flag {print $2, "- " $1}' /usr/share/X11/xkb/rules/base.lst | dmenu -l 15)" | awk '{print $3}')" ||
-          echo "$helpmsg" ;;
+        setxkbmap "$(echo "$(awk '/! layout/{flag=1; next} /! variant/{flag=0} flag {print $2, "- " $1}' /usr/share/X11/xkb/rules/base.lst | dmenu -l 15)" | awk '{print $3}')" ||
+        echo "$helpmsg" ;;
     *) echo "$helpmsg" ;;
 esac

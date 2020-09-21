@@ -8,7 +8,7 @@ transmission-remote -l | grep % |
     s/.*Idle.*/B/g;
     s/.*Uploading.*/L/g;
     s/.*%.*/M/g" |
-        sort -h | uniq -c | sed " # Now we replace the standin letters with icons.
+    sort -h | uniq -c | sed " # Now we replace the standin letters with icons.
                 s/A/$(ico torrent-seed-x)/g;
                 s/B/$(ico torrent-idle)/g;
                 s/L/$(ico up)/g;

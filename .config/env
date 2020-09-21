@@ -22,7 +22,6 @@ export WM PROXY DEFAULT_USER KBLAYOUTS
 
 # Default programs:
 # IMPORTANT: Upon editing, also check and adjust ~/.local/bin/defs/mkdefs
-BL="light" #|"xbacklight"
 BROWSER="firefox-developer-edition"
 CALCULATOR="bc"
 CALENDAR="calcurse"

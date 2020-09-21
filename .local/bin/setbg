@@ -1,12 +1,12 @@
 #!/bin/sh
 # TODO write $helpmsg
 
-checkin(){ # Checks paramater and respond. $2 is the flag and $1 is value.
+checkin() { # Checks paramater and respond. $2 is the flag and $1 is value.
     # shellcheck disable=SC2015
-    [ -n "$1" ] && return 0 || { [ -n "$2" ] && echo "No parameter for $2" || echo "Bad inputs! Seek help." ;}
+    [ -n "$1" ] && return 0 || { [ -n "$2" ] && echo "No parameter for $2" || echo "Bad inputs! Seek help."; }
 }
 
-[ -n "$1" ] && { printf "%s" "$1" | grep -q "^-" || { input="$1" && shift ;} ;} #If the first input wasn't a flag read it as the $file pattern
+[ -n "$1" ] && { printf "%s" "$1" | grep -q "^-" || { input="$1" && shift; }; } #If the first input wasn't a flag read it as the $file pattern
 while true; do case "$1" in
     -f | --file | -p | --directory | -i | --input) checkVal "$2" "$1" && input="$2" && shift 2 ;;
     -c | --config) checkVal "$2" "$1" && xwconfig="$2" && shift 2 ;;
@@ -17,19 +17,19 @@ while true; do case "$1" in
     -h | --help) echo "$helpmsg" && exit 0 ;;
     --) shift && break ;; # End of all options
     -*) echo "Invalid option: $1" && echo "$helpmsg" && exit 1 ;;
-    *)  break ;; # No more options
-esac ;done
+    *) break ;; # No more options
+esac; done
 
 # Location of link to wallpaper link.
 bgloc="${XDG_DATA_HOME:-$HOME/.local/share}/bg"
 
-if [ -n "$temp" ] ;then
+if [ -n "$temp" ]; then
     [ -n "$input" ] && bgloc="$input" || echo "Temporary flag is risen but no temporary file has been declared. Using default!"
-elif [ -n "$input" ] ;then
-    if [ -f "$input" ] ;then
+elif [ -n "$input" ]; then
+    if [ -f "$input" ]; then
         ln -sf "$(readlink -f "$input")" "$bgloc"
         [ -n "$deleteorig" ] && rm "$input"
-    elif [ -d "$input" ] ;then
+    elif [ -d "$input" ]; then
         ln -sf "$(find "$(readlink -f "$input")" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)" "$bgloc"
         notifmsg="Random Wallpaper chosen"
     fi

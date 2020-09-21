@@ -7,7 +7,7 @@
 # Timestamp format
 tsf="${TSF:-%y%m%d-%a-%H%M%S}"
 dir="${XDG_PICTURES_DIR:-$HOME}"
-cb(){ xclip -selection clipboard -t image/png ;}
+cb() { xclip -selection clipboard -t image/png; }
 
 [ "$1" = "-i" ] && maim -u "$dir/pic-full-$(date "+$TSF").png" ||
     case "$(printf "a selected area\\ncurrent window\\nfull screen\\na selected area (copy)\\ncurrent window (copy)\\nfull screen (copy)" | dmenu -l 6 -i -p "Screenshot which area?")" in

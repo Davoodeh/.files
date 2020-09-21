@@ -7,8 +7,8 @@
 
 # If you are in habit of rapidly changing your icons, uncomment the line below
 # icons="$(cat "$HOME/.config/vars/cf.ico" 2>/dev/null)" ||
-    icons="$CF_ICONS"
+icons="$CF_ICONS"
 
-for input in "$@" ;do
+for input in "$@"; do
     echo "$icons" | grep -Po "[:\s]$input=\K.*?(?=(:|$))" || exit $? # break if an icon is not found (won't break if icon is set to null)
 done

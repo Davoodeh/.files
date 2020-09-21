@@ -4,8 +4,8 @@ file="$HOME/log"
 
 case "$1" in
     -l) [ "$2" != '' ] && sed -i "$2d" $file || echo "No line specified to delete" ;;
-    -r) echo "$(head -n -${2:-1} $file)" > $file ;;
+    -r) echo "$(head -n -${2:-1} $file)" >$file ;;
     '') ;;
-    *) echo "[$(date "+${TSF:-%y%m%d-%a-%H%M%S}")] $@" >> $file ;;
+    *) echo "[$(date "+${TSF:-%y%m%d-%a-%H%M%S}")] $@" >>$file ;;
 esac
 bat $file

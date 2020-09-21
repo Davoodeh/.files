@@ -6,18 +6,18 @@
 
 command -v pamixer >/dev/null || backend="alsa"
 
-if [ "$backend" = "alsa" ] ;then
-    toggle(){ amixer sset Master toggle ;}
-    up(){ amixer sset Master 1%+ >/dev/null 2>/dev/null ;}
-    down(){ amixer sset Master 1%- >/dev/null 2>/dev/null ;}
-    ismute(){ amixer get Master | grep "\[off\]" >/dev/null && echo "true" ;}
-    vol(){ amixer get Master | grep -o "\[[0-9]\+%\]" | sed "s/[^0-9]*//g;1q" ;}
+if [ "$backend" = "alsa" ]; then
+    toggle() { amixer sset Master toggle; }
+    up() { amixer sset Master 1%+ >/dev/null 2>/dev/null; }
+    down() { amixer sset Master 1%- >/dev/null 2>/dev/null; }
+    ismute() { amixer get Master | grep "\[off\]" >/dev/null && echo "true"; }
+    vol() { amixer get Master | grep -o "\[[0-9]\+%\]" | sed "s/[^0-9]*//g;1q"; }
 else
-    toggle(){ pamixer -t ;}
-    up(){ pamixer --allow-boost -i 1 ;}
-    down(){ pamixer --allow-boost -d 1 ;}
-    ismute(){ pamixer --get-mute ;}
-    vol(){ pamixer --get-volume ;}
+    toggle() { pamixer -t; }
+    up() { pamixer --allow-boost -i 1; }
+    down() { pamixer --allow-boost -d 1; }
+    ismute() { pamixer --get-mute; }
+    vol() { pamixer --get-volume; }
 fi
 
 case $BLOCK_BUTTON in
@@ -35,17 +35,17 @@ esac
 
 vol="$(vol)"
 
-if [ "$vol" -gt 90 ] ;then
+if [ "$vol" -gt 90 ]; then
     icon="$(ico vol)"
-elif [ "$vol" -gt 75 ] ;then
+elif [ "$vol" -gt 75 ]; then
     icon="$(ico vol-2)"
-elif [ "$vol" -gt 50 ] ;then
+elif [ "$vol" -gt 50 ]; then
     icon="$(ico vol-m)"
-elif [ "$vol" -gt 25 ] ;then
+elif [ "$vol" -gt 25 ]; then
     icon="$(ico vol-1)"
 else
     icon="$(ico vol-0)"
 fi
-{ [ -n "$1" ] || [ "$vol" -gt 100 ] ;} && icon="$icon$vol%"
+{ [ -n "$1" ] || [ "$vol" -gt 100 ]; } && icon="$icon$vol%"
 
 echo "$icon"

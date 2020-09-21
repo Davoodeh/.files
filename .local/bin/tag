@@ -11,7 +11,7 @@ Options:
     -d: year of publication
     -g: genre
     -c: comment
-You will be prompted for title, artist, album and track if not given." && exit 1 ;}
+You will be prompted for title, artist, album and track if not given." && exit 1; }
 
 while getopts "a:t:A:n:N:d:g:c:f:" o; do case "${o}" in
     a) artist="${OPTARG}" ;;
@@ -24,7 +24,7 @@ while getopts "a:t:A:n:N:d:g:c:f:" o; do case "${o}" in
     c) comment="${OPTARG}" ;;
     f) file="${OPTARG}" ;;
     *) printf "Invalid option: -%s\\n" "$OPTARG" && err ;;
-esac done
+esac; done
 
 shift $((OPTIND - 1))
 

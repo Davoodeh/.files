@@ -9,8 +9,8 @@
 #
 # If there is already a running instance, user will be prompted to end it.
 
-updateicon() { \
-    echo "$1" > /tmp/recordingicon
+updateicon() {
+    echo "$1" >/tmp/recordingicon
     pkill -RTMIN+9 "${STATUSBAR:-dwmblocks}"
 }
 
@@ -37,7 +37,7 @@ screencast() {
         -r 30 \
         -c:v h264 -crf 0 -preset ultrafast -c:a aac \
         "$HOME/screencast-$(date '+%y%m%d-%H%M-%S').mp4" &
-    echo $! > /tmp/recordingpid
+    echo $! >/tmp/recordingpid
     updateicon "$(ico rec-voice rec-screen | tr -d '\n')"
 }
 
@@ -48,7 +48,7 @@ video() {
         -i "$DISPLAY" \
         -c:v libx264 -qp 0 -r 30 \
         "$HOME/video-$(date '+%y%m%d-%H%M-%S').mkv" &
-    echo $! > /tmp/recordingpid
+    echo $! >/tmp/recordingpid
     updateicon "$(ico rec-screen)"
 }
 
@@ -58,7 +58,7 @@ webcamhidef() {
         -i /dev/video0 \
         -video_size 1920x1080 \
         "$HOME/webcam-$(date '+%y%m%d-%H%M-%S').mkv" &
-    echo $! > /tmp/recordingpid
+    echo $! >/tmp/recordingpid
     updateicon "$(ico rec-cam)"
 }
 
@@ -68,41 +68,39 @@ webcam() {
         -i /dev/video0 \
         -video_size 640x480 \
         "$HOME/webcam-$(date '+%y%m%d-%H%M-%S').mkv" &
-    echo $! > /tmp/recordingpid
+    echo $! >/tmp/recordingpid
     updateicon "$(ico rec-cam)"
 }
-
 
 audio() {
     ffmpeg \
         -f alsa -i default \
         -c:a flac \
         "$HOME/audio-$(date '+%y%m%d-%H%M-%S').flac" &
-    echo $! > /tmp/recordingpid
+    echo $! >/tmp/recordingpid
     updateicon "$(ico rec-voice)"
 }
 
 askrecording() {
     choice=$(printf "screencast\\nvideo\\naudio\\nwebcam\\nwebcam (hi-def)" | dmenu -i -p "Select recording style:")
     case "$choice" in
-        screencast) screencast;;
-        audio) audio;;
-        video) video;;
-        webcam) webcam;;
-        "webcam (hi-def)") webcamhidef;;
+        screencast) screencast ;;
+        audio) audio ;;
+        video) video ;;
+        webcam) webcam ;;
+        "webcam (hi-def)") webcamhidef ;;
     esac
 }
 
-asktoend() { \
+asktoend() {
     response=$(printf "No\\nYes" | dmenu -i -p "Recording still active. End recording?") &&
-    [ "$response" = "Yes" ] &&  killrecording
+        [ "$response" = "Yes" ] && killrecording
 }
 
-
 case "$1" in
-    screencast) screencast;;
-    audio) audio;;
-    video) video;;
-    kill) killrecording;;
-    *) ([ -f /tmp/recordingpid ] && asktoend && exit) || askrecording;;
+    screencast) screencast ;;
+    audio) audio ;;
+    video) video ;;
+    kill) killrecording ;;
+    *) ([ -f /tmp/recordingpid ] && asktoend && exit) || askrecording ;;
 esac

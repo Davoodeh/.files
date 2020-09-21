@@ -18,16 +18,16 @@ esac
 # acpi | sed "s/Battery [0-9]: //;s/[Dd]ischarging, /$(ico bat-discharging)/;s/[Nn]ot charging, /$(ico bat)/;s/[Cc]harging, /$(ico bat-charging)/;s/[Uu]nknown, /$(ico bat-unknown)/;s/[Ff]ull, /$(ico bat-f)/;s/ \(remaining\|until charged\)//"; exit
 
 # Loop through all attached batteries.
-for battery in /sys/class/power_supply/BAT? ;do
+for battery in /sys/class/power_supply/BAT?; do
     # Get its remaining capacity and charge status.
     capacity=$(cat "$battery"/capacity 2>/dev/null) || break
     status=$(sed "s/[Dd]ischarging/$(ico bat-discharging)/;s/[Nn]ot charging/$(ico bat)/;s/[Cc]harging/$(ico bat-charging)/;s/[Uu]nknown/$(ico bat-unknown)/;s/[Ff]ull/$(ico bat-f)/" "$battery"/status)
-    if [ "$status" = "$(ico bat-f)" ] ;then
+    if [ "$status" = "$(ico bat-f)" ]; then
         out="$status"
-    elif [ "$status" = "$(ico bat-discharging)" ] && [ -z "$1" ] ;then
-        if [ "$capacity" -gt 90 ] ;then
+    elif [ "$status" = "$(ico bat-discharging)" ] && [ -z "$1" ]; then
+        if [ "$capacity" -gt 90 ]; then
             out="$(ico bat)"
-        elif [ "$capacity" -gt 10 ] ;then
+        elif [ "$capacity" -gt 10 ]; then
             out="$(ico bat-$(echo "$capacity" | head -c1))"
         else
             out="$(ico bat-0)"

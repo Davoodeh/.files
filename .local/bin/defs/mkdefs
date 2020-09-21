@@ -2,12 +2,15 @@
 # This makes a shell executable file for each defualt program defined in env
 # $1 is the prefix of files
 
-dir=${1:-$(cd "$(dirname "$0")" ; pwd -P)}
+dir=${1:-$(
+    cd "$(dirname "$0")"
+    pwd -P
+)}
 
-mkscript(){ # $1: file name. $2: content.
+mkscript() { # $1: file name. $2: content.
     file="$dir/$1"
     rm "$file" -f
-    cat > "$file" <<EOF
+    cat >"$file" <<EOF
 #!/bin/sh
 exec nohup $2 "\$@" >/dev/null 2>&1 &
 EOF
@@ -15,10 +18,10 @@ EOF
     echo "     created $file"
 }
 
-mkdesktop(){
+mkdesktop() {
     file="$HOME/.local/share/applications/$1.desktop"
     name="${2:-$(echo "$1" | sed 's/.*/\u&/')}"
-    cat > "$file" << EOT
+    cat >"$file" <<EOT
 [Desktop Entry]
 Type=Application
 Name=$name
@@ -27,10 +30,10 @@ EOT
     echo "     created $file"
 }
 
-checkvar(){ # $1: var to check. $2: prefix. $3: desktop name. $4: postfix/args
+checkvar() { # $1: var to check. $2: prefix. $3: desktop name. $4: postfix/args
     fn="$(echo "$1" | tr '[:upper:]' '[:lower:]')"
     [ -n "$2" ] && prefix="$2 " || prefix=""
-    if [ "$(eval printf "%s" "\$$1")" != "" ] ;then
+    if [ "$(eval printf "%s" "\$$1")" != "" ]; then
         mkscript "$fn" "$prefix\$$1 $4"
         mkdesktop "$fn" "$3"
         echo "files have been created for for: \$$1"
@@ -61,7 +64,7 @@ checkvar TORRENT    '/usr/bin/env' 'Torrent add'
 checkvar TM         '$TERMINAL -e' 'Task Manager'
 checkvar VIDEO      ''             'Video Player'
 
-{ command -v tabbed >/dev/null && [ "$TERMINAL" = "st" ] ;} &&
+{ command -v tabbed >/dev/null && [ "$TERMINAL" = "st" ]; } &&
     checkvar TERMINAL 'tabbed -r 2'       ''             "-w '' -e" ||
     checkvar TERMINAL
 

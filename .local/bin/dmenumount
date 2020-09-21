@@ -7,7 +7,7 @@
 
 getmount() {
     [ -z "$chosen" ] && exit 1
-        # shellcheck disable=SC2086
+    # shellcheck disable=SC2086
     mp="$(find $1 2>/dev/null | dmenu -i -p "Type in mount point.")" || exit 1
     [ "$mp" = "" ] && exit 1
     if [ ! -d "$mp" ]; then
@@ -24,8 +24,13 @@ mountusb() {
     getmount "/mnt /media /mount /home -maxdepth 5 -type d $alreadymounted"
     partitiontype="$(lsblk -no "fstype" "$chosen")"
     case "$partitiontype" in
-        "vfat") sudo -A mount -t vfat "$chosen" "$mp" -o rw,umask=0000;;
-        *) sudo -A mount "$chosen" "$mp"; user="$(whoami)"; ug="$(groups | awk '{print $1}')"; sudo -A chown "$user":"$ug" "$mp";;
+        "vfat") sudo -A mount -t vfat "$chosen" "$mp" -o rw,umask=0000 ;;
+        *)
+            sudo -A mount "$chosen" "$mp"
+            user="$(whoami)"
+            ug="$(groups | awk '{print $1}')"
+            sudo -A chown "$user":"$ug" "$mp"
+            ;;
     esac
     notify-send "$(ico usb) USB mounting" "$chosen mounted to $mp."
 }
@@ -34,7 +39,7 @@ mountandroid() {
     chosen="$(echo "$anddrives" | dmenu -i -p "Which Android device?")" || exit 1
     chosen="$(echo "$chosen" | cut -d : -f 1)"
     getmount "$HOME -maxdepth 3 -type d"
-        simple-mtpfs --device "$chosen" "$mp"
+    simple-mtpfs --device "$chosen" "$mp"
     echo "OK" | dmenu -i -p "Tap Allow on your phone if it asks for permission and then press enter" || exit 1
     simple-mtpfs --device "$chosen" "$mp"
     notify-send "$(ico android) Android Mounting" "Android device mounted to $mp."
