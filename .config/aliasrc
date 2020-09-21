@@ -66,9 +66,10 @@ alias \
     screenkey="screenkey --mods-mode emacs --font-color red --font monospace"\
     weath="less -S $XDG_DATA_HOME/weatherreport"\
     sxiv="sxiv -a"\
-    et="emacs -nw"\
-    ec="emacsclient"\
+    et="emacs -t"\
+    ec="emacsclient -t"\
     x="sxiv -ft *"\
+    shfmt="shfmt -i=4 -ci"\
     yt="youtube-dl --add-metadata -i"\
     yta="yt -x -f bestaudio/best"
 o(){ open "$@" ; exit ;}

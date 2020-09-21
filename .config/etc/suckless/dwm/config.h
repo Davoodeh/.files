@@ -263,8 +263,8 @@ static Key keys[] = {
 	{ 0, XF86XK_TouchpadToggle,     spawn,      SHCMD("toggletouchpad") },
 	{ 0, XF86XK_TouchpadOff,        spawn,      SHCMD("toggletouchpad 1") },
 	{ 0, XF86XK_TouchpadOn,         spawn,      SHCMD("toggletouchpad 0") },
-	{ 0, XF86XK_MonBrightnessUp,    spawn,      SHCMD("bl up") },
-	{ 0, XF86XK_MonBrightnessDown,  spawn,      SHCMD("bl down") },
+	{ 0, XF86XK_MonBrightnessUp,    spawn,      SHCMD("sudo light -A ${LIGHTL:-5}") },
+	{ 0, XF86XK_MonBrightnessDown,  spawn,      SHCMD("sudo light -U ${LIGHTL:-5}") },
 
 	/* { MODKEY|Mod4Mask,  XK_h,      incrgaps,       {.i = +1 } }, */
 	/* { MODKEY|Mod4Mask,  XK_l,      incrgaps,       {.i = -1 } }, */

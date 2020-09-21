@@ -4,8 +4,8 @@
 ;;; Functions
 (defun load-dir (dir) ; loads other dirs relative to DOOMDIR
   (setq dir (concat (or (getenv "DOOMDIR") "~/.doom.d") "/" dir))
-  (let ((load-it (lambda (f)
-                   (load-file (concat (file-name-as-directory dir) f)))))
+  (let ((load-it
+         (lambda (f) (load-file (concat (file-name-as-directory dir) f)))))
     (mapc load-it (directory-files dir nil "\\.el$"))))
 
 (defun set-lang (layout) ; changes keyboard layout
@@ -66,6 +66,10 @@
                                 ("\\.snt\\'"  . org-mode))
                               auto-mode-alist))
 ;; (setq company-idle-delay nil) ; disables Company-Auto-Completion (makes Emacs WAY smoother!)
+;; (setq +latex-viewers '(zathura))
+(setq TeX-command-force "XeTeX")
+(setq-default TeX-engine 'xetex)
+(setq-hook! 'sh-mode-hook +format-with :none)
 ;;; -----
 
 ;;; -----
@@ -74,27 +78,27 @@
 ;; TODO make all of it only one function
 (when (featurep! :editor evil)
   (general-imap "j" (general-key-dispatch '(lambda () (interactive) (insert "j"))
-      :timeout 0.25
-      "j" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
+                      :timeout 0.25
+                      "j" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
   (general-imap "ت" (general-key-dispatch '(lambda () (interactive) (insert "ت"))
-      :timeout 0.25
-      "ت" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
+                      :timeout 0.25
+                      "ت" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
   (general-imap "о" (general-key-dispatch '(lambda () (interactive) (insert "о"))
-      :timeout 0.25
-      "о" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
+                      :timeout 0.25
+                      "о" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
   (general-nmap "о" (lambda () (interactive) (evil-normal-state) (set-lang "us")))
   (general-nmap "л" (lambda () (interactive) (evil-normal-state) (set-lang "us")))
   (general-nmap "ت" (lambda () (interactive) (evil-normal-state) (set-lang "us")))
   (general-nmap "ن" (lambda () (interactive) (evil-normal-state) (set-lang "us"))))
-  ;; (add-hook 'evil-mode-hook ; FIXME doesn't work
-  ;;       (lambda () (local-unset-key (kbd "M-i"))))
-  ;; (general-nmap :prefix "M"
-  ;;   "i" '(lambda ()
-  ;;          (set-lang "fa")
-  ;;          (evil-insert))))
+;; (add-hook 'evil-mode-hook ; FIXME doesn't work
+;;       (lambda () (local-unset-key (kbd "M-i"))))
+;; (general-nmap :prefix "M"
+;;   "i" '(lambda ()
+;;          (set-lang "fa")
+;;          (evil-insert))))
 
 (map! :leader
-    :desc "Open an external terminal here" "o x" #'xterm-here)
+      :desc "Open an external terminal here" "o x" #'xterm-here)
 
 (map! :leader :when (featurep! :ui tabs)
       :desc "Move tab to left"            "{" #'centaur-tabs-move-current-tab-to-left
@@ -110,7 +114,7 @@
       :desc "Select the last tab"         "9" #'centaur-tabs-select-end-tab
       :desc "Backward cycle through tabs" "[" #'centaur-tabs-backward
       :desc "Forward cycle through tabs"  "]" #'centaur-tabs-forward)
-        ;; (:map global-map "C-TAB" #'centaur-tabs-forward) ; FIXME
+;; (:map global-map "C-TAB" #'centaur-tabs-forward) ; FIXME
 
 ;; TODO Add -c flag to magit-log and bind it to Spc-g-l-a
 ;;; -----
