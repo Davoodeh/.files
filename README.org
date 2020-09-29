@@ -1,4 +1,4 @@
-#+TITLE: MY dotfiles
+#+TITLE: MY .files
 
 This is a dotfile repo forked from [[https://github.com/lukesmithxyz/voidrice][Luke Smith's]].
 
@@ -8,7 +8,7 @@ This is a dotfile repo forked from [[https://github.com/lukesmithxyz/voidrice][L
 As mentioned below, you can edit your =CF_ICONS= in the =~/.config/env= to change icons if you don't have the MDI installed.
 
 * Main differences
-Head over there to read the main README. In here, I just write the main notes until some day when I make a proper doc and merge it in master.
+In this README, I just write the main notes until some day when I make a proper doc and merge it in master.
 
 ** Centralized settings
 Almost most of the settings can be tweaked via =~/.config/env=.
