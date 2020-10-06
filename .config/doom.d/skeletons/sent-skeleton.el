@@ -1,13 +1,13 @@
 ;;; ~/.config/doom.d/skeletons/sent-skeleton.el -*- lexical-binding: t; -*-
-
 (define-skeleton sent-skeleton
   "Inserts a preSENT skeleton into current buffer."
   "Title: "
+
   "#+TITLE: \n"
   "#+AUTHOR: \n"
   "#+DATE: \n"
   "#+CREATOR: \n"
-  "* << EOF\n"
+  "* << EndOfSlide\n"
   "title\n"
   "By \n"
   "\n"
@@ -19,6 +19,6 @@
   "\n"
   "* IV. \n"
   "\n"
-  "* EOF\n"
+  "* EndOfSlide\n"
   "Thanks. 🙏\n"
   "Question? 🤔")

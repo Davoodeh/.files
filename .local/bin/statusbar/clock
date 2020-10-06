@@ -1,4 +1,5 @@
 #!/bin/sh
+# If provided with a command, it will also be displayed. E.g: clock 'jdate "+%b %d"' -> 2020 Sep 25 (Meh 04) (Fri) 12:08AM
 
 case $BLOCK_BUTTON in
     1) notify-send "This Month" "$(cal --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" && notify-send "Appointments" "$(calcurse -D ~/.config/calcurse -d3)" ;;
@@ -8,5 +9,6 @@ case $BLOCK_BUTTON in
     6) editor "$0" ;;
 esac
 
+[ -n "$1" ] && lt=" ($(eval "$1"))"
 # TODO make the icon more accurate
-date "+%Y %b %d (%a) $(ico clock-$(echo $(date '+%I')))%I:%M%p"
+date "+%Y %b %d$lt (%a) $(ico clock-$(echo $(date '+%I')))%I:%M%p"

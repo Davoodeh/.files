@@ -46,7 +46,7 @@ for dev in /sys/class/net/e*; do
 done
 
 # VPN (tunnels or vpn word in reslov.conf)
-out="$out$({ cat /etc/resolv.conf | grep -qi vpn || cat /sys/class/net/tun*/operstate 2>/dev/null; } && echo " $(ico vpn)")"
+out="$out$({ cat /etc/resolv.conf | grep -qi vpn || cat /sys/class/net/tun*/operstate >/dev/null 2>/dev/null; } && echo " $(ico vpn)")"
 
 # Tor
 out="$out$(pidof tor >/dev/null && echo " $(ico tor)")"

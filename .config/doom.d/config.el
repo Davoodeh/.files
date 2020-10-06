@@ -33,6 +33,18 @@
 ;;               ;; (nyan-start-animation)
 ;;               (nyan-toggle-wavy-trail))
 (use-package! tex-fold :defer t :config
+              (dolist (item '( ; Custom commands
+                              ("𝕋" ("T"))
+                              ("𝔽" ("F"))
+                              ("[r]" ("reft"))
+                              ;; Xepersian
+                              ("[f]" ("LTRfootnote"))
+                              ;; Default commands
+                              ("∧" ("land"))
+                              ("∨" ("lor"))
+                              ("￢" ("lnot"))
+                              ("―――" ("hline"))))
+                (add-to-list 'LaTeX-fold-math-spec-list item))
               (add-hook 'after-save-hook #'TeX-fold-buffer))
 ;;; -----
 
@@ -67,7 +79,7 @@
                               auto-mode-alist))
 ;; (setq company-idle-delay nil) ; disables Company-Auto-Completion (makes Emacs WAY smoother!)
 ;; (setq +latex-viewers '(zathura))
-(setq TeX-command-force "XeTeX")
+;; (setq TeX-command-force "XeTeX")
 (setq-default TeX-engine 'xetex)
 (setq-hook! 'sh-mode-hook +format-with :none)
 ;;; -----

@@ -1,12 +1,26 @@
 ;;; ~/.config/doom.d/skeletons/header-xelatex.el -*- lexical-binding: t; -*-
 
 (define-skeleton header-xelatex-skeleton
-  "Inserts a minimal Persian Latex skeleton into current buffer."
+  "Inserts a LaTeX template skeleton into current buffer."
   "Title: "
-  "\\input{header}\n"
+
+  "\\input{header" _ "}"
+  "\\author{}\n"
+  "\\title{}\n"
+  "\\date{\\today}\n\n"
+
   "\\begin{document}\n"
-  "\n"
+  "\\begin{titlingpage}\n"
+  "\\maketitle\n\n"
+
   "% فارسی\n"
-  _ "\n"
-  "\n"
-  "\\end{document}")
+  "% \\begin{abstract}\n"
+  "\\end{abstract}\n\n"
+
+  "\\tableofcontents\n"
+  "\\end{titlingpage}\n\n"
+
+  "% فارسی\n"
+  "\n\n"
+
+  "\\end{document}\n")
