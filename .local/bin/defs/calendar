@@ -1,2 +1,2 @@
 #!/bin/sh
-exec nohup $TERMINAL -e $CALENDAR "$@" >/dev/null 2>&1 &
+exec nohup $TERMINAL -e $CALENDAR  "$@" >/dev/null 2>&1 &

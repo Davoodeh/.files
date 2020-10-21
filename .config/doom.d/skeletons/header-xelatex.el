@@ -1,4 +1,4 @@
-;;; ~/.config/doom.d/skeletons/header-xelatex.el -*- lexical-binding: t; -*-
+;;; skeletons/header-xelatex.el -*- lexical-binding: t; -*-
 
 (define-skeleton header-xelatex-skeleton
   "Inserts a LaTeX template skeleton into current buffer."
@@ -15,7 +15,7 @@
 
   "% فارسی\n"
   "% \\begin{abstract}\n"
-  "\\end{abstract}\n\n"
+  "% \\end{abstract}\n\n"
 
   "\\tableofcontents\n"
   "\\end{titlingpage}\n\n"

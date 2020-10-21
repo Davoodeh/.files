@@ -1,4 +1,5 @@
-;;; ~/.config/doom.d/skeletons/mini-xelatex.el -*- lexical-binding: t; -*-
+;;; skeletons/mini-xelatex.el -*- lexical-binding: t; -*-
+
 (define-skeleton mini-xelatex-skeleton
   "Inserts a Persian LaTeX skeleton into current buffer."
   "Title: "
@@ -29,7 +30,7 @@
 
   "% فارسی\n"
   "% \\begin{abstract}\n"
-  "\\end{abstract}\n\n"
+  "% \\end{abstract}\n\n"
 
   "\\tableofcontents\n"
   "\\end{titlingpage}\n\n"

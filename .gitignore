@@ -40,6 +40,7 @@
 !/.config/etc/suckless/*/surf.c
 !/.config/etc/suckless/*/tabbed.c
 !/.config/doom.d/
+/.config/doom.d/custom.el
 !/.config/dunst/
 # !/.config/eog/
 !/.config/fontconfig/
@@ -135,6 +136,7 @@
 !/.local/share/applications/
 !/.local/share/larbs/
 !/.local/share/konsole/
+/.local/share/konsole/bookmark*
 
 # !/.PhpStorm*/
 # !/.PyCharm*/

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 conf="$HOME/.config"
-var(){ cat "$HOME/.config/vars/$1" 2>/dev/null ;} # for rapidly changing variables
+var() { cat "$HOME/.config/vars/$1" 2> /dev/null; } # for rapidly changing variables
 
 # do *NOT* omit the following XDG_*_HOME below
 XDG_CACHE_HOME="$HOME/.cache"
@@ -10,15 +10,12 @@ XDG_DATA_HOME="$HOME/.local/share"
 # Dirs are defined in ~/.config/user-dirs.dirs
 # Export XDG environmental variables from '~/.config/user-dirs.dirs', just in case
 . "$HOME/.config/user-dirs.dirs"
-export XDG_DESKTOP_DIR XDG_DOWNLOAD_DIR XDG_TEMPLATES_DIR XDG_PUBLICSHARE_DIR XDG_DOCUMENTS_DIR XDG_MUSIC_DIR XDG_PICTURES_DIR XDG_VIDEOS_DIR\
-    XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME
 
 # Important VARS
 WM="dwm"
 PROXY="$(var proxy)"
-DEFAULT_USER="$(whoami)" # Will remove username from the prompt
+DEFAULT_USER="$(whoami)" # will remove username from the prompt
 # KBLAYOUTS="$(var kblayouts)" # first one acts as the system default (in keyboard related scripts) if not set default is "us".
-export WM PROXY DEFAULT_USER KBLAYOUTS
 
 # Default programs:
 # IMPORTANT: Upon editing, also check and adjust ~/.local/bin/defs/mkdefs
@@ -34,17 +31,17 @@ MAIL="thunderbird"
 OFFICE="libreoffice"
 READER="zathura"
 RSS="rssadd"
-SOUND="pulsemixer" #|"alsamixer"
+SOUND="pulsemixer"
+# SOUND="alsamixer"
 TERMINAL="st"
+TERM="$TERMINAL"
 TM="htop"
 TORRENT="transadd"
 VIDEO="mpv"
-export ALTERNATIVE_EDITOR BROWSER CALCULATOR CALENDAR EDITOR FM IMAGE LOCK MAIL OFFICE READER RSS SOUND TERMINAL TORRENT TM VIDEO
 
 TSF="%y%m%d-%a-%H%M%S" # Timestamp format
-SOUNDL="5" # Amount of sound changed
-LIGHTL="5" # Amount of light changed
-export TSF SOUNDL LIGHTL
+SOUNDL="5"             # Amount of sound changed
+LIGHTL="5"             # Amount of light changed
 
 # ~/ Clean-up:
 ANDROID_SDK_HOME="$XDG_DATA_HOME/android"
@@ -70,8 +67,6 @@ ZDOTDIR="$conf/zsh"
 ZSH="$XDG_DATA_HOME/ohmyzsh"
 ZSH_CUSTOM="$ZDOTDIR/custom"
 ZSH_PLUGIND="/usr/share/zsh/plugins" # Default for AUR
-export ANDROID_SDK_HOME ANSIBLE_CONFIG CARGO_HOME CURL_HOME DOOMDIR GIT_CONFIG GTK2_RC_FILES HISTFILE HISTSIZE HISTFILESIZE\
-    INPUTRC KODI_DATA LESSHISTFILE NOTMUCH_CONFIG PASSWORD_STORE_DIR WINEPREFIX WGETRC ZDOTDIR ZSH ZSH_CUSTOM ZSH_PLUGIND
 
 # Other program settings:
 DICS="/usr/share/stardict/dic/"
@@ -83,6 +78,7 @@ http_proxy="$PROXY"
 https_proxy="$PROXY"
 # LOCATION="" # for weather module
 PASSWORD_STORE_DIR="$HOME/.local/share/password-store"
+PLANTUML_ENCONDING='deflate'
 QT_STYLE_OVERRIDE="kvantum" #| QT_QPA_PLATFORMTHEME="gtk2" # Have QT use gtk2 theme.
 # STATUSBAR="${WM}blocks" # is set in .xinitrc
 SUDO_ASKPASS="$HOME/.local/bin/dmenupass"
@@ -90,18 +86,15 @@ TLDR_PAGES_SOURCE_LOCATION="${TLDR_DOWNLOAD_CACHE_LOCATION:-file://$XDG_CACHE_HO
 VK_ICD_FILENAMES="/usr/share/vulkan/icd.d/intel_icd.x86_64.json:/usr/share/vulkan/icd.d/nvidia_icd.json"
 _JAVA_AWT_WM_NONREPARENTING=1 # Fix for Java applications in dwm
 #XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
-export DICS FZF_DEFAULT_OPTS ftp_proxy HISTORY_IGNORE HISTIGNORE http_proxy https_proxy LOCATION PASSWORD_STORE_DIR QT_STYLE_OVERRIDE\
-    QT_QPA_PLATFORMTHEME STATUSBAR SUDO_ASKPASS TLDR_PAGES_SOURCE_LOCATION VK_ICD_FILENAMES _JAVA_AWT_WM_NONREPARENTING
 
 # PATH, each line only contains one entry.
-while read -r entry ;do
+while read -r entry; do
     # Add it if it's  not redundant
     echo "$PATH" | grep -Eq "(^|:)$entry($|:)" || PATH="$PATH:$entry"
 done << EOT
     $(du "$HOME/.local/bin" | cut -f2 | tr '\n' ':')
     $HOME/.emacs.d/bin
 EOT
-export PATH
 
 LESS=-R
 LESSOPEN="| /usr/bin/highlight -O ansi %s 2>/dev/null"
@@ -112,10 +105,10 @@ LESS_TERMCAP_se="$(printf '%b' '[0m')"
 LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"
 LESS_TERMCAP_ue="$(printf '%b' '[0m')"
 LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
-export LESS LESSOPEN LESS_TERMCAP_mb LESS_TERMCAP_md LESS_TERMCAP_me LESS_TERMCAP_se LESS_TERMCAP_so LESS_TERMCAP_ue LESS_TERMCAP_us
 
 # System's icons: Refer to `ico` for more details
 # Change soft links instead of modifying these below
 CF_ICONS="$(var cf.ico)"
 LF_ICONS="$(var lf.ico)"
-export LF_ICONS CF_ICONS
+
+export ALTERNATE_EDITOR ANDROID_SDK_HOME ANSIBLE_CONFIG BROWSER CALCULATOR CALENDAR CARGO_HOME CF_ICONS CURL_HOME DEFAULT_USER DICS DOOMDIR EDITOR FM ftp_proxy FZF_DEFAULT_OPTS GIT_CONFIG GNUPGHOME GTK2_RC_FILES HISTFILE HISTFILESIZE HISTIGNORE HISTORY_IGNORE HISTSIZE https_proxy http_proxy IMAGE INPUTRC KBLAYOUTS KODI_DATA LESS LESSHISTFILE LESSOPEN LESS_TERMCAP_mb LESS_TERMCAP_md LESS_TERMCAP_me LESS_TERMCAP_se LESS_TERMCAP_so LESS_TERMCAP_ue LESS_TERMCAP_us LF_ICONS LOCATION LOCK MAIL NOTMUCH_CONFIG OFFICE PASSWORD_STORE_DIR PASSWORD_STORE_DIR PATH PLANTUML_ENCONDING PROXY QT_STYLE_OVERRIDE READER RSS SOUND STATUSBAR SUDO_ASKPASS TERM TERMINAL TLDR_DOWNLOAD_CACHE_LOCATION TLDR_PAGES_SOURCE_LOCATION TM TMUX_TMPDIR TORRENT VIDEO VK_ICD_FILENAMES WGETRC WINEPREFIX WM XAUTHORITY XDG_CACHE_HOME XDG_CONFIG_HOME XDG_DATA_HOME XDG_DESKTOP_DIR XDG_DOCUMENTS_DIR XDG_DOWNLOAD_DIR XDG_MUSIC_DIR XDG_PICTURES_DIR XDG_PUBLICSHARE_DIR XDG_TEMPLATES_DIR XDG_VIDEOS_DIR ZDOTDIR ZSH ZSH_CUSTOM ZSH_PLUGIND _JAVA_AWT_WM_NONREPARENTING

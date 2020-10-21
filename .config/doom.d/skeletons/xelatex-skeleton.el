@@ -1,4 +1,5 @@
-;;; ~/.config/doom.d/skeletons/xelatex-skeleton.el -*- lexical-binding: t; -*-
+;;; skeletons/xelatex-skeleton.el -*- lexical-binding: t; -*-
+
 (define-skeleton xelatex-skeleton
   "Inserts a Farsi LaTeX skeleton into current buffer."
   "Title: "
@@ -7,9 +8,9 @@
   "\\usepackage[pass]{geometry}\n\n"
 
   "\\usepackage[backend=biber, sorting=none]{biblatex}\n"
-  "\\begin{filecontents}{\\jobname.bib.tmp}\n"
+  "\\begin{filecontents}{\\jobname.tmp}\n"
   "\\end{filecontents}\n"
-  "\\addbibresource{\\jobname.bib.tmp}\n\n"
+  "\\addbibresource{\\jobname.tmp}\n\n"
 
   "\\usepackage{\n"
   "  fullpage,\n"
@@ -21,7 +22,7 @@
   "  graphicx,\n"
   "  amsmath, amssymb, amsthm,\n"
   "  tikz,\n"
-  "}\n"
+  "}\n\n"
 
   "\\usepackage[linesnumbered,ruled]{algorithm2e}\n"
   "\\newenvironment{algo}[1][H]{\\renewcommand{\\algorithmcfname}{الگوریتم}\\begin{algorithm}[#1]}{\\end{algorithm}}\n"
@@ -42,7 +43,7 @@
 
   "% فارسی\n"
   "% \\begin{abstract}\n"
-  "\\end{abstract}\n\n"
+  "% \\end{abstract}\n\n"
 
   "\\tableofcontents\n"
   "\\end{titlingpage}\n\n"

@@ -1,2 +1,2 @@
 #!/bin/sh
-exec nohup $EDITOR "$@" >/dev/null 2>&1 &
+exec nohup $EDITOR  "$@" >/dev/null 2>&1 &

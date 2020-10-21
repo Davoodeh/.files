@@ -18,7 +18,7 @@ static const Block blocks[] = {
 	{"", "kbselect", 0,  30},
     {"", "cpu",      10, 18},
     {"", "battery",  5,  3},
-    {"", "internet", 3,  4},
+    {"", "internet", 5,  4},
     {"", "volume",   0,  10},
     {"", "clock",    60, 1},
     {"", "help-icon", 0, 15},

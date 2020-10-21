@@ -3,13 +3,19 @@
 ;;; -----
 ;;; Functions
 (defun load-dir (dir) ; loads other dirs relative to DOOMDIR
-  (setq dir (concat (or (getenv "DOOMDIR") "~/.doom.d") "/" dir))
-  (let ((load-it
-         (lambda (f) (load-file (concat (file-name-as-directory dir) f)))))
+  (setq dir (concat (file-name-directory (or load-file-name buffer-file-name)) dir))
+  (let ((load-it (lambda (f) (load-file (concat (file-name-as-directory dir) f)))))
     (mapc load-it (directory-files dir nil "\\.el$"))))
 
 (defun set-lang (layout) ; changes keyboard layout
   (shell-command (concat "kblayout set " layout) nil nil))
+
+(defun capsoff ()
+  (shell-command "xset q | grep -q '.*Caps\sLock.*on' && xdotool key Caps_Lock" nil nil))
+
+(defun set-bidi-env ()
+  (interactive)
+  (setq bidi-paragraph-direction 'nil))
 
 (defun xterm-here () ; opens an external terminal in the working directory
   (interactive "@")
@@ -28,12 +34,12 @@
 (add-hook 'find-file-hook 'auto-insert)
 (general-evil-setup) ; enables General commands in this file
 (auto-save-visited-mode)
-;; (use-package! nyan-mode :config
-;;               (nyan-mode)
-;;               ;; (nyan-start-animation)
-;;               (nyan-toggle-wavy-trail))
+(use-package! nyan-mode :config
+              (nyan-mode)
+              ;; (nyan-start-animation)
+              (nyan-toggle-wavy-trail))
 (use-package! tex-fold :defer t :config
-              (dolist (item '( ; Custom commands
+              (dolist (item '(; Custom commands
                               ("𝕋" ("T"))
                               ("𝔽" ("F"))
                               ("[r]" ("reft"))
@@ -44,8 +50,25 @@
                               ("∨" ("lor"))
                               ("￢" ("lnot"))
                               ("―――" ("hline"))))
-                (add-to-list 'LaTeX-fold-math-spec-list item))
+                      (add-to-list 'LaTeX-fold-math-spec-list item))
               (add-hook 'after-save-hook #'TeX-fold-buffer))
+(set-ligatures! 'emacs-lisp-mode 'scheme-mode
+                ;; Functional
+                :lambda        "lambda"
+                :def           "defun"
+                ;; Types
+                :null          "null"
+                :true          "t"
+                :true          "T"
+                :false         "nil"
+                ;; Flow
+                :not           "not"
+                :in            "in"
+                :and           "and"
+                :or            "or"
+                :for           "for"
+                ;; Other
+                :dot           ".")
 ;;; -----
 
 ;;; -----
@@ -57,10 +80,12 @@
  '(centaur-tabs-set-icons t)
  '(centaur-tabs-gray-out-icons 'buffer) ; grays out icons for unselected tabs
  '(centaur-tabs-height 20)
- '(doom-font (font-spec :family "Iosevka" :size 16 :inherit 'italic))
+ '(doom-font (font-spec :family "Iosevka" :size 16 :inherit '(italic bold)))
  ;; '(line-spacing 8)
  '(lsp-log-io t) ; shows lsp-log in an accessible buffer
  '(lsp-keymap-prefix "M-l") ; for Window Managers that use the Super key
+ '(org-latex-compiler "xelatex")
+ '(org-latex-bib-compiler "biber")
  '(display-line-number t)
  '(display-line-numbers-type 'relative)
  '(display-time-default-load-average 3) ; shows a simple clock (load time not included)
@@ -70,18 +95,58 @@
  '(global-prettify-symbols-mode) ; disable it already I know you all hate it (why?)
  '(treemacs-position (quote right)))
 
-(setq auto-insert-alist '( ; insers skeletons automatically
+(setq auto-insert-alist '(; insers skeletons automatically
                           ("\\.sent\\'" . sent-skeleton)
                           ("\\.snt\\'"  . sent-skeleton)))
-(setq auto-mode-alist (append '( ; opens specific extensions with given modes
+(setq auto-mode-alist (append '(; opens specific extensions with given modes
                                 ("\\.sent\\'" . org-mode)
                                 ("\\.snt\\'"  . org-mode))
                               auto-mode-alist))
-;; (setq company-idle-delay nil) ; disables Company-Auto-Completion (makes Emacs WAY smoother!)
-;; (setq +latex-viewers '(zathura))
-;; (setq TeX-command-force "XeTeX")
+;; (setq company-idle-delay nil) ; disables Company-Auto-Completion (makes Emacs WAY, WAY smoother!)
+(setq LaTeX-command-style '(("" "%(PDF)%(latex) -shell-escape %S%(PDFout)")))
 (setq-default TeX-engine 'xetex)
-(setq-hook! 'sh-mode-hook +format-with :none)
+(setq org-latex-listings 'minted)
+(setq org-latex-caption-above '(table src-block))
+(after! ob-php
+        (defun org-babel-execute:php (body params)
+          "Orgmode Babel PHP evaluate function for `BODY' with `PARAMS'."
+          (let* ((cmd (concat org-babel-php-command " " org-babel-php-command-options)))
+                (org-babel-eval cmd body))))
+(setq org-latex-packages-alist '("\\usepackage[pass]{geometry}"
+                                 "\\usepackage{fontspec,xpatch,fullpage,float,xcolor}"
+                                 "\\usepackage[newfloat]{minted}"))
+(setq org-preview-latex-default-process 'dvisvgm)
+(setq org-preview-latex-process-alist '((dvisvgm
+                                         :programs ("xelatex" "dvisvgm")
+                                         :description "xdv > svg"
+                                         :message "you need to install the programs: xelatex and dvisvgm."
+                                         :image-input-type "xdv"
+                                         :image-output-type "svg"
+                                         :image-size-adjust (1.7 . 1.5)
+                                         :latex-compiler ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+                                         :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))))
+(setq org-latex-pdf-process
+;; latexmk -pdf -pdflatex='xelatex -shell-escape -interaction nonstopmode %O -output-directory . %S' lisp.tex
+      '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "%bib %b"
+        "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+(setq org-latex-minted-options
+      '(("linenos") ("mathescape")))
+(setq +format-on-save-enabled-modes
+      '(not sql-mode         ; sqlformat is currently broken
+            tex-mode         ; latexindent is broken
+            latex-mode))
+(set-formatter! 'shfmt (concat "shfmt -bn -ci -sr -i 4 -ln "
+                               (cl-case (and (boundp 'sh-shell) (symbol-value 'sh-shell))
+                                        (bash "bash")
+                                        (mksh "mksh")
+                                        (t "posix")))
+                :modes '(sh-mode))
+(setq-hook! 'lisp-mode-hook +format-with 'cljfmt)
+(setq-hook! 'emacs-lisp-mode-hook +format-with 'cljfmt)
+(setq geiser-default-implementation 'racket)
+(add-hook 'org-mode-hook 'set-bidi-env)
 ;;; -----
 
 ;;; -----
@@ -89,15 +154,12 @@
 ;; XXX Why on the earth it's impossible to use a var as input for general-imap?
 ;; TODO make all of it only one function
 (when (featurep! :editor evil)
-  (general-imap "j" (general-key-dispatch '(lambda () (interactive) (insert "j"))
-                      :timeout 0.25
-                      "j" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
-  (general-imap "ت" (general-key-dispatch '(lambda () (interactive) (insert "ت"))
-                      :timeout 0.25
-                      "ت" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
-  (general-imap "о" (general-key-dispatch '(lambda () (interactive) (insert "о"))
-                      :timeout 0.25
-                      "о" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
+  (general-imap "j" (general-key-dispatch 'self-insert-command :timeout 0.25 "j" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
+  (general-imap "k" (general-key-dispatch 'self-insert-command :timeout 0.25 "k" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
+  (general-imap "ت" (general-key-dispatch 'self-insert-command :timeout 0.25 "ت" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
+  (general-imap "о" (general-key-dispatch 'self-insert-command :timeout 0.25 "о" '(lambda () (interactive) (evil-normal-state) (set-lang "us"))))
+  (general-imap "J" (general-key-dispatch 'self-insert-command :timeout 0.25 "J" '(lambda () (interactive) (evil-normal-state) (capsoff))))
+  (general-imap "K" (general-key-dispatch 'self-insert-command :timeout 0.25 "K" '(lambda () (interactive) (evil-normal-state) (capsoff))))
   (general-nmap "о" (lambda () (interactive) (evil-normal-state) (set-lang "us")))
   (general-nmap "л" (lambda () (interactive) (evil-normal-state) (set-lang "us")))
   (general-nmap "ت" (lambda () (interactive) (evil-normal-state) (set-lang "us")))

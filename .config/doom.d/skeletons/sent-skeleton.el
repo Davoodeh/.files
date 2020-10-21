@@ -1,4 +1,5 @@
-;;; ~/.config/doom.d/skeletons/sent-skeleton.el -*- lexical-binding: t; -*-
+;;; skeletons/sent-skeleton.el -*- lexical-binding: t; -*-
+
 (define-skeleton sent-skeleton
   "Inserts a preSENT skeleton into current buffer."
   "Title: "

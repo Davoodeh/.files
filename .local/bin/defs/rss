@@ -1,2 +1,2 @@
 #!/bin/sh
-exec nohup /usr/bin/env $RSS "$@" >/dev/null 2>&1 &
+exec nohup /usr/bin/env $RSS  "$@" >/dev/null 2>&1 &

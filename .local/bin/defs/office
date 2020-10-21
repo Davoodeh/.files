@@ -1,2 +1,2 @@
 #!/bin/sh
-exec nohup $OFFICE "$@" >/dev/null 2>&1 &
+exec nohup $OFFICE  "$@" >/dev/null 2>&1 &
