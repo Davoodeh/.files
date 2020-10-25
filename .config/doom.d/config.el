@@ -84,8 +84,6 @@
  ;; '(line-spacing 8)
  '(lsp-log-io t) ; shows lsp-log in an accessible buffer
  '(lsp-keymap-prefix "M-l") ; for Window Managers that use the Super key
- '(org-latex-compiler "xelatex")
- '(org-latex-bib-compiler "biber")
  '(display-line-number t)
  '(display-line-numbers-type 'relative)
  '(display-time-default-load-average 3) ; shows a simple clock (load time not included)
@@ -105,34 +103,44 @@
 ;; (setq company-idle-delay nil) ; disables Company-Auto-Completion (makes Emacs WAY, WAY smoother!)
 (setq LaTeX-command-style '(("" "%(PDF)%(latex) -shell-escape %S%(PDFout)")))
 (setq-default TeX-engine 'xetex)
-(setq org-latex-listings 'minted)
-(setq org-latex-caption-above '(table src-block))
 (after! ob-php
         (defun org-babel-execute:php (body params)
           "Orgmode Babel PHP evaluate function for `BODY' with `PARAMS'."
           (let* ((cmd (concat org-babel-php-command " " org-babel-php-command-options)))
                 (org-babel-eval cmd body))))
-(setq org-latex-packages-alist '("\\usepackage[pass]{geometry}"
-                                 "\\usepackage{fontspec,xpatch,fullpage,float,xcolor}"
-                                 "\\usepackage[newfloat]{minted}"))
-(setq org-preview-latex-default-process 'dvisvgm)
-(setq org-preview-latex-process-alist '((dvisvgm
-                                         :programs ("xelatex" "dvisvgm")
-                                         :description "xdv > svg"
-                                         :message "you need to install the programs: xelatex and dvisvgm."
-                                         :image-input-type "xdv"
-                                         :image-output-type "svg"
-                                         :image-size-adjust (1.7 . 1.5)
-                                         :latex-compiler ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
-                                         :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))))
-(setq org-latex-pdf-process
-;; latexmk -pdf -pdflatex='xelatex -shell-escape -interaction nonstopmode %O -output-directory . %S' lisp.tex
-      '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
-        "%bib %b"
-        "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
-        "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-(setq org-latex-minted-options
-      '(("linenos") ("mathescape")))
+(after! org
+        (setq org-preview-latex-default-process 'xdvisvgm)
+        (add-to-list 'org-preview-latex-process-alist '(xdvisvgm
+                                                        :programs ("xelatex" "dvisvgm")
+                                                        :description "xdv > svg"
+                                                        :message "you need to install the programs: xelatex and dvisvgm."
+                                                        :image-input-type "xdv"
+                                                        :image-output-type "svg"
+                                                        :image-size-adjust (1.7 . 1.5)
+                                                        :latex-compiler ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+                                                        :image-converter ("dvisvgm %f -n -b min -c %S -o %O")))
+        (after! ox-latex
+                (add-to-list 'org-latex-classes '("xa4article"
+                                                  "\\documentclass[a4paper]{article}\n"
+                                                  ("\\section{%s}" . "\\section*{%s}")
+                                                  ("\\subsection{%s}" . "\\subsection*{%s}")
+                                                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                                                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                                                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                (setq
+                 org-latex-bib-compiler "biber"
+                 org-latex-caption-above '(table src-block)
+                 org-latex-compiler "xelatex"
+                 org-latex-default-class "xa4article"
+                 org-latex-listings 'minted
+                 org-latex-minted-options '(("linenos") ("mathescape"))
+                 org-latex-toc-command "\\tableofcontents\n\\clearpage"
+                 org-latex-pdf-process (mapcar (lambda (s)
+                                                       (replace-regexp-in-string "%latex " "%latex -shell-escape " s))
+                                               org-latex-pdf-process) ; -shell-escape needed for minted
+                 org-latex-packages-alist '("\\usepackage[pass]{geometry}"
+                                            "\\usepackage{fontspec, xpatch, fullpage, float, xcolor, titling}"
+                                            "\\usepackage[newfloat]{minted}"))))
 (setq +format-on-save-enabled-modes
       '(not sql-mode         ; sqlformat is currently broken
             tex-mode         ; latexindent is broken
