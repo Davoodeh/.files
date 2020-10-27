@@ -1,7 +1,7 @@
 #!/bin/sh
 
 conf="$HOME/.config"
-var() { cat "$HOME/.config/vars/$1" 2> /dev/null; } # for rapidly changing variables
+var() { cat "$HOME/.config/vars/$1" 2>/dev/null; } # for rapidly changing variables
 
 # do *NOT* omit the following XDG_*_HOME below
 XDG_CACHE_HOME="$HOME/.cache"
@@ -91,7 +91,7 @@ _JAVA_AWT_WM_NONREPARENTING=1 # Fix for Java applications in dwm
 while read -r entry; do
     # Add it if it's  not redundant
     echo "$PATH" | grep -Eq "(^|:)$entry($|:)" || PATH="$PATH:$entry"
-done << EOT
+done <<EOT
     $(du "$HOME/.local/bin" | cut -f2 | tr '\n' ':')
     $HOME/.emacs.d/bin
 EOT

@@ -1,2 +1,2 @@
 #!/bin/sh
-exec nohup tabbed -r 2 $TERMINAL -w '' -e "$@" >/dev/null 2>&1 &
+exec nohup tabbed -r 2 $TERMINAL -w '' "$@" >/dev/null 2>&1 &

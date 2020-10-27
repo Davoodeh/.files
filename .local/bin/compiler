@@ -30,15 +30,18 @@ case "$ext" in
     [0-9]) preconv "$file" | refer -PS -e | groff -mandoc -T pdf >"$base".pdf ;;
     c) cc "$file" -o "$base" && "$base" ;;
     go) go run "$file" ;;
+    cpp) g++ "$file" -o "$base" && "$base" ;;
     h) sudo make install ;;
     m) octave "$file" ;;
-    md) if [ -x "$(command -v lowdown)" ]; then
-        lowdown -d nointem -e super "$file" -Tms | groff -mpdfmark -ms -kept >"$base".pdf
-    elif [ -x "$(command -v groffdown)" ]; then
-        groffdown -i "$file" | groff >"$base.pdf"
-    else
-        pandoc "$file" --pdf-engine=xelatex -o "$base".pdf
-    fi ;;
+    md)
+        if [ -x "$(command -v lowdown)" ]; then
+            lowdown -d nointem -e super "$file" -Tms | groff -mpdfmark -ms -kept >"$base".pdf
+        elif [ -x "$(command -v groffdown)" ]; then
+            groffdown -i "$file" | groff >"$base.pdf"
+        else
+            pandoc "$file" --pdf-engine=xelatex -o "$base".pdf
+        fi
+        ;;
     mom) preconv "$file" | refer -PS -e | groff -mom -kept -T pdf >"$base".pdf ;;
     ms) preconv "$file" | refer -PS -e | groff -me -ms -kept -T pdf >"$base".pdf ;;
     py) python "$file" ;;

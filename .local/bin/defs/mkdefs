@@ -65,7 +65,7 @@ checkvar TM         '$TERMINAL -e' 'Task Manager'
 checkvar VIDEO      ''             'Video Player'
 
 { command -v tabbed >/dev/null && [ "$TERMINAL" = "st" ]; } &&
-    checkvar TERMINAL 'tabbed -r 2'       ''             "-w '' -e" ||
+    checkvar TERMINAL 'tabbed -r 2'       ''             "-w ''" ||
     checkvar TERMINAL
 
 echo "All done. Before using scripts and shortcuts (as default applications), be sure that script location ($dir) is in your \$PATH and shortcuts are set in your $HOME/.config/mimeapps.list."

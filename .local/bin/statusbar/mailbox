@@ -5,7 +5,7 @@
 
 case $BLOCK_BUTTON in
     1) mail ;;
-    2) setsid -f mailsync >/dev/null ;;
+    2) setsid -f mw sync >/dev/null ;;
     3) notify-send "$(ico mail) Mail module" "\- Shows unread mail
 - Shows $(ico sync) if syncing mail
 - Left click opens neomutt

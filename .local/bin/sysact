@@ -11,9 +11,9 @@ case "$(readlink -f /sbin/init)" in
         ;;
 esac
 
-pidof i3 && renew="i3 restart" && leave="i3 exit" && wm="i3"
-pidof dwm && renew="kill -HUP $(pidof -s dwm)" && leave="kill -TERM $(pidof -s dwm)" && wm="dwm"
-pidof bspwm && renew="${XDG_CONFIG_HOME:-$HOME/.config}/bspwm/bspwmrc" && wm="bspwm"
+pgrep -u "$USER" "\bi3$" && renew="i3 restart" && leave="i3 exit" && wm="i3"
+pid=$(pgrep -u "$USER" "\bdwm$") && renew="kill -HUP $pid" && leave="kill -TERM $pid" && wm="dwm"
+pgrep -u "$USER" "\bbspwm$" && renew="${XDG_CONFIG_HOME:-$HOME/.config}/bspwm/bspwmrc" && wm="bspwm"
 
 cmds="\
 $(ico lock) lock:               lock

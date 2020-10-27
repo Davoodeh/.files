@@ -2,19 +2,13 @@
 
 transmission-remote -l | grep % |
     sed " # This first sed command is to ensure a desirable order with sort
-    s/.*Stopped.*/A/g;
-    s/.*Seeding.*/Z/g;
-    s/.*100%.*/N/g;
-    s/.*Idle.*/B/g;
-    s/.*Uploading.*/L/g;
-    s/.*%.*/M/g" |
-    sort -h | uniq -c | sed " # Now we replace the standin letters with icons.
-                s/A/$(ico torrent-seed-x)/g;
-                s/B/$(ico torrent-idle)/g;
-                s/L/$(ico up)/g;
-                s/M/$(ico down)/g;
-                s/N/$(ico tick-cloud)/g;
-                s/Z/$(ico torrent-seed)/g" | awk '{print $2 $1}' | paste -sd ' '
+        s/.*Stopped.*/A $(ico torrent-seed-x)/;
+        s/.*Seeding.*/Z $(ico torrent-seed)/;
+        s/.*100%.*/N $(ico tick-cloud)/;
+        s/.*Idle.*/B $(ico torrent-idle)/;
+        s/.*Uploading.*/L $(ico up)/;
+        s/.*%.*/M $(ico down)/" |
+    sort -h | uniq -c | awk '{print $3 $1}' | paste -sd ' '
 
 case $BLOCK_BUTTON in
     1) setsid -f "$TERMINAL" -e tremc ;;
