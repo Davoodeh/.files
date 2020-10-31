@@ -2,9 +2,27 @@
 
 This is a dotfile repo forked from [[https://github.com/lukesmithxyz/voidrice][Luke Smith's]].
 
+* Contents :TOC_3:noexport:
+- [[#requirements][Requirements]]
+- [[#main-differences][Main differences]]
+  - [[#centralized-settings][Centralized settings]]
+    - [[#external-and-rapid-changing-variables]["External and rapid changing variables"]]
+    - [[#easy-to-modify-icons][Easy to modify icons]]
+  - [[#clean-ups][Clean ups]]
+  - [[#gitignore][GITIGNORE!]]
+  - [[#modified-and-extra-scripts][Modified and extra scripts]]
+  - [[#less-hostile-toward-anything][Less hostile toward... anything?]]
+    - [[#scripts-and-variables-for-easier-localization][Scripts and variables for easier localization]]
+  - [[#emacs-suckless-and-other-configs-included][Emacs, Suckless and other configs included]]
+  - [[#default-applications][Default applications]]
+- [[#end-notes][End notes]]
+- [[#next-step][Next step]]
+  - [[#known-issues][Known issues]]
+
 * Requirements
 +In addition to Luke's dotfiles you'll need+:
-+- [[https://github.com/Templarian/MaterialDesign][Material Design Icons git]]+
+- +[[https://github.com/Templarian/MaterialDesign][Material Design Icons git]]+
+
 As mentioned below, you can edit your =CF_ICONS= in the =~/.config/env= to change icons if you don't have the MDI installed.
 
 * Main differences
@@ -29,7 +47,9 @@ Instantly applies!
 *** Easy to modify icons
 Material icons (requires =material-design-icons-git= AUR package.)! Icons can be changed by editing =CF_ICONS= in the =~/.config/env= file (MAGIC!).
 Or even better you can edit the =~/.config/vars/cf.ico= link and point it to another set available in there (or simply make another).
-** Minimum amount of tabs plaguing files
+** Clean ups
+Everything is cleaned up with a formatter program, just as expected from civils.
+Also tabs are reduced to minimum.
 ** GITIGNORE!
 The =.gitignore= in this repo is a reverse file that un-ignores everything you list there.
 Therefore, you can have the repo directly under your =$HOME= without the fear that =git status= output will fill your ram.
@@ -49,7 +69,12 @@ Changes happen so frequently in this repo.
 I make a lot of stupid decisions and experimenting.
 
 I also love extra features and "bloat" stuff. So, if you see another implementation of your closed PR to Luke's repo don't be surprised.
-** Emacs configs included
+*** Scripts and variables for easier localization
+- Keyboard layout is easy to change.
+- Suckless programs are configed to work with KeyCodes rather than KeySyms (no matter the layout you will get what you want).
+- Scripts have minor tweaks that make them more extensible for easier localization.
+  For example ~clock~ can be changed to ~clock 'jdate "+%d"'~ in your blocks or =.aliasrc= and you'll see a Persian version of calendar next to your default Gregorian.
+** Emacs, Suckless and other configs included
 ** Default applications
 Default applications can be called about everywhere since they are not simply aliases or variables.
 =~/.local/bin/defs/mkdefs= makes these files both in script form and in =.desktop= form.

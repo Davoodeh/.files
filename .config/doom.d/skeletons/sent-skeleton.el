@@ -23,3 +23,7 @@
   "* EndOfSlide\n"
   "Thanks. 🙏\n"
   "Question? 🤔")
+
+(add-to-list 'auto-insert-alist '(; insers skeletons automatically
+                                  ("\\.sent\\'" . sent-skeleton)
+                                  ("\\.snt\\'"  . sent-skeleton)))

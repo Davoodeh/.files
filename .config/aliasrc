@@ -39,8 +39,8 @@ alias \
     aria2c="aria2c -c -j 1 -Z -P -s 16 -x 16" \
     tmux="tmux -f ~/.config/tmux.conf" \
     diff='diff -W $(( $(tput cols) - 2 ))'
-command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d" # uses neovim for vim if present.
-command -v tabbed >/dev/null && alias surf="tabbed -r 2 surf -pe ''"
+[ -x "$(command -v nvim)" ] && alias vim="nvim" vimdiff="nvim -d" # uses neovim for vim if present.
+[ -x "$(command -v tabbed)" ] && alias surf="tabbed -r 2 surf -pe ''"
 # TODO Instead of the line below take manjaro's aproach to Dmenu!
 [ -f "$HOME/.cache/wal/colors.sh" ] && . $HOME/.cache/wal/colors.sh && alias dmenu_run='dmenu_run -nb "$color0" -nf "$color15" -sb "$color1" -sf "$color15"'
 
