@@ -1,3 +1,6 @@
+[submodule "doom.d"]
+	path = .config/doom.d
+	url = https://github.com/davoodeh/doom.d.git
 [submodule "iosevka-emacs"]
 	path = .local/share/fonts/iosevka-emacs
 	url = https://github.com/jsravn/iosevka-emacs.git
