@@ -6,21 +6,12 @@
 
 (load! "+helpers")
 
-(load-dir "skeletons")
-(plugin "+visuals")
-(when (featurep! :lang latex)
-  (plugin "+xetex")
-  (plugin "+minted"))
-(when (featurep! :tools format)
-  (plugin "+format"))
-(when (featurep! :lang org)
-  (load! "+org"))
-(load! "+misc")
+(setq mono-font "Iosevka")
 
 (custom-set-variables
  '(auto-insert-query nil)
  '(bidi-paragraph-direction nil) ; ensures Emacs' default behaviour
- '(doom-font (font-spec :family "Iosevka" :size 16 :inherit '(italic bold)))
+ '(doom-font (font-spec :family mono-font :size 16 :inherit '(italic bold)))
  ;; '(line-spacing 8)
  '(display-line-number t)
  '(display-line-numbers-type 'relative)
@@ -35,6 +26,17 @@
 (add-hook 'find-file-hook 'auto-insert)
 (auto-save-visited-mode)
 ;;; -----
+
+(load-dir "skeletons")
+(plugin "+visuals")
+(when (featurep! :lang latex)
+  (plugin "+xetex")
+  (plugin "+minted"))
+(when (featurep! :tools format)
+  (plugin "+format"))
+(when (featurep! :lang org)
+  (load! "+org"))
+(load! "+misc")
 
 ;;; -----
 ;;; Binds

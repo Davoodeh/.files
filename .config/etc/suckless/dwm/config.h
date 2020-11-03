@@ -1,3 +1,4 @@
+/* -*- eval: (format-all-mode 0); -*- */
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
@@ -201,14 +202,14 @@ static Key keys[] = {
 	{ MODKEY,               /*F3*/  69,       spawn,      SHCMD("displayselect") },
 	{ MODKEY,               /*F4*/  70,       spawn,      SHCMD("sound; kill -44 $(pidof dwmblocks)") },
 	{ Mod1Mask,             /*F4*/  70,       killclient, {0} },
-	{ MODKEY,               /*F5*/  71,       xrdb,       { .v = NULL } },
+	{ MODKEY,               /*F5*/  71,       spawn,      SHCMD("killall screenkey || screenkey &") },
 	{ MODKEY,               /*F6*/  72,       spawn,      SHCMD("torwrap") },
 	{ MODKEY,               /*F7*/  73,       spawn,      SHCMD("td-toggle") },
 	{ MODKEY,               /*F8*/  74,       spawn,      SHCMD("mailsync") },
 	{ MODKEY,               /*F9*/  75,       spawn,      SHCMD("dmenumount") },
 	{ MODKEY,               /*F10*/ 76,       spawn,      SHCMD("dmenuumount") },
 	{ MODKEY,               /*F11*/ 95,       spawn,      SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
-	{ MODKEY,               /*F12*/ 96,       spawn,      SHCMD("killall screenkey || screenkey &") },
+	{ MODKEY,               /*F12*/ 96,       xrdb,       { .v = NULL } }, /* Do not change, is bound to be pressed upon wallpaper change in `setbg`, refreshes colors */
 	{ MODKEY,               /*SPC*/ 65,       spawn,      SHCMD("kblayout cycle $(cat $HOME/.config/vars/kblayouts)") },
 	{ Mod1Mask,             /*SPC*/ 65,       zoom,       {0} },
 	{ MODKEY|ShiftMask,     /*SPC*/ 65,       togglefloating, {0} },

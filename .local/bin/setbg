@@ -1,5 +1,41 @@
 #!/bin/sh
-# TODO write $helpmsg
+# Location of link to wallpaper link.
+bgloc="${XDG_DATA_HOME:-$HOME/.local/share}/bg"
+helpmsg='Usage: setbg [FLAGS...] [-f] [FILE/S]
+If prvoided with false inputs this message will be prompted.
+
+Requirements are `xwallpaper` (optionally `wal` for starred commands and `notify-send`).
+
+Accepts file, link or directory as the main input.
+If given a directory it will select wallpaper in it randomly.
+
+Upon running with a file address a link will be created in
+the default location at "$XDG_DATA_HOME/bg" or ".local/share/bg".
+If run without any flags or file, your wallpaper will be refreshed.
+
+Viable flags:
+  -f, --file, -p, --directory, -i, --input
+          wallpaper file
+  -c, --config
+          input flags given to xwallpaper (e.g: "--no-randr --tile")
+  -d, --delete-original
+          deletes the original wallpaper file after moving it
+  -t, --temporary
+          does not overwrite the cache link of the default wallpaper
+* -n, --nowal
+          does not run wall after refreshing/setting the wallpaper
+  -q, --quite
+          does not sent notifications (suitable for startup binds)
+  -h, --help
+          shows this message
+
+If provided with no flag the first argument is read as a file.
+
+Examples:
+  setbg mywallpaper.png
+  setbg wallpapers.d/
+  setbg --temporary --nowal --config "--no-randr --tile" --quite --file testing-pattern.jpg
+  setbg --quite'
 
 checkin() { # Checks paramater and respond. $2 is the flag and $1 is value.
     # shellcheck disable=SC2015
@@ -20,21 +56,23 @@ while true; do case "$1" in
     *) break ;; # No more options
 esac; done
 
-# Location of link to wallpaper link.
-bgloc="${XDG_DATA_HOME:-$HOME/.local/share}/bg"
-
 if [ -n "$temp" ]; then
     [ -n "$input" ] && bgloc="$input" || echo "Temporary flag is risen but no temporary file has been declared. Using default!"
 elif [ -n "$input" ]; then
     if [ -f "$input" ]; then
-        ln -sf "$(readlink -f "$input")" "$bgloc"
-        [ -n "$deleteorig" ] && rm "$input"
+        if [ -n "$deleteorig" ]; then
+            mv "$(readlink -f "$input")" "$bgloc"
+            rm "$input"
+        else
+            rm -f "$bgloc"
+            ln -sf "$(readlink -f "$input")" "$bgloc"
+        fi
     elif [ -d "$input" ]; then
         ln -sf "$(find "$(readlink -f "$input")" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)" "$bgloc"
         notifmsg="Random Wallpaper chosen"
     fi
 fi
-[ -f "$bgloc" ] || echo "No such a file!"
+[ -f "$bgloc" ] || echo "Not such a file!"
 [ -n "$nowal" ] || wal -i "$(readlink -f "$bgloc")" -o "${XDG_CONFIG_HOME:-$HOME/.config}/wal/postrun" >/dev/null 2>&1
 
 pidof dwm >/dev/null && xdotool key super+F12
