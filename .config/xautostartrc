@@ -19,4 +19,4 @@ mpdup &                            # Required for music status in blocks
 
 # toggletouchpad 0 &
 # terminal &
-# /usr/bin/optimus-manager-qt >/dev/null 2>&1 &
+# /usr/bin/optimus-manager-qt > /dev/null 2>&1 &

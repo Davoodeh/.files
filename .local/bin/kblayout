@@ -41,10 +41,9 @@ setl() { # accepts either the layout (xx) or layout and variant separated with a
 
 case $1 in
     g*) getl ;;
-    s*) setl "$2" ;;
     c*) shift && setl "$(echo "$@" | grep -oP ".*$(getl) +\\K[\\w-]+" || echo "$1")" ;;
     l*) [ -x "$(command -v dmenu)" ] &&
         setxkbmap "$(echo "$(awk '/! layout/{flag=1; next} /! variant/{flag=0} flag {print $2, "- " $1}' /usr/share/X11/xkb/rules/base.lst | dmenu -l 15)" | awk '{print $3}')" ||
         echo "$helpmsg" ;;
-    *) echo "$helpmsg" ;;
+    *) setl "$2" ;;
 esac

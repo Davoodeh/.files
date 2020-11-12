@@ -44,8 +44,8 @@ checkin() { # Checks paramater and respond. $2 is the flag and $1 is value.
 
 [ -n "$1" ] && { printf "%s" "$1" | grep -q "^-" || { input="$1" && shift; }; } #If the first input wasn't a flag read it as the $file pattern
 while true; do case "$1" in
-    -f | --file | -p | --directory | -i | --input) checkVal "$2" "$1" && input="$2" && shift 2 ;;
-    -c | --config) checkVal "$2" "$1" && xwconfig="$2" && shift 2 ;;
+    -f | --file | -p | --directory | -i | --input) checkin "$2" "$1" && input="$2" && shift 2 ;;
+    -c | --config) checkin "$2" "$1" && xwconfig="$2" && shift 2 ;;
     -d | --delete-orignial) deleteorig="deleteOriginalFile" && shift ;;
     -t | --temporary) temp="temp" && shift ;;
     -n | --nowal) nowal="noWal" && shift ;;

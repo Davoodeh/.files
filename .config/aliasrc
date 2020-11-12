@@ -30,6 +30,7 @@ alias \
     xq="xbps-query" \
     xr="sudo xbps-remove -R" \
     yd="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+bestaudio' --merge-output-format mp4" \
+    ym="youtube-dl -f 'bestaudio[ext=m4a]/bestaudio'" \
     YT="youtube-viewer"
 
 # Load config files before launching... or apply a crucial config...

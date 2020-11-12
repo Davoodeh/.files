@@ -9,4 +9,4 @@ case $BLOCK_BUTTON in
     6) editor "$0" ;;
 esac
 
-sensors | awk "/Core 0/ {print \"$(ico temp)\" \$3}"
+printf "%s°C\n" "$(ico temp)$(sensors | grep -Po 'Core 0:\s*\+\K\d*')"
