@@ -11,6 +11,7 @@ Viable commands:
   cycle  cycles through a list of languages provided to it
 * list   puts a list of available "basic" layouts in `dmenu` for you to choose from
          if you just want to list installed layouts use `localctl list-x11-keymap-layouts`
+* vars   much like `list` but also asks for variants
 
 Use "xx" as input where xx is the language code (us, ir, ru, dk...).
 Alternatively, use "xx-variant" if you do not want the "basic" variant of a layout.
@@ -22,7 +23,9 @@ to have it singalled with "30" each time you run the script.
 Examples:
   kblayout get
   kblayout set us
-  kblayout cycle us ir ru-phonetic'
+  kblayout cycle us ir ru-phonetic
+  kblayout list
+  kblayout variants'
 # FIXME The script is relatively way too slow (especially when cycling)
 
 getl() { # prints out keyboard layout in xx-variant format.
@@ -39,11 +42,20 @@ setl() { # accepts either the layout (xx) or layout and variant separated with a
         pkill -RTMIN+30 "${STATUSBAR:-dwmblocks}" # for [lang] or [kbselect] modules in blocks bars
 }
 
+listl() { # if has an argument will also ask for variants
+    if [ -x "$(command -v dmenu)" ]; then
+        lang="$(awk '/! layout/{flag=1; next} /! variant/{flag=0} flag {print $2, "- " $1}' /usr/share/X11/xkb/rules/base.lst | dmenu -l 15 | awk '{print $3}')"
+        [ -n "$1" ] && variant="$(sed "/! variant/,/^$/!d;/$lang:/!d" </usr/share/X11/xkb/rules/evdev.lst | dmenu -l 15 | awk '{print $1}')"
+        setl "$lang-$variant"
+    else
+        echo "$helpmsg"
+    fi
+}
+
 case $1 in
     g*) getl ;;
     c*) shift && setl "$(echo "$@" | grep -oP ".*$(getl) +\\K[\\w-]+" || echo "$1")" ;;
-    l*) [ -x "$(command -v dmenu)" ] &&
-        setxkbmap "$(echo "$(awk '/! layout/{flag=1; next} /! variant/{flag=0} flag {print $2, "- " $1}' /usr/share/X11/xkb/rules/base.lst | dmenu -l 15)" | awk '{print $3}')" ||
-        echo "$helpmsg" ;;
+    v*) listl with_variants ;;
+    l*) listl ;;
     *) setl "$2" ;;
 esac
