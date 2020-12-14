@@ -4,7 +4,8 @@ bgloc="${XDG_DATA_HOME:-$HOME/.local/share}/bg"
 helpmsg='Usage: setbg [FLAGS...] [-f] [FILE/S]
 If prvoided with false inputs this message will be prompted.
 
-Requirements are `xwallpaper` (optionally `wal` for starred commands and `notify-send`).
+Requirements are `xwallpaper` and optionally `notify-send`.
+Optionally `wal` for `-n` | `--nowal` and `convert` (Imagick) for solid color generation.
 
 Accepts file, link or directory as the main input.
 If given a directory it will select wallpaper in it randomly.
@@ -16,7 +17,7 @@ If run without any flags or file, your wallpaper will be refreshed.
 Viable flags:
   -f, --file, -p, --directory, -i, --input
           wallpaper file
-  -c, --config
+  -x, --x-args
           input flags given to xwallpaper (e.g: "--no-randr --tile")
   -d, --delete-original
           deletes the original wallpaper file after moving it
@@ -24,6 +25,8 @@ Viable flags:
           does not overwrite the cache link of the default wallpaper
 * -n, --nowal
           does not run wall after refreshing/setting the wallpaper
+* -c, --color
+          create a solid color wallpaper with rrggbb
   -q, --quite
           does not sent notifications (suitable for startup binds)
   -h, --help
@@ -34,30 +37,43 @@ If provided with no flag the first argument is read as a file.
 Examples:
   setbg mywallpaper.png
   setbg wallpapers.d/
-  setbg --temporary --nowal --config "--no-randr --tile" --quite --file testing-pattern.jpg
+  setbg --temporary --color cyan
+  setbg --temporary --color \#F8DE7E
+  setbg --temporary --nowal --x-args "--no-randr --tile" --quite --file testing-pattern.jpg
   setbg --quite'
 
-checkin() { # Checks paramater and respond. $2 is the flag and $1 is value.
-    # shellcheck disable=SC2015
+checkin() { # checks paramater and respond. $2 is the flag and $1 is value.
     [ -n "$1" ] && return 0 || { [ -n "$2" ] && echo "No parameter for $2" || echo "Bad inputs! Seek help."; }
 }
 
 [ -n "$1" ] && { printf "%s" "$1" | grep -q "^-" || { input="$1" && shift; }; } #If the first input wasn't a flag read it as the $file pattern
 while true; do case "$1" in
-    -f | --file | -p | --directory | -i | --input) checkin "$2" "$1" && input="$2" && shift 2 ;;
-    -c | --config) checkin "$2" "$1" && xwconfig="$2" && shift 2 ;;
-    -d | --delete-orignial) deleteorig="deleteOriginalFile" && shift ;;
-    -t | --temporary) temp="temp" && shift ;;
-    -n | --nowal) nowal="noWal" && shift ;;
-    -q | --quite) quite="quiteModeNoNotification" && shift ;;
+    -f | --f* | \
+        -p | --directory | \
+        -i | --input) checkin "$2" "$1" && input="$2" && shift 2 ;;
+    -c | --c*) checkin "$2" "$1" && color="$2" && shift 2 ;;
+    -x | --x*) checkin "$2" "$1" && xwconfig="$2" && shift 2 ;;
+    -d | --d*) deleteorig="deleteOriginalFile" && shift ;;
+    -t | --t*) temp="temp" && shift ;;
+    -n | --n*) nowal="noWal" && shift ;;
+    -q | --q*) quite="quiteModeNoNotification" && shift ;;
     -h | --help) echo "$helpmsg" && exit 0 ;;
     --) shift && break ;; # End of all options
     -*) echo "Invalid option: $1" && echo "$helpmsg" && exit 1 ;;
     *) break ;; # No more options
 esac; done
 
+[ -n "$color" ] && {
+    rm -f /tmp/c.png
+    # lesser resolutions make a weird shadow effect on borders
+    convert -size 800x600 "xc:$color" /tmp/c.png &&
+        input='/tmp/c.png' &&
+        notifmsg="Color is set to $color" ||
+        notifmsg="Failed to set the color, falling back to default"
+}
 if [ -n "$temp" ]; then
-    [ -n "$input" ] && bgloc="$input" || echo "Temporary flag is risen but no temporary file has been declared. Using default!"
+    [ -n "$input" ] &&
+        bgloc="$input" || echo "Temporary flag is risen but no temporary file has been declared. Using default!"
 elif [ -n "$input" ]; then
     if [ -f "$input" ]; then
         if [ -n "$deleteorig" ]; then
@@ -69,7 +85,7 @@ elif [ -n "$input" ]; then
         fi
     elif [ -d "$input" ]; then
         ln -sf "$(find "$(readlink -f "$input")" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)" "$bgloc"
-        notifmsg="Random Wallpaper chosen"
+        notifmsg="Random Wallpaper chosen: $(basename -- $bgloc)"
     fi
 fi
 [ -f "$bgloc" ] || echo "Not such a file!"
@@ -78,5 +94,7 @@ fi
 pidof dwm >/dev/null && xdotool key super+F12
 
 # If the sleep is removed, there won't be any notification on startup
-xwallpaper ${xwconfig:---zoom} "$bgloc" &&
-    { [ -z "$quite" ] && sleep 1 && notify-send -i "$bgloc" "${notifmsg:-Wallpaper is set}" >/dev/null 2>&1 & }
+xwallpaper ${xwconfig:---zoom} "$bgloc" && {
+    [ -z "$quite" ] &&
+        sleep 1 && notify-send -i "$bgloc" "${notifmsg:-Wallpaper is set}" >/dev/null 2>&1 &
+}

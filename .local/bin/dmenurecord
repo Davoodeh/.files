@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# Depends on xorg-xdpyinfo
 # Usage:
 # `$0`: Ask for recording type via dmenu
 # `$0 screencast`: Record both audio and screen

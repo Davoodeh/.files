@@ -11,4 +11,4 @@ esac
 
 [ -n "$1" ] && lt=" ($(eval "$1"))"
 # TODO make the icon more accurate
-date "+%Y %b %d$lt (%a) $(ico clock-$(echo $(date '+%I')))%I:%M%p"
+date "+%b %d$lt (%a) $(ico clock-$(echo $(date '+%I')))%I:%M%p"
