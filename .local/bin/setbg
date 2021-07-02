@@ -4,8 +4,8 @@ bgloc="${XDG_DATA_HOME:-$HOME/.local/share}/bg"
 helpmsg='Usage: setbg [FLAGS...] [-f] [FILE/S]
 If prvoided with false inputs this message will be prompted.
 
-Requirements are `xwallpaper` and optionally `notify-send`.
-Optionally `wal` for `-n` | `--nowal` and `convert` (Imagick) for solid color generation.
+Requirements are only `xwallpaper`.  Optionally `notify-send`, `wal`
+for `-n` | `--nowal` and `convert` (Imagick) for solid color generation.
 
 Accepts file, link or directory as the main input.
 If given a directory it will select wallpaper in it randomly.
@@ -43,15 +43,16 @@ Examples:
   setbg --quite'
 
 checkin() { # checks paramater and respond. $2 is the flag and $1 is value.
-    [ -n "$1" ] && return 0 || { [ -n "$2" ] && echo "No parameter for $2" || echo "Bad inputs! Seek help."; }
+    [ -n "$1" ] && return 0 || {
+        [ -n "$2" ] && echo "No parameter for $2" || printf "Bad inputs!\n%s" "$helpmsg"
+        return 1
+    }
 }
 
-[ -n "$1" ] && { printf "%s" "$1" | grep -q "^-" || { input="$1" && shift; }; } #If the first input wasn't a flag read it as the $file pattern
+[ -n "$1" ] && { printf "%s" "$1" | grep -q "^-" || { input="$1" && shift; }; } # If the first input wasn't a flag read it as the $file pattern
 while true; do case "$1" in
-    -f | --f* | \
-        -p | --directory | \
-        -i | --input) checkin "$2" "$1" && input="$2" && shift 2 ;;
-    -c | --c*) checkin "$2" "$1" && color="$2" && shift 2 ;;
+    -f | --f* | -p | --dir* | -i | --input) checkin "$2" "$1" && input="$2" && shift 2 ;;
+    -c | --c*) { checkin "$2" "$1" >/dev/null && color="$2" && shift 2; } || { color="black" && shift; } ;;
     -x | --x*) checkin "$2" "$1" && xwconfig="$2" && shift 2 ;;
     -d | --d*) deleteorig="deleteOriginalFile" && shift ;;
     -t | --t*) temp="temp" && shift ;;
@@ -89,7 +90,7 @@ elif [ -n "$input" ]; then
     fi
 fi
 [ -f "$bgloc" ] || echo "Not such a file!"
-[ -n "$nowal" ] || wal -i "$(readlink -f "$bgloc")" -o "${XDG_CONFIG_HOME:-$HOME/.config}/wal/postrun" >/dev/null 2>&1
+{ [ -n "$nowal" ] || [ -n "$color" ]; } || wal -i "$(readlink -f "$bgloc")" -o "${XDG_CONFIG_HOME:-$HOME/.config}/wal/postrun" >/dev/null 2>&1
 
 pidof dwm >/dev/null && xdotool key super+F12
 

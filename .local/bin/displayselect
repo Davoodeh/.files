@@ -50,7 +50,7 @@ multimon() {
 onescreen() { xrandr --output "$1" --auto --scale 1.0x1.0 $(echo "$allposs" | grep -v "$1" | awk '{print "--output", $1, "--off"}' | paste -sd ' '); }
 
 postrun() {
-    setbg -q # fixes background if screen size/arangement has changed.
+    setbg -q >/dev/null # fixes background if screen size/arangement has changed.
     # remaps # re-remap keys if keyboard added (for laptop bases)
     {
         killall dunst
