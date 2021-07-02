@@ -2,8 +2,13 @@
 # If provided with a command, it will also be displayed. E.g: clock 'jdate "+%b %d"' -> 2020 Sep 25 (Meh 04) (Fri) 12:08AM
 
 c() {
-    o="$(cal --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")"
-    echo "$o"
+    output="$(cal --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")"
+    if command -v jcal jdate >/dev/null; then
+        # Since jcal has color issues and is not compatible with notify-send, it must be edited before using
+        current_day="$(jdate "+%d")"
+        output="$output\n$(jcal | sed "s/\x1B\[[0-9;]*[a-zA-Z]//g;s/$current_day/<b><span color=\"red\">$current_day<\/span><\/b>/")"
+    fi
+    echo "$output"
 }
 
 case $BLOCK_BUTTON in
