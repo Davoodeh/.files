@@ -35,7 +35,6 @@ alias \
 
 # Load config files before launching... or apply a crucial config...
 alias \
-    calcurse="calcurse -D ~/.config/calcurse" \
     keynav="keynav 'loadconfig ~/.config/keynav/keynavrc'" \
     aria2c="aria2c -c -j 1 -Z -P -s 16 -x 16" \
     tmux="tmux -f ~/.config/tmux.conf" \
