@@ -1,14 +1,21 @@
 #!/bin/sh
 # If provided with a command, it will also be displayed. E.g: clock 'jdate "+%b %d"' -> 2020 Sep 25 (Meh 04) (Fri) 12:08AM
 
+c() {
+    o="$(cal --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")"
+    echo "$o"
+}
+
 case $BLOCK_BUTTON in
-    1) notify-send "This Month" "$(cal --color=always | sed "s/..7m/<b><span color=\"red\">/;s/..27m/<\/span><\/b>/")" && notify-send "Appointments" "$(calcurse -d3)" ;;
+    1) notify-send "This Month" "$(c)" && notify-send "Appointments" "$(calcurse -d3)" ;;
     2) calendar ;;
-    3) notify-send "$(ico time) Time/date module" "\- Left click to show upcoming appointments for the next three days via \`calcurse -d3\` and show the month via \`cal\`
-- Middle click opens calcurse if installed" ;;
+    3) notify-send "$(ico time) Time/date module" '\- Left click to show
+upcoming appointments for the next three days via `calcurse -d3` and show
+the month via `cal`
+- Middle click opens calcurse if installed' ;;
     6) editor "$0" ;;
 esac
 
-[ -n "$1" ] && lt=" ($(eval "$1"))"
+{ [ -n "$1" ] && command -v "$(echo "$1" | grep -oP ".+(?=\s)")" >/dev/null; } && lt=" ($(eval "$1"))"
 # TODO make the icon more accurate
-date "+%b %d$lt (%a) $(ico clock-$(echo $(date '+%I')))%I:%M%p"
+date "+%a, %b %d$lt $(ico clock-$(date '+%I'))%H:%M"
