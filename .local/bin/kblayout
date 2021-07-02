@@ -3,59 +3,101 @@
 helpmsg='Usage: kblayout [COMMAND] [INPUTS]
 If provided with false commands this message will be prompted.
 
-Requirements are `setxkbmap`, `awk` and `grep` (optionally `dmenu` for marked commands).
+Requirements are `setxkbmap`, `awk` and `grep` (optionally `dmenu` for marked
+commands).
 
 Viable commands:
-  get    prints the current language and variant
-  set    sets keyboard layout to the language provided
-  cycle  cycles through a list of languages provided to it
+  active
+         prints the active layout (bind to your statusbar)
+  cycle  cycles through a list of languages provided to it (bind to your switch
+         layout combination)
+         this is basically switch, ran repeatedly without messing with the order
+  get    prints all the languages and variants behind your active layout
+  set    sets keyboard layout(s) to the language(s) given
+  switch
+         activates a layout among previously set layouts
 * list   puts a list of available "basic" layouts in `dmenu` for you to choose from
-         if you just want to list installed layouts use `localctl list-x11-keymap-layouts`
+         if you just want to list installed layouts
+         use `localctl list-x11-keymap-layouts`
 * vars   much like `list` but also asks for variants
 
+If none of commands above is chosen, script assumes `set` as the default.
+
 Use "xx" as input where xx is the language code (us, ir, ru, dk...).
-Alternatively, use "xx-variant" if you do not want the "basic" variant of a layout.
-List available variants with `localectl list-x11-keymap-variants xx`.
+Alternatively, use "xx-variant" if you do not want the "basic" variant of a
+layout. List available variants with `localectl list-x11-keymap-variants xx`.
+
+Note that using "xx-" without a variant produces unexpected and buggy results.
 
 Set Env var $STATUSBAR (default value "dwmblocks") to your statusbar of choice
 to have it singalled with "30" each time you run the script.
 
 Examples:
+  kblayout us
   kblayout get
   kblayout set us
   kblayout cycle us ir ru-phonetic
+  kblayout switch ru-phonetic
   kblayout list
   kblayout variants'
 # FIXME The script is relatively way too slow (especially when cycling)
 
-getl() { # prints out keyboard layout in xx-variant format.
+activel() { # prints the first language in the query (the active layout)
     q="$(setxkbmap -query)"
     variant="$(echo "$q" | grep -oP 'variant:\s*\K\w+')" && variant="-$variant"
-    echo "$(echo "$q" | grep -oP 'layout:\s*\K[\w,]+')$variant"
+    echo "$(echo "$q" | grep -oP 'layout:\s*\K\w+')$variant"
+}
+
+getl() { # prints out keyboard layout in xx-variant format.
+    setxkbmap -query | awk 'BEGIN{ORS=""}
+    /layout/{langs_count=split($2, langs, ",")}
+    /variant/{variants_count=split($2, variants, ",")}
+    END{
+        {print entry(langs[1], variants[1])}
+        for(i=2; i<=langs_count; i++) {print " " entry(langs[i], variants[i])}
+        {print "\n"}
+    }
+    function entry(lang, variant){return variant==""? lang : lang "-" variant}'
+}
+
+switchl() { # activates a layout ($1) and keeps other layouts as alternatives ($2)
+    # $1: what you want to switch to; $2: space-separated layouts that you want to preserve
+    setl "$1" $(echo "$2" | sed -E "s/$1\s?//")
 }
 
 setl() { # accepts either the layout (xx) or layout and variant separated with a dash (xx-variant)
     [ -z "$1" ] && echo "$helpmsg" && exit 1
-    setxkbmap "$(echo "$1" | cut -d- -f1)" "$(echo "$1" | cut -s -d- -f2)"
+    # Extract and group languages and their variants in 'lang,lang2,...' and 'variant,variant2,...'
+    langs="$(echo "$1" | cut -d- -f1)"
+    variants="$(echo "$1" | cut -s -d- -f2)"
+    shift
+    for lang; do
+        langs="$langs,$(echo "$lang" | cut -d- -f1)"
+        variants="$variants,$(echo "$lang" | cut -s -d- -f2)"
+    done
+    setxkbmap "$langs" "$variants"
     [ "$STATUSBAR" = "i3status" ] && pgrep i3status | xargs --no-run-if-empty kill -s USR1 ||
         # tell i3status to update
         pkill -RTMIN+30 "${STATUSBAR:-dwmblocks}" # for [lang] or [kbselect] modules in blocks bars
 }
 
-listl() { # if has an argument will also ask for variants
-    if [ -x "$(command -v dmenu)" ]; then
-        lang="$(awk '/! layout/{flag=1; next} /! variant/{flag=0} flag {print $2, "- " $1}' /usr/share/X11/xkb/rules/base.lst | dmenu -l 15 | awk '{print $3}')"
-        [ -n "$1" ] && variant="$(sed "/! variant/,/^$/!d;/$lang:/!d" </usr/share/X11/xkb/rules/evdev.lst | dmenu -l 15 | awk '{print $1}')"
-        setl "$lang-$variant"
-    else
-        echo "$helpmsg"
-    fi
+listl() { # lists all the language (and possibly variants) in a dmenu to choose from
+    # if has an argument will also ask for variants
+    [ ! -x "$(command -v dmenu)" ] && echo "$helpmsg" && exit 2
+    lang="$(awk '/! layout/{flag=1; next} /! variant/{flag=0} flag {print $2, "- " $1}' /usr/share/X11/xkb/rules/base.lst | dmenu -l 15 | awk '{print $3}')"
+    [ -n "$1" ] && variant="$(sed "/! variant/,/^$/!d;/$lang:/!d" </usr/share/X11/xkb/rules/evdev.lst | dmenu -l 15 | awk '{print $1}')"
+    setl "$lang-$variant"
 }
 
 case $1 in
+    a*) activel ;;
+    c*)
+        shift &&
+            switchl "$(echo "$@" | grep -oP ".*$(getl | cut -d' ' -f1)-? +\\K[\\w-]+" || echo "$1")" "$*"
+        ;;
     g*) getl ;;
-    c*) shift && setl "$(echo "$@" | grep -oP ".*$(getl) +\\K[\\w-]+" || echo "$1")" ;;
     v*) listl with_variants ;;
     l*) listl ;;
-    *) setl "$2" ;;
+    se*) setl "$2" ;;
+    sw*) shift && switchl "$1" "$(getl)" ;;
 esac
