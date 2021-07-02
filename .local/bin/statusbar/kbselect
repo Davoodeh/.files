@@ -1,6 +1,6 @@
 #!/bin/sh
 # works on any init system
-kb="$(kblayout get)" || exit 1
+kb="$(kblayout active)" || exit 1
 
 case $BLOCK_BUTTON in
     1)
@@ -12,7 +12,7 @@ case $BLOCK_BUTTON in
     6) editor "$0" ;;
 esac
 
-# Since shortcuts are bound for US layout by default and it's the universal default layout it won't be printed
-[ "$kb" = "$(echo "${KBLAYOUT:-us}" | cut -d' ' -f1)" ] && unset kb
+# Don't show the first/main entry in kblayouts list (hide the default kb from statusbar)
+[ "$kb" = "$(cat $XDG_CONFIG_HOME/vars/kblayouts | cut -d' ' -f1)" ] && unset kb
 
 printf "%s\n" "$kb"
