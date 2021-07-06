@@ -1,0 +1,74 @@
+#!/bin/sh
+# Format and pretty print awk code using gawk (with a few extra features)
+helpmsg='
+Usage: awkfmt [-h|SPACE SIZE/TAB]
+
+If provided with no SPACE SIZE, unlike the default `gawk` behavior, 4 spaces
+will be placed at the beginning of the line.
+
+Requirements are only `gawk`
+
+
+Viable SPACE SIZE/TAB arguments:
+  0, t, tab, -t, --tab \t
+         Use tabs like the default pretty output of gawk
+  1..n   Any natural number indicated the number of spaces (default 4)
+
+
+Examples:
+  awkfmt --help
+  cat code.awk | awkfmt
+  cat code.awk | awkfmt 4
+  cat code.awk | awkfmt 2
+  cat code.awk | awkfmt 0
+  cat code.awk | awkfmt t
+
+
+Binding to Doom Emacs (or any other editor):
+  This script is tailored to be used with an editor like Emacs.
+  To do so, just introduce it to your editor as the formatter for awk.
+
+  In Doom Emacs, after the inital config and enabling format plugin
+  (lassik/emacs-format-all-the-code), simply put the script in your `$PATH` and
+  config your emacs like below:
+    (set-formatter! "'"'"'"awkfmt "awkfmt" :modes "'"'"'"(awk-mode))
+    (setq-hook! "'"'"'"awk-mode-hook +format-with "'"'"'"awkfmt)'
+
+# TODO add a "compact" option which turns codes like below to one liners:
+# /from/{
+#     print $0
+# }
+# /to/{ print $0 }
+
+(# subshell/script takes inputs from a pipe
+    # parse arguments
+    while true; do case "$1" in
+        h* | -h* | --h*) echo "$helpmsg" && exit 0 ;;
+        t* | -t* | --t* | '\t'* | "0") usetabs="usetabs" && shift ;;
+        --) shift && break ;; # End of all options
+        -*) echo "Invalid option: $1" && echo "$helpmsg" && exit 1 ;;
+        *) break ;; # No more options
+    esac; done
+
+    # prettify
+    while read -r l; do f="$f$l\n"; done # get lines from shell and put them in $f
+    f="$(printf "%b" "$f")"              # eval \n and others in $f
+    f="$(gawk -o- "$f")" || exit $?      # prettify or fail
+    # since tabs are default, just print if that's what user wants
+    [ -n "$usetabs" ] && { echo "$f" && exit 0; }
+
+    echo "$f" | gawk -v spaces="$(printf "%${1:-4}s")" '# replace tabs with spaces if tabs are not used
+    match($0, /^\t+/) {
+        p = ""
+        l = RLENGTH
+        while (l--) {
+            p = p spaces
+        }
+        sub(/^\t+/, p, $0)
+    }
+    { print $0 }'
+) || { # print help and return the correct exit code if failed
+    r=$?
+    echo "$helpmsg"
+    exit $r
+}
